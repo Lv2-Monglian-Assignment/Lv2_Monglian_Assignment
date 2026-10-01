@@ -15,8 +15,10 @@
 
 | 구분 | 항목 | 상세 사양 및 설정값 |
 |---|---|---|
-| 소프트웨어 | OS | Ubuntu Server 22.04 LTS (Raspberry Pi) |
-| | ROS2 | Humble |
+| 소프트웨어 | OS (Raspberry Pi) | Ubuntu 26.04 |
+| | OS (PC) | Ubuntu 24.04 |
+| | ROS2 (PC) | Lyrical |
+| | ROS2 (Raspberry Pi) | Lyrical |
 | | OpenCV | 4.x (TODO: `python3 -c "import cv2; print(cv2.__version__)"` 결과로 정확한 버전 기입) |
 | | Python | TODO |
 | | Arduino IDE / arduino-cli · OpenCR 보드 패키지 | TODO: 버전 |
@@ -28,6 +30,7 @@
 | | 기구 | 고정 브래킷 · 수평 1축 (회전 범위: TODO) |
 | 목표물 | 대상 | TODO: 카드·공·블록 중 선택, 색상 (사진: `results/images/target.jpg`) |
 
+- 발제 기본 환경(Ubuntu Server 22.04 · ROS2 Humble)과 다른 대체 환경을 사용합니다. 차이와 영향은 [report.md](report.md)의 한계에 기록합니다.
 - 모터 ID·baud·프로토콜은 실제 장비에서 확인한 값입니다. 확인 방법과 날짜: TODO
 - PC는 SSH 접속과 결과 확인에만 사용합니다. OpenCR 빌드·업로드·시리얼 확인은 Raspberry Pi에서 수행합니다.
 
@@ -58,14 +61,14 @@ ssh <user>@<raspberrypi-ip>
 
 # 의존성 설치 (TODO: 실제 사용한 패키지로 수정)
 sudo apt update
-sudo apt install -y ros-humble-cv-bridge ros-humble-usb-cam python3-opencv
+sudo apt install -y ros-lyrical-cv-bridge ros-lyrical-usb-cam python3-opencv
 
 # 저장소 clone (개인별 폴더 사용, 같은 폴더에서 동시에 브랜치 변경 금지)
 git clone <팀 저장소 URL>
 cd Lv2_Monglian_Assignment/lv2_module5/ros2_ws
 
 # 빌드
-source /opt/ros/humble/setup.bash
+source /opt/ros/lyrical/setup.bash
 colcon build --symlink-install
 source install/setup.bash
 ```
