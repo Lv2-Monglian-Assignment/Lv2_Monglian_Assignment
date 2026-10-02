@@ -23,7 +23,7 @@
 
 | PR | 제목 | 작성자 | 연결 Issue | 리뷰·승인자 | 리뷰 요지 | 병합자 · 일자 |
 |---|---|---|---|---|---|---|
-| TODO (PR 번호·링크) | docs: 루트·모듈 README 및 team.md 작성 | 온창범 | [#1](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1) | TODO (리뷰어 · 승인 링크) | TODO (이번 PR 리뷰 내용) · 포함 변경: ROS2 humble → lyrical 수정 ff62c9a | 온창범 · TODO |
+| TODO (PR 번호·링크) | docs: 루트·모듈 README 및 team.md 작성 | 온창범 | [#1](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1) | TODO (리뷰어 · 승인 링크) | TODO (이번 PR 리뷰 내용) · 포함 변경: ROS2 humble → lyrical 수정 7b91ea0 | 온창범 · TODO |
 | | | | | | | |
 
 - 리뷰 링크는 PR의 **Files changed** 또는 **Conversation**에서 해당 리뷰의 `…` → **Copy link**로 복사합니다.
@@ -49,7 +49,7 @@
 | Do not allow bypassing | 적용 | |
 | force push · main 삭제 금지 | 적용 | |
 
-- 설정 화면 캡처: ![main-protect](results/images/main-protect-rulesets.png) (TODO: 새 저장소 설정 화면으로 교체)
+- 설정 화면 캡처: ![main-protect](results/images/main-protect-rulesets.png)
 - 보호 동작 확인 PR: TODO (Issue #1 PR)
 - 적용할 수 없는 항목과 사유, 대신 사용한 운영 규칙: 없음
 
