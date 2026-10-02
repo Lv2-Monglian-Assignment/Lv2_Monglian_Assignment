@@ -1,6 +1,6 @@
 # 팀 협업 기록 — 몽글리안
 
-- 팀 저장소: https://github.com/SpartaPA/Lv2_Monglian_Assignment
+- 팀 저장소: https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment
 - 제출 명칭: Lv2_몽글리안_과제
 - 제출 태그: `lv2-module5-submit` (TODO: 생성 후 링크)
 
@@ -12,7 +12,7 @@
 
 | 이름 / GitHub ID | 역할 | 담당 Issue | 병합된 본인 PR | 다른 PR 리뷰 | 구현·검증 내용 |
 |---|---|---|---|---|---|
-| 온창범 / [Onbeom](https://github.com/Onbeom) | 팀장 · 테크리드 + 검증 | [#1](https://github.com/SpartaPA/Lv2_Monglian_Assignment/issues/1) | [#2](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2) | TODO | 검증, 루트·모듈 README 작성, TODO |
+| 온창범 / [Onbeom](https://github.com/Onbeom) | 팀장 · 테크리드 + 검증 | [#1](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1) | [Issue #1 PR](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1#issue-5675321094) | TODO | 검증, 루트·모듈 README·team.md 작성, TODO |
 | 권형중 / [JuneKunst](https://github.com/JuneKunst) | 통합 | TODO | TODO | TODO | 통합, TODO |
 | 최성진 / [Choi-sungjin](https://github.com/Choi-sungjin) | 인지 | TODO | TODO | TODO | 인지, TODO |
 | 천경호 / [pizzaafterhangover](https://github.com/pizzaafterhangover) | 제어 | TODO | TODO | TODO | 제어, TODO |
@@ -23,7 +23,7 @@
 
 | PR | 제목 | 작성자 | 연결 Issue | 리뷰·승인자 | 리뷰 요지 | 병합자 · 일자 |
 |---|---|---|---|---|---|---|
-| [#2](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2) | docs: 루트·모듈 README 작성 | 온창범 | [#1](https://github.com/SpartaPA/Lv2_Monglian_Assignment/issues/1) | 천경호 · [승인](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2#pullrequestreview-5376121405) | ros humble -> ros lyrical로 변경 요청 → 반영: cc31d9e | 온창범 · 2026-10-01 |
+| TODO (PR 번호·링크) | docs: 루트·모듈 README 및 team.md 작성 | 온창범 | [#1](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1) | TODO (리뷰어 · 승인 링크) | TODO (이번 PR 리뷰 내용) · 포함 변경: ROS2 humble → lyrical 수정 ff62c9a | 온창범 · TODO |
 | | | | | | | |
 
 - 리뷰 링크는 PR의 **Files changed** 또는 **Conversation**에서 해당 리뷰의 `…` → **Copy link**로 복사합니다.
@@ -49,8 +49,8 @@
 | Do not allow bypassing | 적용 | |
 | force push · main 삭제 금지 | 적용 | |
 
-- 설정 화면 캡처:  ![main-protect](results/images/main-protect-rulesets.png)
-- 보호 동작 확인 PR: [#2](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2)
+- 설정 화면 캡처: ![main-protect](results/images/main-protect-rulesets.png) (TODO: 새 저장소 설정 화면으로 교체)
+- 보호 동작 확인 PR: TODO (Issue #1 PR)
 - 적용할 수 없는 항목과 사유, 대신 사용한 운영 규칙: 없음
 
 ## 4. 대행·예외 기록
@@ -67,7 +67,7 @@
 |---|---|---|
 | 4명 모두 본인 PR 병합 1건 이상 | TODO | 1번 표 |
 | 4명 모두 타인 PR 리뷰 1건 이상 | TODO | 1번 표 |
-| 팀장 PR을 다른 팀원이 승인 | O | [승인](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2#pullrequestreview-5376121405) |
+| 팀장 PR을 다른 팀원이 승인 | TODO | TODO (Issue #1 PR 승인 링크) |
 | 최종 main에서 다른 팀원과 실행·정지·재현 확인 | TODO | 확인자 · 날짜 · 커밋 |
 | 제출 태그 생성 | TODO | 태그 링크 |
 | 평가자가 저장소·영상·bag 링크에 접근 가능 | TODO | 확인자 · 날짜 |
