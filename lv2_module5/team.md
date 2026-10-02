@@ -23,7 +23,7 @@
 
 | PR | 제목 | 작성자 | 연결 Issue | 리뷰·승인자 | 리뷰 요지 | 병합자 · 일자 |
 |---|---|---|---|---|---|---|
-| [#2](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2) | docs: 루트·모듈 README 작성 | 온창범 | [#1](https://github.com/SpartaPA/Lv2_Monglian_Assignment/issues/1) | 천경호 · [리뷰 1](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2#pullrequestreview-5376121405) | ros humble -> ros lyrical로 변경 요청 → 반영: cc31d9e | 온창범 · 2026-10-01 |
+| [#2](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2) | docs: 루트·모듈 README 작성 | 온창범 | [#1](https://github.com/SpartaPA/Lv2_Monglian_Assignment/issues/1) | 천경호 · [승인](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2#pullrequestreview-5376121405) | ros humble -> ros lyrical로 변경 요청 → 반영: cc31d9e | 온창범 · 2026-10-01 |
 | | | | | | | |
 
 - 리뷰 링크는 PR의 **Files changed** 또는 **Conversation**에서 해당 리뷰의 `…` → **Copy link**로 복사합니다.
@@ -67,7 +67,7 @@
 |---|---|---|
 | 4명 모두 본인 PR 병합 1건 이상 | TODO | 1번 표 |
 | 4명 모두 타인 PR 리뷰 1건 이상 | TODO | 1번 표 |
-| 팀장 PR을 다른 팀원이 승인 | O | [리뷰 1](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2#pullrequestreview-5376121405) |
+| 팀장 PR을 다른 팀원이 승인 | O | [승인](https://github.com/SpartaPA/Lv2_Monglian_Assignment/pull/2#pullrequestreview-5376121405) |
 | 최종 main에서 다른 팀원과 실행·정지·재현 확인 | TODO | 확인자 · 날짜 · 커밋 |
 | 제출 태그 생성 | TODO | 태그 링크 |
 | 평가자가 저장소·영상·bag 링크에 접근 가능 | TODO | 확인자 · 날짜 |
