@@ -15,24 +15,35 @@
 
 | 구분 | 항목 | 상세 사양 및 설정값 |
 |---|---|---|
-| 소프트웨어 | OS (Raspberry Pi) | Ubuntu 26.04 |
-| | OS (PC) | Ubuntu 24.04 |
-| | ROS2 (PC) | Lyrical |
-| | ROS2 (Raspberry Pi) | Lyrical |
-| | OpenCV | 4.x (TODO: `python3 -c "import cv2; print(cv2.__version__)"` 결과로 정확한 버전 기입) |
-| | Python | TODO |
-| | Arduino IDE / arduino-cli · OpenCR 보드 패키지 | TODO: 버전 |
-| 하드웨어 | SBC | Raspberry Pi 4 |
-| | Camera | USB Camera (해상도: 640x480 / 설정 FPS: 30) |
+| 소프트웨어 (Raspberry Pi) | OS · 아키텍처 | Ubuntu Server 26.04.1 LTS · aarch64 |
+| | ROS2 | Lyrical (공식 apt 패키지, resolute 빌드) |
+| | RMW 구현체 | rmw_fastrtps_cpp (기본값, `ros2 doctor --report`로 확인) |
+| | ROS_DOMAIN_ID | TODO: 제출 장비 담당자의 Raspberry Pi 값 |
+| | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |
+| | rosbag2 | 0.33.3 (저장 형식: TODO mcap / sqlite3) |
+| | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR:OpenCR 1.5.1 |
+| | OpenCR 보드 패키지 주소 | `https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/arduino/opencr_release/package_opencr_index.json` |
+| | DYNAMIXEL 라이브러리 | Dynamixel2Arduino 0.8.1 |
+| 소프트웨어 (PC) | 용도 | Raspberry Pi SSH 접속 · Isaac Sim 실행 |
+| | OS · 아키텍처 | Ubuntu 24.04.5 LTS · x86_64 |
+| | ROS2 | Lyrical ([NVIDIA Isaac ROS release-5.0](https://nvidia-isaac-ros.github.io/v/release-5.0/getting_started/index.html) 문서의 터미널 설치 절차) |
+| | RMW 구현체 | rmw_fastrtps_cpp (기본값) |
+| 하드웨어 | SBC | Raspberry Pi 4 Model B Rev 1.5 · 메모리 4GB (`free -h` 3.7Gi) |
+| | Camera | Intel RealSense D435 (D435i 아님) · 펌웨어 5.15.1.55 · USB 3.2 (5 Gbps) 포트 연결 |
+| | Camera 설정 | Color 640x480 @ 30 Hz (실측 30.1 Hz) · rgb8 · frame_id `camera_color_optical_frame` |
+| | Camera 내부 파라미터 (CameraInfo K) | fx 605.85 · fy 605.68 · cx 324.37 · cy 245.14 |
 | | Control Board | OpenCR 1.0 |
-| | Actuator | DYNAMIXEL (모델: TODO / ID: 1 / Baudrate: 57600 / Protocol 2.0) |
+| | Actuator | ROBOTIS DYNAMIXEL XM460-W350-T (ID · Baudrate · Protocol: TODO 제출 장비 담당자 확인) |
 | | Power | 12V 외부 전원 공급 장치 |
-| | 기구 | 고정 브래킷 · 수평 1축 (회전 범위: TODO) |
+| | 기구 | 고정 브래킷 · 수평 1축 (회전 범위 · 속도 상한: TODO 제출 장비 담당자 확인) |
 | 목표물 | 대상 | TODO: 카드·공·블록 중 선택, 색상 (사진: `results/images/target.jpg`) |
 
-- 발제 기본 환경(Ubuntu Server 22.04 · ROS2 Humble)과 다른 대체 환경을 사용합니다. 차이와 영향은 [report.md](report.md)의 한계에 기록합니다.
+> **TODO (제출 장비 담당자 확인 후 이 블록 삭제)**
+> 표의 값은 실험용 Raspberry Pi에서 확인했습니다. 모터 ID·통신 속도·프로토콜·회전 범위·속도 상한과 ROS_DOMAIN_ID는 **제출용 장비**에서 직접 확인해 채웁니다. OpenCV·arduino-cli·OpenCR 보드 패키지·Dynamixel2Arduino 버전도 제출용 Raspberry Pi에서 같은지 확인합니다. 장비마다 값이 다를 수 있으므로 다른 장비의 값을 복사하지 않습니다.
+
+- 카메라 Color 토픽 이름: TODO (카메라 노드를 실행한 상태에서 `ros2 topic list | grep color`로 확인) · 정렬 Depth 토픽은 `/camera/camera/aligned_depth_to_color/image_raw` · 30 Hz
 - 모터 ID·baud·프로토콜은 실제 장비에서 확인한 값입니다. 확인 방법과 날짜: TODO
-- PC는 SSH 접속과 결과 확인에만 사용합니다. OpenCR 빌드·업로드·시리얼 확인은 Raspberry Pi에서 수행합니다.
+- PC는 Raspberry Pi SSH 접속과 Isaac Sim 실행에 사용합니다. OpenCR 빌드·업로드·시리얼 확인은 Raspberry Pi에서 수행합니다.
 
 ## 2. 폴더 구조
 
@@ -61,7 +72,7 @@ ssh <user>@<raspberrypi-ip>
 
 # 의존성 설치 (TODO: 실제 사용한 패키지로 수정)
 sudo apt update
-sudo apt install -y ros-lyrical-cv-bridge ros-lyrical-usb-cam python3-opencv
+sudo apt install -y ros-lyrical-cv-bridge python3-opencv   # TODO: RealSense ROS 패키지 설치 방법 추가
 
 # 저장소 clone (개인별 폴더 사용, 같은 폴더에서 동시에 브랜치 변경 금지)
 git clone <팀 저장소 URL>
