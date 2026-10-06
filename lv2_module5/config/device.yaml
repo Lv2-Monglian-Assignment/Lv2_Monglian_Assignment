@@ -1,0 +1,13 @@
+# OpenCR 연결 (opencr_bridge). 모터 ID 11·12, XM430-W350, 1 Mbps, Protocol 2.0, 각도 제한·속도 상한 120 deg/s는
+# 펌웨어(firmware/opencr_tracker/opencr_tracker.ino) 상수에 있다. #todo = 실측 필요
+opencr_bridge:
+  ros__parameters:
+    serial_port: /dev/ttyACM0                  # #todo 실제 OpenCR 포트 (/dev/serial/by-id/... 권장). /dev/ttyUSB0는 라이다
+    serial_baud: 115200                        # 펌웨어 Serial.begin과 같게
+    dry_run: false                             # true: 시리얼 미사용, 관절 각도는 명령 적분(시뮬레이션, 이름 pan_sim·tilt_sim)
+    bridge_rate_hz: 50.0                       # [Hz] V 전송 주기. 펌웨어 CMD_TIMEOUT_MS(300 ms)보다 충분히 짧게
+    torque_off_on_exit: false                  # true: 종료 시 O(토크 OFF). 틸트(카메라)가 처질 수 있음
+    sim_pan_limit_deg: 180.0                   # dry_run용. 펌웨어 LIMIT_DEG와 같게
+    sim_tilt_limit_deg: 40.0
+    log_dir: ~/lv2_module5_logs
+    run_id: ''                                 # 비우면 bridge_YYYYmmdd_HHMMSS (<run_id>_serial.log)
