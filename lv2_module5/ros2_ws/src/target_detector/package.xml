@@ -12,6 +12,7 @@
   <exec_depend>cv_bridge</exec_depend>
   <exec_depend>python3-opencv</exec_depend>
   <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>tracker_controller</exec_depend>  <!-- object_tracker의 회전축 좌표 변환(geometry.py). 없으면 회전 보정 없이 동작 -->
 
   <test_depend>python3-pytest</test_depend>
   <export>

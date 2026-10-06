@@ -1,0 +1,7 @@
+# 정지 규칙. 정지 계층: 인지(카메라 멈추면 발행 중단) -> 제어(z=0 즉시 0, 입력 타임아웃) -> 브리지(제어 명령 끊기면 0 전송)
+#   -> OpenCR(V가 300 ms 없으면 속도 0, 5 s 더 없으면 토크 OFF) -> 모터 Bus Watchdog(200 ms)
+tracker_controller:
+  ros__parameters:
+    input_timeout_s: 0.5                       # [s] 발제 기본값
+    recover_frames: 3                          # 신선한 목표 연속 프레임이면 복귀 (발제 기본값)
+    require_increasing_stamp: true             # stamp가 증가하지 않는 /target(재전송)은 버림
