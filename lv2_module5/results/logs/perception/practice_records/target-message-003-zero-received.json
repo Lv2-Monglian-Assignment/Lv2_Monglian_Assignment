@@ -1,0 +1,26 @@
+{
+  "evidence_source": "PC /target echo output supplied in conversation",
+  "topic": "/target",
+  "message_type": "geometry_msgs/msg/PointStamped",
+  "environment_scope": "observer command only",
+  "ros_static_peers": "10.2.12.61",
+  "cyclonedds_uri": "file://<repository-root>/config/cyclonedds-pc-wifi.xml",
+  "subscription_qos": "best_effort / keep_last depth 1",
+  "header": {
+    "stamp": {
+      "sec": 1791252743,
+      "nanosec": 507585449
+    },
+    "frame_id": "camera_color_optical_frame"
+  },
+  "point": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "live_zero_message_received": true,
+  "input_output_same_header_verified": false,
+  "continuous_reception_verified": false,
+  "input_stop_behavior_verified": false,
+  "labeled_accuracy_evaluation": false
+}

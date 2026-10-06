@@ -1,0 +1,761 @@
+{
+  "method": "Copy and adapt package/import/document paths; original project preserved",
+  "files": [
+    {
+      "source": "tracker_perception/__init__.py",
+      "destination": "lv2_module5/ros2_ws/src/target_detector/target_detector/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tracker_perception/detector.py",
+      "destination": "lv2_module5/ros2_ws/src/target_detector/target_detector/detector.py",
+      "source_sha256": "8a90236277be47421aa8e5bb7588776e634483a2718042a9fcde0e2ff27a3230",
+      "destination_sha256": "8a90236277be47421aa8e5bb7588776e634483a2718042a9fcde0e2ff27a3230"
+    },
+    {
+      "source": "tracker_perception/target_detector.py",
+      "destination": "lv2_module5/ros2_ws/src/target_detector/target_detector/target_detector.py",
+      "source_sha256": "456d9b0422fdd0f967d790abda558837b4f4d47930e1d3d539e41367363631fd",
+      "destination_sha256": "51228f7266177dabc0509d8eb906ef263dfeeda99c3d3fe63fcf916d8b90d7b0"
+    },
+    {
+      "source": "tools/detect_image.py",
+      "destination": "lv2_module5/scripts/detect_image.py",
+      "source_sha256": "3eb875fac1ccf4aa376299791f9ad3f409c342626da5a6fcbe0c9922f1871aaa",
+      "destination_sha256": "2e4bc9a2aa384a117eb7e9d6386927ed58db535a3ec7b49663a328653fe078b4"
+    },
+    {
+      "source": "tools/capture_ros_image.py",
+      "destination": "lv2_module5/scripts/capture_ros_image.py",
+      "source_sha256": "f9c64d24e6f5660f9a18f1b5796883f53675bf26de118ef0bf21def82a389468",
+      "destination_sha256": "f9c64d24e6f5660f9a18f1b5796883f53675bf26de118ef0bf21def82a389468"
+    },
+    {
+      "source": "tools/capture_ros_dataset.py",
+      "destination": "lv2_module5/scripts/capture_ros_dataset.py",
+      "source_sha256": "5c2f0af933338762b4bd2639305d3fb5b7b6c64f2d8272ce2fa073a044e06bac",
+      "destination_sha256": "5c2f0af933338762b4bd2639305d3fb5b7b6c64f2d8272ce2fa073a044e06bac"
+    },
+    {
+      "source": "tools/label_perception_dataset.py",
+      "destination": "lv2_module5/scripts/label_perception_dataset.py",
+      "source_sha256": "264b2d1b7f49d58c8a3c7dea4d3f69193971245378cdf4c67696e4bb351c1558",
+      "destination_sha256": "264b2d1b7f49d58c8a3c7dea4d3f69193971245378cdf4c67696e4bb351c1558"
+    },
+    {
+      "source": "tools/evaluate_perception_dataset.py",
+      "destination": "lv2_module5/scripts/evaluate_perception_dataset.py",
+      "source_sha256": "0cc227e06b363e8cece7a2c9699fe707f0ca5767b40606fd0d4a439a3b069a60",
+      "destination_sha256": "6886e0b8a1ac4adeaf88029709cae7613fc9d97a6e0fcf7fcb44b89f777c8b0f"
+    },
+    {
+      "source": "tools/observe_ros_images.py",
+      "destination": "lv2_module5/scripts/observe_ros_images.py",
+      "source_sha256": "d02694ed947aec59badbac641b1ba73477870b2cddf3f68d06b2340cf194392c",
+      "destination_sha256": "d02694ed947aec59badbac641b1ba73477870b2cddf3f68d06b2340cf194392c"
+    },
+    {
+      "source": "tools/check_target_headers.py",
+      "destination": "lv2_module5/scripts/check_target_headers.py",
+      "source_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf",
+      "destination_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf"
+    },
+    {
+      "source": "tools/check_target_stream.py",
+      "destination": "lv2_module5/scripts/check_target_stream.py",
+      "source_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2",
+      "destination_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2"
+    },
+    {
+      "source": "config/perception.yaml",
+      "destination": "lv2_module5/config/hsv.yaml",
+      "source_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+      "destination_sha256": "fb4fa4aa14fb01f8265888d443160f3ab872c15817eac3b5d221f88cd6cab334"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/perception-used.yaml",
+      "destination": "lv2_module5/config/perception-evaluation-used.yaml",
+      "source_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+      "destination_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8"
+    },
+    {
+      "source": "results/blue-target-normal-001/detections.json",
+      "destination": "lv2_module5/results/images/perception/normal/detections.json",
+      "source_sha256": "b46a18ddb62ec4f77885510261d242ae9f28489aeb2b59d5bc38c03d0cd14142",
+      "destination_sha256": "b46a18ddb62ec4f77885510261d242ae9f28489aeb2b59d5bc38c03d0cd14142"
+    },
+    {
+      "source": "results/blue-target-normal-001/color_mask.png",
+      "destination": "lv2_module5/results/images/perception/normal/color_mask.png",
+      "source_sha256": "6a67ab17bb358cea96ee9bf9bcf46360cd476a59846056615073b38ae6e094c6",
+      "destination_sha256": "6a67ab17bb358cea96ee9bf9bcf46360cd476a59846056615073b38ae6e094c6"
+    },
+    {
+      "source": "results/blue-target-normal-001/color_detection.png",
+      "destination": "lv2_module5/results/images/perception/normal/color_detection.png",
+      "source_sha256": "1de6e698b72f324e245bb26161798d0ddab8d22fa1ff40c0ae8647532e92d4a6",
+      "destination_sha256": "1de6e698b72f324e245bb26161798d0ddab8d22fa1ff40c0ae8647532e92d4a6"
+    },
+    {
+      "source": "results/blue-target-normal-001/perception-used.yaml",
+      "destination": "lv2_module5/results/images/perception/normal/perception-used.yaml",
+      "source_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+      "destination_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8"
+    },
+    {
+      "source": "results/blue-target-normal-001/color_original.png",
+      "destination": "lv2_module5/results/images/perception/normal/color_original.png",
+      "source_sha256": "792851d2f1100cb1b2b80246a27e5b3a853fbe3c4100da6e43d45e2366aa0107",
+      "destination_sha256": "792851d2f1100cb1b2b80246a27e5b3a853fbe3c4100da6e43d45e2366aa0107"
+    },
+    {
+      "source": "results/blue-target-normal-001/CHECK_KO.md",
+      "destination": "lv2_module5/results/images/perception/normal/CHECK_KO.md",
+      "source_sha256": "9a40728186c35bbd21d55bfe81f88011e796e02fff85031b29086e60759e810d",
+      "destination_sha256": "9a40728186c35bbd21d55bfe81f88011e796e02fff85031b29086e60759e810d"
+    },
+    {
+      "source": "data/captures/capture-001/color.png",
+      "destination": "lv2_module5/results/images/perception/normal/color_original.png",
+      "source_sha256": "792851d2f1100cb1b2b80246a27e5b3a853fbe3c4100da6e43d45e2366aa0107",
+      "destination_sha256": "792851d2f1100cb1b2b80246a27e5b3a853fbe3c4100da6e43d45e2366aa0107"
+    },
+    {
+      "source": "data/captures/capture-001/capture.json",
+      "destination": "lv2_module5/results/logs/perception/capture-001/capture.json",
+      "source_sha256": "3011fc925c832ef8ff39d5aabbfd5c27b0dd5350be2fd1bda5fcdfefe16d1e83",
+      "destination_sha256": "3011fc925c832ef8ff39d5aabbfd5c27b0dd5350be2fd1bda5fcdfefe16d1e83"
+    },
+    {
+      "source": "data/captures/capture-001/run.log",
+      "destination": "lv2_module5/results/logs/perception/capture-001/run.log",
+      "source_sha256": "75d5fd289e7aa8a4d4cb8ad216fdc5613df3f817f6c309f2d433e9dac307d9d4",
+      "destination_sha256": "75d5fd289e7aa8a4d4cb8ad216fdc5613df3f817f6c309f2d433e9dac307d9d4"
+    },
+    {
+      "source": "results/blue-target-empty-001/detections.json",
+      "destination": "lv2_module5/results/images/perception/absent/detections.json",
+      "source_sha256": "1ea44fc88af0b4154607b2f0c69583c5c065814c1d5c74d4dd2f577990ad2719",
+      "destination_sha256": "1ea44fc88af0b4154607b2f0c69583c5c065814c1d5c74d4dd2f577990ad2719"
+    },
+    {
+      "source": "results/blue-target-empty-001/color_mask.png",
+      "destination": "lv2_module5/results/images/perception/absent/color_mask.png",
+      "source_sha256": "45e945d98ded38001430be13601895981708846604f9db9184b3b6af1dd62402",
+      "destination_sha256": "45e945d98ded38001430be13601895981708846604f9db9184b3b6af1dd62402"
+    },
+    {
+      "source": "results/blue-target-empty-001/color_detection.png",
+      "destination": "lv2_module5/results/images/perception/absent/color_detection.png",
+      "source_sha256": "82a7a3800628d118b94be48f50c07bcac363085161d6d6d175ab500bbb7499ed",
+      "destination_sha256": "82a7a3800628d118b94be48f50c07bcac363085161d6d6d175ab500bbb7499ed"
+    },
+    {
+      "source": "results/blue-target-empty-001/perception-used.yaml",
+      "destination": "lv2_module5/results/images/perception/absent/perception-used.yaml",
+      "source_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+      "destination_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8"
+    },
+    {
+      "source": "results/blue-target-empty-001/color_original.png",
+      "destination": "lv2_module5/results/images/perception/absent/color_original.png",
+      "source_sha256": "41f05bbf6c4d33e9de691e1147ce8bf90e0d540b9dd8d63f270ed06586f0f129",
+      "destination_sha256": "41f05bbf6c4d33e9de691e1147ce8bf90e0d540b9dd8d63f270ed06586f0f129"
+    },
+    {
+      "source": "results/blue-target-empty-001/CHECK_KO.md",
+      "destination": "lv2_module5/results/images/perception/absent/CHECK_KO.md",
+      "source_sha256": "9f1b2b5cdd59f0f09025e6a424dcd9deae8b7e7c597cdb77fba88fc77b7dea2e",
+      "destination_sha256": "9f1b2b5cdd59f0f09025e6a424dcd9deae8b7e7c597cdb77fba88fc77b7dea2e"
+    },
+    {
+      "source": "data/captures/capture-002/color.png",
+      "destination": "lv2_module5/results/images/perception/absent/color_original.png",
+      "source_sha256": "41f05bbf6c4d33e9de691e1147ce8bf90e0d540b9dd8d63f270ed06586f0f129",
+      "destination_sha256": "41f05bbf6c4d33e9de691e1147ce8bf90e0d540b9dd8d63f270ed06586f0f129"
+    },
+    {
+      "source": "data/captures/capture-002/capture.json",
+      "destination": "lv2_module5/results/logs/perception/capture-002/capture.json",
+      "source_sha256": "09f775da5c217430a589aacac6f6a74ee4c530dca260e4fd50ef3298b11e1e4e",
+      "destination_sha256": "09f775da5c217430a589aacac6f6a74ee4c530dca260e4fd50ef3298b11e1e4e"
+    },
+    {
+      "source": "data/captures/capture-002/run.log",
+      "destination": "lv2_module5/results/logs/perception/capture-002/run.log",
+      "source_sha256": "a35f3bbd6ce7ae2490a30079a242e742b10432dd63e43152e0fb5269705a0683",
+      "destination_sha256": "a35f3bbd6ce7ae2490a30079a242e742b10432dd63e43152e0fb5269705a0683"
+    },
+    {
+      "source": "results/blue-target-occluded-001/detections.json",
+      "destination": "lv2_module5/results/images/perception/occluded/detections.json",
+      "source_sha256": "78a0dd289b3f291c2d01524880a5da97ae6b6cd31528b65ba85b7583f722c69b",
+      "destination_sha256": "78a0dd289b3f291c2d01524880a5da97ae6b6cd31528b65ba85b7583f722c69b"
+    },
+    {
+      "source": "results/blue-target-occluded-001/color_mask.png",
+      "destination": "lv2_module5/results/images/perception/occluded/color_mask.png",
+      "source_sha256": "1b26d78035be06ef1f6da184e381ca2a407064ce2d984b5a5e38d792e8bfcecf",
+      "destination_sha256": "1b26d78035be06ef1f6da184e381ca2a407064ce2d984b5a5e38d792e8bfcecf"
+    },
+    {
+      "source": "results/blue-target-occluded-001/color_detection.png",
+      "destination": "lv2_module5/results/images/perception/occluded/color_detection.png",
+      "source_sha256": "3b1985a7e2b661a60fb49bb6d144b3ec8320b38056faef64f4d03f85c5b78a22",
+      "destination_sha256": "3b1985a7e2b661a60fb49bb6d144b3ec8320b38056faef64f4d03f85c5b78a22"
+    },
+    {
+      "source": "results/blue-target-occluded-001/perception-used.yaml",
+      "destination": "lv2_module5/results/images/perception/occluded/perception-used.yaml",
+      "source_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+      "destination_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8"
+    },
+    {
+      "source": "results/blue-target-occluded-001/color_original.png",
+      "destination": "lv2_module5/results/images/perception/occluded/color_original.png",
+      "source_sha256": "fb2b021c9af46c992cd47534d1151713c77bef5dfd1150e0c20c15d82ef4dbcf",
+      "destination_sha256": "fb2b021c9af46c992cd47534d1151713c77bef5dfd1150e0c20c15d82ef4dbcf"
+    },
+    {
+      "source": "data/captures/capture-003/color.png",
+      "destination": "lv2_module5/results/images/perception/occluded/color_original.png",
+      "source_sha256": "fb2b021c9af46c992cd47534d1151713c77bef5dfd1150e0c20c15d82ef4dbcf",
+      "destination_sha256": "fb2b021c9af46c992cd47534d1151713c77bef5dfd1150e0c20c15d82ef4dbcf"
+    },
+    {
+      "source": "data/captures/capture-003/capture.json",
+      "destination": "lv2_module5/results/logs/perception/capture-003/capture.json",
+      "source_sha256": "7d2bfbed03ea6c4b39e7117b9183b9d8fba98e1df0e0198f151499634fb990fa",
+      "destination_sha256": "7d2bfbed03ea6c4b39e7117b9183b9d8fba98e1df0e0198f151499634fb990fa"
+    },
+    {
+      "source": "data/captures/capture-003/run.log",
+      "destination": "lv2_module5/results/logs/perception/capture-003/run.log",
+      "source_sha256": "145bb63b52bd48b1c2e093f3330c243facb71f33621dd37d53525e1ca5308a0e",
+      "destination_sha256": "145bb63b52bd48b1c2e093f3330c243facb71f33621dd37d53525e1ca5308a0e"
+    },
+    {
+      "source": "results/three-scenes-001/summary.json",
+      "destination": "lv2_module5/results/logs/perception/three-scenes-001/summary.json",
+      "source_sha256": "bda7e31b4b7734436428da99abcb7f62f5db3dcc370678e449e0d825e6067122",
+      "destination_sha256": "bda7e31b4b7734436428da99abcb7f62f5db3dcc370678e449e0d825e6067122"
+    },
+    {
+      "source": "results/three-scenes-001/REPORT_KO.md",
+      "destination": "lv2_module5/results/logs/perception/three-scenes-001/REPORT_KO.md",
+      "source_sha256": "726aa358927c3270fa7e2e18bd635366c2b5eac9ed528f1714e8bed15bca5298",
+      "destination_sha256": "15b9dfb5d559dff8fd785b7fa6be0ae71e4b098a3fa58fdfb34f71e6d03486b0"
+    },
+    {
+      "source": "results/three-scenes-001/perception-used.yaml",
+      "destination": "lv2_module5/results/logs/perception/three-scenes-001/perception-used.yaml",
+      "source_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+      "destination_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8"
+    },
+    {
+      "source": "results/ros-interface-check-001/REPORT_KO.md",
+      "destination": "lv2_module5/results/logs/perception/ros-interface-check-001/REPORT_KO.md",
+      "source_sha256": "6809de0ee4db02f392b7c199e9d0bcb284eaa0d12e786fddbc2ae849529bdbaa",
+      "destination_sha256": "1dff73f221b7d5ca2c48c6ca9ac72cc191ee70af38b2b2ac678715aee6733d99"
+    },
+    {
+      "source": "results/target-header-check-002/check_source.py",
+      "destination": "lv2_module5/results/logs/perception/target-header-check-002/check_source.py",
+      "source_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf",
+      "destination_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf"
+    },
+    {
+      "source": "results/target-header-check-002/result.json",
+      "destination": "lv2_module5/results/logs/perception/target-header-check-002/result.json",
+      "source_sha256": "e333b288097d830ee972a8954330d5e51f4f0ead2f62493143beb2028e7347fb",
+      "destination_sha256": "e333b288097d830ee972a8954330d5e51f4f0ead2f62493143beb2028e7347fb"
+    },
+    {
+      "source": "results/target-header-check-002/CHECK_KO.md",
+      "destination": "lv2_module5/results/logs/perception/target-header-check-002/CHECK_KO.md",
+      "source_sha256": "3cbcbfc439aa773eae5b6778569d531d7f6123b87dd11d8910475b527d1563aa",
+      "destination_sha256": "3cbcbfc439aa773eae5b6778569d531d7f6123b87dd11d8910475b527d1563aa"
+    },
+    {
+      "source": "results/target-input-stop-check-001/result.json",
+      "destination": "lv2_module5/results/logs/perception/target-input-stop-check-001/result.json",
+      "source_sha256": "1e53f71234206d2b13a256aa9f70010c12a99fec64ec1c1bb27ca32d9c0ab0b0",
+      "destination_sha256": "1e53f71234206d2b13a256aa9f70010c12a99fec64ec1c1bb27ca32d9c0ab0b0"
+    },
+    {
+      "source": "results/target-input-stop-check-001/CHECK_KO.md",
+      "destination": "lv2_module5/results/logs/perception/target-input-stop-check-001/CHECK_KO.md",
+      "source_sha256": "c6a790c04b2aa24715d62f4a02e3eb4646051729ac8152a7502ba39d1c1c759a",
+      "destination_sha256": "066b8de33a2355180ea25176cc78f8bad21e9c58a3e780daca0f30c81ce172ee"
+    },
+    {
+      "source": "results/target-stream-baseline-001/check_source.py",
+      "destination": "lv2_module5/results/logs/perception/target-stream-baseline-001/check_source.py",
+      "source_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2",
+      "destination_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2"
+    },
+    {
+      "source": "results/target-stream-baseline-001/result.json",
+      "destination": "lv2_module5/results/logs/perception/target-stream-baseline-001/result.json",
+      "source_sha256": "9160bbdcfa021aa915a26b149b606382988ec00d17930aa52c4e6aff853939a2",
+      "destination_sha256": "9160bbdcfa021aa915a26b149b606382988ec00d17930aa52c4e6aff853939a2"
+    },
+    {
+      "source": "results/target-stream-pi-local-001/check_source.py",
+      "destination": "lv2_module5/results/logs/perception/target-stream-pi-local-001/check_source.py",
+      "source_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2",
+      "destination_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2"
+    },
+    {
+      "source": "results/target-stream-pi-local-001/result.json",
+      "destination": "lv2_module5/results/logs/perception/target-stream-pi-local-001/result.json",
+      "source_sha256": "e33999bfabed1f7a7fcd3b1e6f59388c6a302326820de9a5dc733ae1671d709f",
+      "destination_sha256": "e33999bfabed1f7a7fcd3b1e6f59388c6a302326820de9a5dc733ae1671d709f"
+    },
+    {
+      "source": "results/target-stream-pi-local-001/cross-opencv-check.json",
+      "destination": "lv2_module5/results/logs/perception/target-stream-pi-local-001/cross-opencv-check.json",
+      "source_sha256": "19cdebc019f72331f9866d848945cc48fd6a53e1dcbaf3a365ded97654feb397",
+      "destination_sha256": "19cdebc019f72331f9866d848945cc48fd6a53e1dcbaf3a365ded97654feb397"
+    },
+    {
+      "source": "results/target-stream-pi-local-001/CHECK_KO.md",
+      "destination": "lv2_module5/results/logs/perception/target-stream-pi-local-001/CHECK_KO.md",
+      "source_sha256": "7c2fec4a217a8586abc9117f3d677349ea70f7f6e16b55266f24f9d76782292e",
+      "destination_sha256": "7c2fec4a217a8586abc9117f3d677349ea70f7f6e16b55266f24f9d76782292e"
+    },
+    {
+      "source": "results/pi-local-input-001/result.json",
+      "destination": "lv2_module5/results/logs/perception/pi-local-input-001/result.json",
+      "source_sha256": "133d7d1e87b6183a1c87955d739c7ddb4b351875d6a09e3e5213d8310f519f2f",
+      "destination_sha256": "133d7d1e87b6183a1c87955d739c7ddb4b351875d6a09e3e5213d8310f519f2f"
+    },
+    {
+      "source": "results/pi-local-input-001/observe_source.py",
+      "destination": "lv2_module5/results/logs/perception/pi-local-input-001/observe_source.py",
+      "source_sha256": "d02694ed947aec59badbac641b1ba73477870b2cddf3f68d06b2340cf194392c",
+      "destination_sha256": "d02694ed947aec59badbac641b1ba73477870b2cddf3f68d06b2340cf194392c"
+    },
+    {
+      "source": "results/pi-local-header-001/check_source.py",
+      "destination": "lv2_module5/results/logs/perception/pi-local-header-001/check_source.py",
+      "source_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf",
+      "destination_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf"
+    },
+    {
+      "source": "results/pi-local-header-001/result.json",
+      "destination": "lv2_module5/results/logs/perception/pi-local-header-001/result.json",
+      "source_sha256": "7e0ed60029322e6b22107c09ecf9649f9cb68f3c6eaffbc245dc7e4705cfd30f",
+      "destination_sha256": "7e0ed60029322e6b22107c09ecf9649f9cb68f3c6eaffbc245dc7e4705cfd30f"
+    },
+    {
+      "source": "results/target-input-stop-pi-local-001/check_source.py",
+      "destination": "lv2_module5/results/logs/perception/target-input-stop-pi-local-001/check_source.py",
+      "source_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2",
+      "destination_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2"
+    },
+    {
+      "source": "results/target-input-stop-pi-local-001/result.json",
+      "destination": "lv2_module5/results/logs/perception/target-input-stop-pi-local-001/result.json",
+      "source_sha256": "74c595c894664183eeaf7805a7e47414661aca4a2e2359f97e638577b7986f35",
+      "destination_sha256": "74c595c894664183eeaf7805a7e47414661aca4a2e2359f97e638577b7986f35"
+    },
+    {
+      "source": "results/target-input-stop-pi-local-001/expected-stop-result.json",
+      "destination": "lv2_module5/results/logs/perception/target-input-stop-pi-local-001/expected-stop-result.json",
+      "source_sha256": "bb327af14443eecb623602017fe3724af3962dd3acece4e30300efc06d1ae846",
+      "destination_sha256": "bb327af14443eecb623602017fe3724af3962dd3acece4e30300efc06d1ae846"
+    },
+    {
+      "source": "results/evaluation-candidate-review-001/review-state.json",
+      "destination": "lv2_module5/results/logs/perception/evaluation-candidate-review-001/review-state.json",
+      "source_sha256": "a6495627bd681dccb8038260d3184f4f80658e3f551626062e651adaa6c8ce70",
+      "destination_sha256": "a6495627bd681dccb8038260d3184f4f80658e3f551626062e651adaa6c8ce70"
+    },
+    {
+      "source": "results/evaluation-candidate-review-001/original-contact-11-20.png",
+      "destination": "lv2_module5/results/logs/perception/evaluation-candidate-review-001/original-contact-11-20.png",
+      "source_sha256": "ca841918c208e5cce9cbe5b4df09dfe8ff11221f6527002fb172b3bda93e7c83",
+      "destination_sha256": "ca841918c208e5cce9cbe5b4df09dfe8ff11221f6527002fb172b3bda93e7c83"
+    },
+    {
+      "source": "results/evaluation-candidate-review-001/original-contact-01-10.png",
+      "destination": "lv2_module5/results/logs/perception/evaluation-candidate-review-001/original-contact-01-10.png",
+      "source_sha256": "c74b40e146b241364d9371b94b8cac274bc722da01f10a0cc0945c2c77d37a54",
+      "destination_sha256": "c74b40e146b241364d9371b94b8cac274bc722da01f10a0cc0945c2c77d37a54"
+    },
+    {
+      "source": "results/evaluation-candidate-review-001/original-contact-21-30.png",
+      "destination": "lv2_module5/results/logs/perception/evaluation-candidate-review-001/original-contact-21-30.png",
+      "source_sha256": "8ade2d665860838e7213111c191b9dee1abb72a139689f4eb6a37cb7d015e477",
+      "destination_sha256": "8ade2d665860838e7213111c191b9dee1abb72a139689f4eb6a37cb7d015e477"
+    },
+    {
+      "source": "results/collector-runtime-check-001/frame-001.png",
+      "destination": "lv2_module5/results/logs/perception/collector-runtime-check-001/frame-001.png",
+      "source_sha256": "481097002b7513afd4ed12bf56fa1e49a532e672aeb2c24600bfc44fbe1167a7",
+      "destination_sha256": "481097002b7513afd4ed12bf56fa1e49a532e672aeb2c24600bfc44fbe1167a7"
+    },
+    {
+      "source": "results/collector-runtime-check-001/frame-002.png",
+      "destination": "lv2_module5/results/logs/perception/collector-runtime-check-001/frame-002.png",
+      "source_sha256": "7d36902bb1394278bc6bc139fc8cda2b1118dbec6e4b32ad54f00986a04f5414",
+      "destination_sha256": "7d36902bb1394278bc6bc139fc8cda2b1118dbec6e4b32ad54f00986a04f5414"
+    },
+    {
+      "source": "results/collector-runtime-check-001/dataset.json",
+      "destination": "lv2_module5/results/logs/perception/collector-runtime-check-001/dataset.json",
+      "source_sha256": "af516fb2aecd88be828c34832f599531a511a78634602252b894b7a5cb49bc5e",
+      "destination_sha256": "af516fb2aecd88be828c34832f599531a511a78634602252b894b7a5cb49bc5e"
+    },
+    {
+      "source": "results/collector-runtime-check-001/capture_source.py",
+      "destination": "lv2_module5/results/logs/perception/collector-runtime-check-001/capture_source.py",
+      "source_sha256": "b88515a179e2b15b5abd77b00683b840b0c8c0b2697bec59822b64d4fb6cc821",
+      "destination_sha256": "b88515a179e2b15b5abd77b00683b840b0c8c0b2697bec59822b64d4fb6cc821"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-001.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-001.png",
+      "source_sha256": "336dd2226a3c53fa0368f6f71cdaaed1be953411452857ae8f373d9bcf4d0a87",
+      "destination_sha256": "336dd2226a3c53fa0368f6f71cdaaed1be953411452857ae8f373d9bcf4d0a87"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-013.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-013.png",
+      "source_sha256": "f8d51dc3ef8c1d4283f8a5dcfbf39b21f66bf6d6e5e167957e465c8e6941600a",
+      "destination_sha256": "f8d51dc3ef8c1d4283f8a5dcfbf39b21f66bf6d6e5e167957e465c8e6941600a"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-010.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-010.png",
+      "source_sha256": "cd29bd7d66edd1a186be35692969e61cbc4cdd1f315168d792c60a85587a6fa2",
+      "destination_sha256": "cd29bd7d66edd1a186be35692969e61cbc4cdd1f315168d792c60a85587a6fa2"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-016.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-016.png",
+      "source_sha256": "53421b6cdc468a39a2a20b2a0cea1a671147edd8a76a9f6c18a91014be170711",
+      "destination_sha256": "53421b6cdc468a39a2a20b2a0cea1a671147edd8a76a9f6c18a91014be170711"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-006.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-006.png",
+      "source_sha256": "71163bb2504db658082992030d4d9dc856c00eeca98788f079530296aad401b9",
+      "destination_sha256": "71163bb2504db658082992030d4d9dc856c00eeca98788f079530296aad401b9"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-026.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-026.png",
+      "source_sha256": "e61ed1b242f44f895cce82f3397e8e19959a3aec4957a1e5de8942f10daa0ad9",
+      "destination_sha256": "e61ed1b242f44f895cce82f3397e8e19959a3aec4957a1e5de8942f10daa0ad9"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-029.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-029.png",
+      "source_sha256": "e324f8f55d889ff4416a0a3232fb671d04d0a4a7cea718ade7b25a5b79f48ae2",
+      "destination_sha256": "e324f8f55d889ff4416a0a3232fb671d04d0a4a7cea718ade7b25a5b79f48ae2"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-024.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-024.png",
+      "source_sha256": "f140444fd8f7cd78182f5f105a4cbbaafbea2e6347f24987247b7ff80d65b588",
+      "destination_sha256": "f140444fd8f7cd78182f5f105a4cbbaafbea2e6347f24987247b7ff80d65b588"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-030.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-030.png",
+      "source_sha256": "65ecfeca405d994bff6b86d0cba19945c5d73cbdd6192613306b9a4e07eb611d",
+      "destination_sha256": "65ecfeca405d994bff6b86d0cba19945c5d73cbdd6192613306b9a4e07eb611d"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-002.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-002.png",
+      "source_sha256": "0078c896b12c6d2fc9089efd233eacb38c90be40011940ced79a6a97a53e5bab",
+      "destination_sha256": "0078c896b12c6d2fc9089efd233eacb38c90be40011940ced79a6a97a53e5bab"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-019.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-019.png",
+      "source_sha256": "c36429f9d10d22d41136df93cdb61a2d982249557e1d87f17842eafa635c3b16",
+      "destination_sha256": "c36429f9d10d22d41136df93cdb61a2d982249557e1d87f17842eafa635c3b16"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-028.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-028.png",
+      "source_sha256": "5df5a8577f0b5203f25865f69a595f351d95763edd8ba952e4b7668af8f2f8e9",
+      "destination_sha256": "5df5a8577f0b5203f25865f69a595f351d95763edd8ba952e4b7668af8f2f8e9"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-007.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-007.png",
+      "source_sha256": "5e42f47694cbbfdeb783ed009aa08670acab0768b0876169f15342dbf7e71411",
+      "destination_sha256": "5e42f47694cbbfdeb783ed009aa08670acab0768b0876169f15342dbf7e71411"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-027.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-027.png",
+      "source_sha256": "1503f1afe332dbe500920d75834f63241b2199ceba175cda3b8aac320d618945",
+      "destination_sha256": "1503f1afe332dbe500920d75834f63241b2199ceba175cda3b8aac320d618945"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-022.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-022.png",
+      "source_sha256": "38dea50d7376c7b5bbd61790c46faf3f59779d4fd5d398661696dbc26c162c7e",
+      "destination_sha256": "38dea50d7376c7b5bbd61790c46faf3f59779d4fd5d398661696dbc26c162c7e"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-009.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-009.png",
+      "source_sha256": "8c5f416ef5e2e18f99623d4c28b013514e911a6adb55108742b3b2fabb2b8c89",
+      "destination_sha256": "8c5f416ef5e2e18f99623d4c28b013514e911a6adb55108742b3b2fabb2b8c89"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-021.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-021.png",
+      "source_sha256": "01491154ba8209d87fd2a4df6426539ac59680ba88dedae7ea42308d47b55ce8",
+      "destination_sha256": "01491154ba8209d87fd2a4df6426539ac59680ba88dedae7ea42308d47b55ce8"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-004.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-004.png",
+      "source_sha256": "ce06893ca72ebf6aa2c1792c58a2a7e7248218dda4be9d7dfb8ed1b472f3bcba",
+      "destination_sha256": "ce06893ca72ebf6aa2c1792c58a2a7e7248218dda4be9d7dfb8ed1b472f3bcba"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-023.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-023.png",
+      "source_sha256": "c6e0aa54f2d886b8e8a175918cadc9d55c230c8e2935144afb4eb74176dc2048",
+      "destination_sha256": "c6e0aa54f2d886b8e8a175918cadc9d55c230c8e2935144afb4eb74176dc2048"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-014.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-014.png",
+      "source_sha256": "dcd2c73a91ddeefe3afd7e161dfde903e2c15475699134be62b9e64711cac2ea",
+      "destination_sha256": "dcd2c73a91ddeefe3afd7e161dfde903e2c15475699134be62b9e64711cac2ea"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-011.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-011.png",
+      "source_sha256": "3a015c5ce8466d0736752ca55acb1d43a199d64d85f2f33fe5e1860e5c1a05b4",
+      "destination_sha256": "3a015c5ce8466d0736752ca55acb1d43a199d64d85f2f33fe5e1860e5c1a05b4"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-003.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-003.png",
+      "source_sha256": "f02c6ab937e12df73a8a4d9e26c869b05e0ad13ececb20d4738ef716980f68ae",
+      "destination_sha256": "f02c6ab937e12df73a8a4d9e26c869b05e0ad13ececb20d4738ef716980f68ae"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-020.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-020.png",
+      "source_sha256": "465e495e028e0207636a57fd079c78d6c280eb61c85600282d0c8567bd498ac9",
+      "destination_sha256": "465e495e028e0207636a57fd079c78d6c280eb61c85600282d0c8567bd498ac9"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-015.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-015.png",
+      "source_sha256": "dc926fe7cf4d7ffe37acd995e511ae6dcf4fbeb5fae1a68dde366b0b01fc734b",
+      "destination_sha256": "dc926fe7cf4d7ffe37acd995e511ae6dcf4fbeb5fae1a68dde366b0b01fc734b"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-017.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-017.png",
+      "source_sha256": "ca5fd90c6755b54caefa711df505d2ae497b89e4315c76eb5cffcd98908368ff",
+      "destination_sha256": "ca5fd90c6755b54caefa711df505d2ae497b89e4315c76eb5cffcd98908368ff"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-012.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-012.png",
+      "source_sha256": "6b993b929d3c93bc3e992ac947aa135d2fa8080c34e5a3a19a0bb11415d79ebe",
+      "destination_sha256": "6b993b929d3c93bc3e992ac947aa135d2fa8080c34e5a3a19a0bb11415d79ebe"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-018.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-018.png",
+      "source_sha256": "4c404d57e362d975344c8b85798d05e688791bdd9984b5a3e79ae4d2611c3f40",
+      "destination_sha256": "4c404d57e362d975344c8b85798d05e688791bdd9984b5a3e79ae4d2611c3f40"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-005.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-005.png",
+      "source_sha256": "1770f848bfd50c9720ebf6b4a8bd6c14889986971b7e78c354b9b2644172ab62",
+      "destination_sha256": "1770f848bfd50c9720ebf6b4a8bd6c14889986971b7e78c354b9b2644172ab62"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/dataset.json",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/dataset.json",
+      "source_sha256": "4bf302655b5668b7f83328e8a51213e2c769769029e66695f8610ce03d70955c",
+      "destination_sha256": "4bf302655b5668b7f83328e8a51213e2c769769029e66695f8610ce03d70955c"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-025.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-025.png",
+      "source_sha256": "b7c69ba3c4a0df77ada8ec91b23141301797a5836225a4cec877ba0356309cf0",
+      "destination_sha256": "b7c69ba3c4a0df77ada8ec91b23141301797a5836225a4cec877ba0356309cf0"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/capture_source.py",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/capture_source.py",
+      "source_sha256": "5c2f0af933338762b4bd2639305d3fb5b7b6c64f2d8272ce2fa073a044e06bac",
+      "destination_sha256": "5c2f0af933338762b4bd2639305d3fb5b7b6c64f2d8272ce2fa073a044e06bac"
+    },
+    {
+      "source": "data/evaluation/evaluation-001/candidate-present/frame-008.png",
+      "destination": "lv2_module5/results/images/perception/evaluation-001/candidate-present/frame-008.png",
+      "source_sha256": "9d0c0f78444ed6874def8357fd2cfea89ba68a72e06e1af74716334d9d134ec9",
+      "destination_sha256": "9d0c0f78444ed6874def8357fd2cfea89ba68a72e06e1af74716334d9d134ec9"
+    },
+    {
+      "source": "practice_records/autonomous-perception-001.json",
+      "destination": "lv2_module5/results/logs/perception/practice_records/autonomous-perception-001.json",
+      "source_sha256": "86b5a6d63d70690846dba08c648196a1e7bc9f3a4a3d9bbc4adc2416fc77899d",
+      "destination_sha256": "86b5a6d63d70690846dba08c648196a1e7bc9f3a4a3d9bbc4adc2416fc77899d"
+    },
+    {
+      "source": "practice_records/target-restart-comparison-001.json",
+      "destination": "lv2_module5/results/logs/perception/practice_records/target-restart-comparison-001.json",
+      "source_sha256": "49bb7b79558b72f11b5b08469afcecab5b2f266060c2142f0ad4f556a28d6d87",
+      "destination_sha256": "49bb7b79558b72f11b5b08469afcecab5b2f266060c2142f0ad4f556a28d6d87"
+    },
+    {
+      "source": "practice_records/target-restart-comparison-001-received.log",
+      "destination": "lv2_module5/results/logs/perception/practice_records/target-restart-comparison-001-received.log",
+      "source_sha256": "5e75c512138b0cbdd751cd5a3b61e4f2efbeaf978edb89496c6f7acab1e6b71c",
+      "destination_sha256": "5e75c512138b0cbdd751cd5a3b61e4f2efbeaf978edb89496c6f7acab1e6b71c"
+    },
+    {
+      "source": "practice_records/pc-direct-image-003-static-peer-received.json",
+      "destination": "lv2_module5/results/logs/perception/practice_records/pc-direct-image-003-static-peer-received.json",
+      "source_sha256": "6756002f718cb7e795382b2bc378887d886b452cbb9fc3abf4d2803c2df64230",
+      "destination_sha256": "6756002f718cb7e795382b2bc378887d886b452cbb9fc3abf4d2803c2df64230"
+    },
+    {
+      "source": "practice_records/target-node-start-004-static-peer-received.log",
+      "destination": "lv2_module5/results/logs/perception/practice_records/target-node-start-004-static-peer-received.log",
+      "source_sha256": "b4c32b60e7f1086d8a7f0666b0fe7082585f575bb2f4738b55cf4d5c21e8f0af",
+      "destination_sha256": "b4c32b60e7f1086d8a7f0666b0fe7082585f575bb2f4738b55cf4d5c21e8f0af"
+    },
+    {
+      "source": "practice_records/target-message-003-zero-received.json",
+      "destination": "lv2_module5/results/logs/perception/practice_records/target-message-003-zero-received.json",
+      "source_sha256": "69ad0263a0950f0dd81595962eeb610afaecb9c04b2ad47d4818755c4cda3324",
+      "destination_sha256": "69ad0263a0950f0dd81595962eeb610afaecb9c04b2ad47d4818755c4cda3324"
+    },
+    {
+      "source": "practice_records/target-stop-confirmed-001.json",
+      "destination": "lv2_module5/results/logs/perception/practice_records/target-stop-confirmed-001.json",
+      "source_sha256": "3b8eb1cb4e2766519fc1e278d2445fe32d7c2d9f17fbf70422ebff534f049b74",
+      "destination_sha256": "3b8eb1cb4e2766519fc1e278d2445fe32d7c2d9f17fbf70422ebff534f049b74"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/pi-bundle-manifest.json",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/pi-bundle-manifest.json",
+      "source_sha256": "e376320fc4031c118d597e96c41de8596ae11e0b20c6ff484a156645874fbfb8",
+      "destination_sha256": "e376320fc4031c118d597e96c41de8596ae11e0b20c6ff484a156645874fbfb8"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/final-document-check.json",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/final-document-check.json",
+      "source_sha256": "91a6d50362eb53313e32f11431c1d4ab089a5303eadc25f9dafc339e36e19747",
+      "destination_sha256": "91a6d50362eb53313e32f11431c1d4ab089a5303eadc25f9dafc339e36e19747"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/pc-detector.log",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/pc-detector.log",
+      "source_sha256": "bc75b5db2c447393fb6fd4eb5b137d3fa74b4ac26cb19d0011d0c8ce27a6fa97",
+      "destination_sha256": "bc75b5db2c447393fb6fd4eb5b137d3fa74b4ac26cb19d0011d0c8ce27a6fa97"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/perception-pi-bundle.tar.gz",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/perception-pi-bundle.tar.gz",
+      "source_sha256": "13f7d40005e12b8045015635b5c99a9f9029155c396102c9b7680312df39a634",
+      "destination_sha256": "13f7d40005e12b8045015635b5c99a9f9029155c396102c9b7680312df39a634"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/software-integration-check.json",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/software-integration-check.json",
+      "source_sha256": "e80456ed37aafab5f11277bd4b906d8c9c466d82c74c1d14f967efcf5bbc5ace",
+      "destination_sha256": "e80456ed37aafab5f11277bd4b906d8c9c466d82c74c1d14f967efcf5bbc5ace"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/candidate-detection.log",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/candidate-detection.log",
+      "source_sha256": "1262cf7d2aed7d7fd09afe3420036924066a972e2e1011f7699f1615dd9709e0",
+      "destination_sha256": "1262cf7d2aed7d7fd09afe3420036924066a972e2e1011f7699f1615dd9709e0"
+    },
+    {
+      "source": "practice_records/autonomous-runtime-001/target-after-camera-resume.yaml",
+      "destination": "lv2_module5/results/logs/perception/autonomous-runtime-001/target-after-camera-resume.yaml",
+      "source_sha256": "ae55487ae96a4b0435170bb66e6997151870c0fcf7357552dd984ee6d6aa2f04",
+      "destination_sha256": "ae55487ae96a4b0435170bb66e6997151870c0fcf7357552dd984ee6d6aa2f04"
+    },
+    {
+      "source": "vision_todo.md",
+      "destination": "vision_todo/vision_todo.md",
+      "source_sha256": "0760151f63fc277db00bf768286b43300f0da16d8073b210ffe28b2f2395d7f1",
+      "destination_sha256": "8d025f8c548b152f0747673204b3f9363bc1e5d601404738b1136726c3b280e8"
+    },
+    {
+      "source": "docs/perception_report.md",
+      "destination": "lv2_module5/docs/perception/report.md",
+      "source_sha256": "dceab95e87253c6a0910bf4fc86269033062301c987058fbec9d2af4ed1725e7",
+      "destination_sha256": "6a7bf03057b522b7af76ab5eac035bd9bd88ec2c7737206c32fc795340915e98"
+    },
+    {
+      "source": "team.md",
+      "destination": "lv2_module5/docs/perception/team_perception.md",
+      "source_sha256": "ed2b7c20f18632b057558516ecc2083262c904aab5d68e6a0d4fba3f9379a5f3",
+      "destination_sha256": "c7a29b0c10197631cbd50c7e8d71a5d6b62fdbf67738225d97facf1f9eee9b8d"
+    },
+    {
+      "source": "AI_CONTRIBUTIONS.md",
+      "destination": "lv2_module5/docs/perception/AI_CONTRIBUTIONS.md",
+      "source_sha256": "a9bfcff87e5a59529bd9455993893e491480425a4d6f1b9944ef764a33d0942d",
+      "destination_sha256": "0d543ade3673d9cd00dad765da35827473e58783f273e712fac35dbd39740389"
+    },
+    {
+      "source": "docs/submission/ISSUE_DRAFT.md",
+      "destination": "lv2_module5/docs/perception/submission/ISSUE_DRAFT.md",
+      "source_sha256": "45f60f40b24b5cab951786e8bba210df16b69a0bb41e8069065ffa1d743392c8",
+      "destination_sha256": "45f60f40b24b5cab951786e8bba210df16b69a0bb41e8069065ffa1d743392c8"
+    },
+    {
+      "source": "docs/submission/PR_DRAFT.md",
+      "destination": "lv2_module5/docs/perception/submission/PR_DRAFT.md",
+      "source_sha256": "9e2133bf84d0fa6a9a37486708c9af26e4a0ab7ef0007758dbdfcf5bf71da88c",
+      "destination_sha256": "9e2133bf84d0fa6a9a37486708c9af26e4a0ab7ef0007758dbdfcf5bf71da88c"
+    },
+    {
+      "source": "docs/submission/CODE_REVIEW.md",
+      "destination": "lv2_module5/docs/perception/submission/CODE_REVIEW.md",
+      "source_sha256": "3f8ec9ef27d814729ce9f413853288ff05869f456dff4ffddc8b58423703480a",
+      "destination_sha256": "417d563fb5d661ab03b79b8e45fc35cb4b6f780cd27deafc2b38ff9ee7f3d9a2"
+    }
+  ],
+  "unmapped_markdown_links_to_resolve": [],
+  "adaptations": [
+    "ROS package name target_detector and console entry point",
+    "scripts import paths and config/hsv.yaml path",
+    "optional camera launch and installed configuration",
+    "duplicate SIGINT guard in node cleanup",
+    "relative Markdown links and team repository status"
+  ],
+  "new_files": [
+    "lv2_module5/docs/perception/practice_summary.md",
+    "lv2_module5/docs/perception/README.md",
+    "lv2_module5/docs/perception/troubleshooting.md",
+    "lv2_module5/ros2_ws/src/target_detector/.gitkeep",
+    "lv2_module5/ros2_ws/src/target_detector/setup.py",
+    "lv2_module5/ros2_ws/src/target_detector/setup.cfg",
+    "lv2_module5/ros2_ws/src/target_detector/package.xml",
+    "lv2_module5/ros2_ws/src/target_detector/resource/target_detector",
+    "lv2_module5/ros2_ws/src/tracker_bringup/package.xml",
+    "lv2_module5/ros2_ws/src/tracker_bringup/CMakeLists.txt",
+    "lv2_module5/ros2_ws/src/tracker_bringup/launch/full.launch.py",
+    "lv2_module5/ros2_ws/src/tracker_bringup/launch/replay.launch.py",
+    "lv2_module5/ros2_ws/src/tracker_bringup/launch/control.launch.py",
+    "lv2_module5/ros2_ws/src/tracker_bringup/launch/perception.launch.py"
+  ]
+}

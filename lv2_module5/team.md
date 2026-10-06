@@ -14,7 +14,7 @@
 |---|---|---|---|---|---|
 | 온창범 / [Onbeom](https://github.com/Onbeom) | 팀장 · 테크리드 + 검증 | [#1](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1) | [Issue #1 PR](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/1#issue-5675321094) | TODO | 검증, 루트·모듈 README·team.md 작성, TODO |
 | 권형중 / [JuneKunst](https://github.com/JuneKunst) | 통합 | TODO | TODO | TODO | 통합, TODO |
-| 최성진 / [Choi-sungjin](https://github.com/Choi-sungjin) | 인지 | TODO | TODO | TODO | 인지, TODO |
+| 최성진 / [Choi-sungjin](https://github.com/Choi-sungjin) | 인지 | TODO | TODO | TODO | HSV·Contour 인지 패키지·설정·촬영/평가 도구 배치, PC 패키지 빌드 및 합성 검사 15개; 실제 40프레임 평가·PR·리뷰 대기 |
 | 천경호 / [pizzaafterhangover](https://github.com/pizzaafterhangover) | 제어 | TODO | TODO | TODO | 제어, TODO |
 
 필수 조건: 4명 모두 **본인 PR 1건 이상 병합** + **다른 사람 PR에 의미 있는 리뷰 1건 이상**. 팀장 PR은 다른 팀원이 승인한 뒤 팀장이 병합합니다.
@@ -73,3 +73,7 @@
 | 평가자가 저장소·영상·bag 링크에 접근 가능 | TODO | 확인자 · 날짜 |
 
 - 확인자: 온창범 · 확인 일자: TODO · 기준 커밋: TODO
+
+## 인지 파일 반영 상태
+
+[인지 상세 기여](docs/perception/team_perception.md), [실행·작성 도구 기여](docs/perception/AI_CONTRIBUTIONS.md), [파일 분류표](docs/perception/FILE_MAP.json)에 로컬 반영 범위와 증거를 기록했다. 원본은 보존하고 팀 구조에 필요한 사본을 배치했다. 인지 5/7단계의 기존 증거와 새 패키지의 빌드·launch 검증을 구분한다. 현재 파일 변경은 로컬 상태이며 실제 Issue·PR·병합·타인 리뷰의 증빙으로 간주하지 않는다.

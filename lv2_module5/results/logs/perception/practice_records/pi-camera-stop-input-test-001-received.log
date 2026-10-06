@@ -1,0 +1,8 @@
+# Evidence: camera termination output supplied in conversation.
+^C[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[realsense2_camera_node-1] [INFO] [1791253323.768236485] [rclcpp]: signal_handler(signum=2)
+[realsense2_camera_node-1] [INFO] [1791253325.380779531] [camera.camera]: Stop Sensor: RGB Camera
+[realsense2_camera_node-1] [INFO] [1791253325.380935567] [camera.camera]: Close Sensor.
+[realsense2_camera_node-1] [INFO] [1791253325.585943359] [camera.camera]: Close Sensor - Done.
+[INFO] [realsense2_camera_node-1]: process has finished cleanly [pid 7483]
+Connection to pa18.local closed.

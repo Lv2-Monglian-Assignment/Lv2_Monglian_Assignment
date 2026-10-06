@@ -1,0 +1,538 @@
+{
+  "purpose": "Real camera evaluation frames; labels describe physical scene setup",
+  "recorded_at_utc": "2026-10-06T06:53:23.111748+00:00",
+  "host": "pa18",
+  "topic": "/camera/camera/color/image_raw",
+  "scene": "unlabelled",
+  "label_basis": "Evaluation candidate frames; target identity and labels pending confirmation",
+  "frames_requested": 30,
+  "interval_seconds": 0.5,
+  "timeout_seconds": 60.0,
+  "source_sha256": "5c2f0af933338762b4bd2639305d3fb5b7b6c64f2d8272ce2fa073a044e06bac",
+  "environment": {
+    "ROS_DISTRO": "lyrical",
+    "ROS_DOMAIN_ID": "30",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+    "CYCLONEDDS_URI": null
+  },
+  "subscription_qos": "best_effort / keep_last depth 1 / volatile",
+  "camera_launched_by_this_tool": false,
+  "frames": [
+    {
+      "file": "frame-001.png",
+      "sha256": "336dd2226a3c53fa0368f6f71cdaaed1be953411452857ae8f373d9bcf4d0a87",
+      "target_present": null,
+      "arrival_seconds": 0.032365985000069486,
+      "header": {
+        "stamp": {
+          "sec": 1791269606,
+          "nanosec": 397663086
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-002.png",
+      "sha256": "0078c896b12c6d2fc9089efd233eacb38c90be40011940ced79a6a97a53e5bab",
+      "target_present": null,
+      "arrival_seconds": 0.5604822709992732,
+      "header": {
+        "stamp": {
+          "sec": 1791269606,
+          "nanosec": 931391602
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-003.png",
+      "sha256": "f02c6ab937e12df73a8a4d9e26c869b05e0ad13ececb20d4738ef716980f68ae",
+      "target_present": null,
+      "arrival_seconds": 1.092966157999399,
+      "header": {
+        "stamp": {
+          "sec": 1791269607,
+          "nanosec": 465139160
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-004.png",
+      "sha256": "ce06893ca72ebf6aa2c1792c58a2a7e7248218dda4be9d7dfb8ed1b472f3bcba",
+      "target_present": null,
+      "arrival_seconds": 1.5937348179995752,
+      "header": {
+        "stamp": {
+          "sec": 1791269607,
+          "nanosec": 965498291
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-005.png",
+      "sha256": "1770f848bfd50c9720ebf6b4a8bd6c14889986971b7e78c354b9b2644172ab62",
+      "target_present": null,
+      "arrival_seconds": 2.09428588999981,
+      "header": {
+        "stamp": {
+          "sec": 1791269608,
+          "nanosec": 465848633
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-006.png",
+      "sha256": "71163bb2504db658082992030d4d9dc856c00eeca98788f079530296aad401b9",
+      "target_present": null,
+      "arrival_seconds": 2.5946972960000494,
+      "header": {
+        "stamp": {
+          "sec": 1791269608,
+          "nanosec": 966209229
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-007.png",
+      "sha256": "5e42f47694cbbfdeb783ed009aa08670acab0768b0876169f15342dbf7e71411",
+      "target_present": null,
+      "arrival_seconds": 3.094729059999736,
+      "header": {
+        "stamp": {
+          "sec": 1791269609,
+          "nanosec": 466572754
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-008.png",
+      "sha256": "9d0c0f78444ed6874def8357fd2cfea89ba68a72e06e1af74716334d9d134ec9",
+      "target_present": null,
+      "arrival_seconds": 3.595305988999826,
+      "header": {
+        "stamp": {
+          "sec": 1791269609,
+          "nanosec": 966850342
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-009.png",
+      "sha256": "8c5f416ef5e2e18f99623d4c28b013514e911a6adb55108742b3b2fabb2b8c89",
+      "target_present": null,
+      "arrival_seconds": 4.0955264239992175,
+      "header": {
+        "stamp": {
+          "sec": 1791269610,
+          "nanosec": 467098145
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-010.png",
+      "sha256": "cd29bd7d66edd1a186be35692969e61cbc4cdd1f315168d792c60a85587a6fa2",
+      "target_present": null,
+      "arrival_seconds": 4.595874673999788,
+      "header": {
+        "stamp": {
+          "sec": 1791269610,
+          "nanosec": 967434570
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-011.png",
+      "sha256": "3a015c5ce8466d0736752ca55acb1d43a199d64d85f2f33fe5e1860e5c1a05b4",
+      "target_present": null,
+      "arrival_seconds": 5.129809817999558,
+      "header": {
+        "stamp": {
+          "sec": 1791269611,
+          "nanosec": 501150879
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-012.png",
+      "sha256": "6b993b929d3c93bc3e992ac947aa135d2fa8080c34e5a3a19a0bb11415d79ebe",
+      "target_present": null,
+      "arrival_seconds": 5.629873647999375,
+      "header": {
+        "stamp": {
+          "sec": 1791269612,
+          "nanosec": 1546387
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-013.png",
+      "sha256": "f8d51dc3ef8c1d4283f8a5dcfbf39b21f66bf6d6e5e167957e465c8e6941600a",
+      "target_present": null,
+      "arrival_seconds": 6.129974722999577,
+      "header": {
+        "stamp": {
+          "sec": 1791269612,
+          "nanosec": 501952881
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-014.png",
+      "sha256": "dcd2c73a91ddeefe3afd7e161dfde903e2c15475699134be62b9e64711cac2ea",
+      "target_present": null,
+      "arrival_seconds": 6.665181183999266,
+      "header": {
+        "stamp": {
+          "sec": 1791269613,
+          "nanosec": 35651611
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-015.png",
+      "sha256": "dc926fe7cf4d7ffe37acd995e511ae6dcf4fbeb5fae1a68dde366b0b01fc734b",
+      "target_present": null,
+      "arrival_seconds": 7.196929791000002,
+      "header": {
+        "stamp": {
+          "sec": 1791269613,
+          "nanosec": 569338135
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-016.png",
+      "sha256": "53421b6cdc468a39a2a20b2a0cea1a671147edd8a76a9f6c18a91014be170711",
+      "target_present": null,
+      "arrival_seconds": 7.698562403999858,
+      "header": {
+        "stamp": {
+          "sec": 1791269614,
+          "nanosec": 69687500
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-017.png",
+      "sha256": "ca5fd90c6755b54caefa711df505d2ae497b89e4315c76eb5cffcd98908368ff",
+      "target_present": null,
+      "arrival_seconds": 8.231566492999264,
+      "header": {
+        "stamp": {
+          "sec": 1791269614,
+          "nanosec": 603397949
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-018.png",
+      "sha256": "4c404d57e362d975344c8b85798d05e688791bdd9984b5a3e79ae4d2611c3f40",
+      "target_present": null,
+      "arrival_seconds": 8.732520112999737,
+      "header": {
+        "stamp": {
+          "sec": 1791269615,
+          "nanosec": 103792480
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-019.png",
+      "sha256": "c36429f9d10d22d41136df93cdb61a2d982249557e1d87f17842eafa635c3b16",
+      "target_present": null,
+      "arrival_seconds": 9.266130001999954,
+      "header": {
+        "stamp": {
+          "sec": 1791269615,
+          "nanosec": 637544678
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-020.png",
+      "sha256": "465e495e028e0207636a57fd079c78d6c280eb61c85600282d0c8567bd498ac9",
+      "target_present": null,
+      "arrival_seconds": 9.766727313000047,
+      "header": {
+        "stamp": {
+          "sec": 1791269616,
+          "nanosec": 137903564
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-021.png",
+      "sha256": "01491154ba8209d87fd2a4df6426539ac59680ba88dedae7ea42308d47b55ce8",
+      "target_present": null,
+      "arrival_seconds": 10.299743319999834,
+      "header": {
+        "stamp": {
+          "sec": 1791269616,
+          "nanosec": 671626709
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-022.png",
+      "sha256": "38dea50d7376c7b5bbd61790c46faf3f59779d4fd5d398661696dbc26c162c7e",
+      "target_present": null,
+      "arrival_seconds": 10.800694135999947,
+      "header": {
+        "stamp": {
+          "sec": 1791269617,
+          "nanosec": 172020020
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-023.png",
+      "sha256": "c6e0aa54f2d886b8e8a175918cadc9d55c230c8e2935144afb4eb74176dc2048",
+      "target_present": null,
+      "arrival_seconds": 11.334142609999617,
+      "header": {
+        "stamp": {
+          "sec": 1791269617,
+          "nanosec": 705780273
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-024.png",
+      "sha256": "f140444fd8f7cd78182f5f105a4cbbaafbea2e6347f24987247b7ff80d65b588",
+      "target_present": null,
+      "arrival_seconds": 11.834856338999998,
+      "header": {
+        "stamp": {
+          "sec": 1791269618,
+          "nanosec": 206193359
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-025.png",
+      "sha256": "b7c69ba3c4a0df77ada8ec91b23141301797a5836225a4cec877ba0356309cf0",
+      "target_present": null,
+      "arrival_seconds": 12.368902815999718,
+      "header": {
+        "stamp": {
+          "sec": 1791269618,
+          "nanosec": 739955322
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-026.png",
+      "sha256": "e61ed1b242f44f895cce82f3397e8e19959a3aec4957a1e5de8942f10daa0ad9",
+      "target_present": null,
+      "arrival_seconds": 12.902366426999833,
+      "header": {
+        "stamp": {
+          "sec": 1791269619,
+          "nanosec": 273681885
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-027.png",
+      "sha256": "1503f1afe332dbe500920d75834f63241b2199ceba175cda3b8aac320d618945",
+      "target_present": null,
+      "arrival_seconds": 13.434964191999825,
+      "header": {
+        "stamp": {
+          "sec": 1791269619,
+          "nanosec": 807412842
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-028.png",
+      "sha256": "5df5a8577f0b5203f25865f69a595f351d95763edd8ba952e4b7668af8f2f8e9",
+      "target_present": null,
+      "arrival_seconds": 13.936978613000065,
+      "header": {
+        "stamp": {
+          "sec": 1791269620,
+          "nanosec": 307791260
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-029.png",
+      "sha256": "e324f8f55d889ff4416a0a3232fb671d04d0a4a7cea718ade7b25a5b79f48ae2",
+      "target_present": null,
+      "arrival_seconds": 14.438799109999309,
+      "header": {
+        "stamp": {
+          "sec": 1791269620,
+          "nanosec": 808168701
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-030.png",
+      "sha256": "65ecfeca405d994bff6b86d0cba19945c5d73cbdd6192613306b9a4e07eb611d",
+      "target_present": null,
+      "arrival_seconds": 14.97078212499946,
+      "header": {
+        "stamp": {
+          "sec": 1791269621,
+          "nanosec": 341903564
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    }
+  ],
+  "images_received": 448,
+  "error": null,
+  "success": true,
+  "opencv_version": "4.10.0",
+  "elapsed_seconds": 15.239499828999215,
+  "frames_saved": 30
+}

@@ -195,3 +195,9 @@ python3 <analysis_script>.py recordings/<run_id>
 | 확인자 | 날짜 | 기준 커밋 | 수행 내용 | 결과 · 수정 사항 |
 |---|---|---|---|---|
 | TODO (작성자가 아닌 팀원) | | | 빌드·실행·정지·bag 재현 | |
+
+## 인지 구현과 재현
+
+[인지 실행 안내](docs/perception/README.md)에 두 패키지 빌드, 선택적 카메라 launch, 촬영·검출·평가 명령과 산출물 경로를 정리했다. 설정 원본은 `config/hsv.yaml`이다. 실제 인지 실험에서는 Cyclone DDS·DOMAIN 30으로 Pi에서 검출하고 PC에서 `/target`을 받았다. 위 환경 표의 기본 Fast DDS와 구별하며 최종 제출 장비의 공통 RMW·DOMAIN 값은 통합 단계에서 확정한다.
+
+[인지 보고서](docs/perception/report.md)와 [수행 계획](../vision_todo/vision_todo.md)은 기존 검증 5/7(약 71%)과 미완료 평가를 구분한다. 새 패키지는 PC에서 빌드·합성 검사·카메라 없는 launch 기동/종료를 확인했다. 새 패키지로 Pi 카메라 실측을 재수행한 결과는 아직 없다. 제어·통합의 빈 launch·설정은 그대로 유지한다.

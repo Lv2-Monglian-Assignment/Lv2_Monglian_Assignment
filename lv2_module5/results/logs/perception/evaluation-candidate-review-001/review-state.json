@@ -1,0 +1,13 @@
+{
+  "actual_frames_saved": 30,
+  "all_hashes_verified": true,
+  "ground_truth": "not_assigned",
+  "target_identity_confirmation": "pending",
+  "metric_evaluation_executed": false,
+  "execution_tool": "Codex terminal tools",
+  "original_contact_sheets_visually_reviewed": true,
+  "visible_object": "blue cylindrical object in all 30 candidate images",
+  "designated_target_identity_confirmed": false,
+  "candidate_detector_found_count": 30,
+  "candidate_detection_count_is_accuracy": false
+}

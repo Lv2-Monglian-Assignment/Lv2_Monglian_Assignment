@@ -1,0 +1,23 @@
+{
+  "recorded_at_utc": "2026-10-06T06:41:08.977370+00:00",
+  "authorization": "인지 7단계 완료를 위한 남은 작업과 터미널 실행 직접 요청",
+  "execution_tool": "Codex 터미널 도구",
+  "scope": "인지 카메라·검출·평가·보고서·제출 증빙 준비",
+  "motor_control_in_scope": false,
+  "initial_camera_and_detector_running": false,
+  "image_observation_004_result": "10초 관측 0장; 카메라 부재 조건이므로 속도 평가로 사용하지 않음",
+  "independent_evaluation_scene_confirmation": "pending",
+  "team_repository_url": "pending",
+  "last_updated_at_utc": "2026-10-06T06:56:45.866434+00:00",
+  "runtime": "Pi camera and identical detector; PC target subscription only",
+  "runtime_camera_pid": 5278,
+  "runtime_detector_pid": 4362,
+  "target_messages_in_10_seconds": 297,
+  "target_arrival_hz": 29.87946223679953,
+  "candidate_real_frames_saved": 30,
+  "candidate_labels": "unlabelled/null",
+  "absent_real_frames_saved": 0,
+  "synthetic_detector_tests_passed": 7,
+  "provenance_tests_passed": 8,
+  "original_detector_and_config_changed": false
+}

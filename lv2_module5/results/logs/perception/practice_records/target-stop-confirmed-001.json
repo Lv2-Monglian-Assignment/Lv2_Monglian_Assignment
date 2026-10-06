@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-10-06T05:43:00.409584+00:00",
+  "evidence": "전달된 kill -TERM 및 반복 pgrep 무출력; Codex 읽기 전용 PC pgrep 및 Pi 프로세스/결과 폴더 조회",
+  "manual_signal": {
+    "signal": "TERM",
+    "pid": 45277,
+    "reported_error": null
+  },
+  "target_detector_process_absent": true,
+  "pi_camera_pid": 1781,
+  "pi_camera_launch_params_files": [
+    "/tmp/launch_params_4hgk_sl9",
+    "/tmp/launch_params__q8ff840"
+  ],
+  "pi_output_003_exists": false,
+  "next_measurement_state": "prepared_not_run",
+  "practice_commands_executed_by_codex": false,
+  "limits": [
+    "PC의 target_detector 부재만 확인했으며 Pi 카메라 프로세스 존재가 연속 영상 수신 증명은 아니다.",
+    "다른 영상 구독자 전체 부재는 이번 조회에서 확인하지 않았다."
+  ],
+  "progress_completed": 5,
+  "progress_total": 7
+}

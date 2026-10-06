@@ -1,0 +1,38 @@
+{
+  "purpose": "Three-scene exploratory check, not independent 30+10-frame evaluation",
+  "same_parameters_verified": true,
+  "config_sha256": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8",
+  "lighting_identical": false,
+  "rows": [
+    {
+      "scene": "normal",
+      "input": "data/captures/capture-001/color.png",
+      "results_directory": "results/blue-target-normal-001",
+      "image": "data/captures/capture-001/color.png",
+      "found": true,
+      "x": 0.04937608902666337,
+      "y": 0.3740809965691438,
+      "z": 0.013388671875
+    },
+    {
+      "scene": "empty",
+      "input": "data/captures/capture-002/color.png",
+      "results_directory": "results/blue-target-empty-001",
+      "image": "data/captures/capture-002/color.png",
+      "found": false,
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    {
+      "scene": "occluded",
+      "input": "data/captures/capture-003/color.png",
+      "results_directory": "results/blue-target-occluded-001",
+      "image": "data/captures/capture-003/color.png",
+      "found": true,
+      "x": 0.05265658280085184,
+      "y": 0.43183850283990044,
+      "z": 0.008151041666666666
+    }
+  ]
+}
