@@ -53,3 +53,6 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# raw serial logs (kept locally, CSVs are committed)
+lv2_module5/results/logs/raw/
