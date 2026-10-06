@@ -56,3 +56,9 @@ dkms.conf
 
 # raw serial logs (kept locally, CSVs are committed)
 lv2_module5/results/logs/raw/
+
+# colcon build outputs, python cache
+lv2_module5/ros2_ws/build/
+lv2_module5/ros2_ws/install/
+lv2_module5/ros2_ws/log/
+__pycache__/

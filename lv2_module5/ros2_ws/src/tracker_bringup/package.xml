@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>tracker_bringup</name>
+  <version>0.1.0</version>
+  <description>Lv2 module 5 launch files (perception, control, full, replay) and config/*.yaml install</description>
+  <maintainer email="todo@example.com">todo</maintainer>  <!-- #todo 통합 담당 -->
+  <license>TODO</license>  <!-- #todo 팀 합의 -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>realsense2_camera</exec_depend>
+  <exec_depend>target_detector</exec_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
