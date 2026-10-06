@@ -18,11 +18,11 @@
 | 소프트웨어 (Raspberry Pi) | OS · 아키텍처 | Ubuntu Server 26.04.1 LTS · aarch64 |
 | | ROS2 | Lyrical (공식 apt 패키지, resolute 빌드) |
 | | RMW 구현체 | rmw_fastrtps_cpp (기본값, `ros2 doctor --report`로 확인) |
-| | ROS_DOMAIN_ID | TODO: 제출 장비 담당자의 Raspberry Pi 값 |
+| | ROS_DOMAIN_ID | 28 (Raspberry Pi·PC 모두 `~/.bashrc` 맨 위에 `export ROS_DOMAIN_ID=28`) |
 | | Python | 3.14.4 |
 | | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |
 | | rosbag2 | 0.33.3 (저장 형식: TODO mcap / sqlite3) |
-| | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR:OpenCR 1.5.1 |
+| | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR 보드 패키지 1.5.3 (FQBN `ROBOTIS:OpenCR:OpenCR`) |
 | | OpenCR 보드 패키지 주소 | `https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/arduino/opencr_release/package_opencr_index.json` |
 | | DYNAMIXEL 라이브러리 | Dynamixel2Arduino 0.8.1 |
 | 소프트웨어 (PC) | 용도 | Raspberry Pi SSH 접속 · Isaac Sim 실행 |
@@ -40,9 +40,6 @@
 | | 기구 | 팬·틸트 2축 (필수 추적은 팬 1축, 틸트는 선택) · ROBOTIS FR12-H101K · 팬 마운트 · 카메라 마운트 |
 | | 회전 범위 · 속도 상한 | 기구 범위 팬 ±180° (틸트 모터 케이블 때문에 연속 회전 금지) · 틸트 ±40°, 기준 자세(IDLE) 팬 0°·틸트 180° (모터 원시값) · 속도 상한 120°/s (Kp 계단 응답 시험과 같은 값) |
 | 목표물 | 대상 | TODO: 카드·공·블록 중 선택, 색상 (사진: `results/images/target.jpg`) |
-
-> **TODO (제출 장비 담당자 확인 후 이 블록 삭제)**
-> 표의 값은 실험용 Raspberry Pi에서 확인했습니다. 모터 ID·통신 속도·프로토콜·회전 범위·속도 상한과 ROS_DOMAIN_ID는 **제출용 장비**에서 직접 확인해 채웁니다. OpenCV·arduino-cli·OpenCR 보드 패키지·Dynamixel2Arduino 버전도 제출용 Raspberry Pi에서 같은지 확인합니다. 장비마다 값이 다를 수 있으므로 다른 장비의 값을 복사하지 않습니다.
 
 - 카메라 Color 토픽 이름: TODO (카메라 노드를 실행한 상태에서 `ros2 topic list | grep color`로 확인) · 정렬 Depth 토픽은 `/camera/camera/aligned_depth_to_color/image_raw` · 30 Hz
 - 모터 ID·baud·프로토콜은 실제 장비에서 확인한 값입니다. 확인 방법과 날짜: TODO
