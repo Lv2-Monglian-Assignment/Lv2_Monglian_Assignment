@@ -19,6 +19,7 @@
 | | ROS2 | Lyrical (공식 apt 패키지, resolute 빌드) |
 | | RMW 구현체 | rmw_fastrtps_cpp (기본값, `ros2 doctor --report`로 확인) |
 | | ROS_DOMAIN_ID | TODO: 제출 장비 담당자의 Raspberry Pi 값 |
+| | Python | 3.14.4 |
 | | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |
 | | rosbag2 | 0.33.3 (저장 형식: TODO mcap / sqlite3) |
 | | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR:OpenCR 1.5.1 |
@@ -28,14 +29,16 @@
 | | OS · 아키텍처 | Ubuntu 24.04.5 LTS · x86_64 |
 | | ROS2 | Lyrical ([NVIDIA Isaac ROS release-5.0](https://nvidia-isaac-ros.github.io/v/release-5.0/getting_started/index.html) 문서의 터미널 설치 절차) |
 | | RMW 구현체 | rmw_fastrtps_cpp (기본값) |
+| | Python | 3.12.3 |
 | 하드웨어 | SBC | Raspberry Pi 4 Model B Rev 1.5 · 메모리 4GB (`free -h` 3.7Gi) |
 | | Camera | Intel RealSense D435 (D435i 아님) · 펌웨어 5.15.1.55 · USB 3.2 (5 Gbps) 포트 연결 |
 | | Camera 설정 | Color 640x480 @ 30 Hz (실측 30.1 Hz) · rgb8 · frame_id `camera_color_optical_frame` |
 | | Camera 내부 파라미터 (CameraInfo K) | fx 605.85 · fy 605.68 · cx 324.37 · cy 245.14 |
-| | Control Board | OpenCR 1.0 |
-| | Actuator | ROBOTIS DYNAMIXEL XM460-W350-T (ID · Baudrate · Protocol: TODO 제출 장비 담당자 확인) |
+| | Control Board | OpenCR 1.0 · Raspberry Pi와 USB 시리얼 115200 bps (`/dev/ttyACM0`, 사용자 `dialout` 그룹 필요) |
+| | Actuator | ROBOTIS DYNAMIXEL XM430-W350-T × 2 · 팬 ID 11 · 틸트 ID 12 · 1,000,000 bps · Protocol 2.0 |
 | | Power | 12V 외부 전원 공급 장치 |
-| | 기구 | 고정 브래킷 · 수평 1축 (회전 범위 · 속도 상한: TODO 제출 장비 담당자 확인) |
+| | 기구 | 팬·틸트 2축 (필수 추적은 팬 1축, 틸트는 선택) · ROBOTIS FR12-H101K · 팬 마운트 · 카메라 마운트 |
+| | 회전 범위 · 속도 상한 | 기구 범위 팬 ±180° (틸트 모터 케이블 때문에 연속 회전 금지) · 틸트 ±40°, 기준 자세(IDLE) 팬 0°·틸트 180° (모터 원시값) · 속도 상한 120°/s (Kp 계단 응답 시험과 같은 값) |
 | 목표물 | 대상 | TODO: 카드·공·블록 중 선택, 색상 (사진: `results/images/target.jpg`) |
 
 > **TODO (제출 장비 담당자 확인 후 이 블록 삭제)**
