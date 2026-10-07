@@ -1,0 +1,4 @@
+# Evidence: terminal output supplied in conversation, matched to the new PC node log by read-only inspection.
+[INFO] [1791252521.757743116] [target_detector]: TARGET_NODE_READY: /camera/camera/color/image_raw -> /target; HSV=(92, 80, 26)..(120, 255, 255), kernel=5, min_area=400.0; best_effort / keep_last 1; 영상 수신 대기
+[INFO] [1791252522.246270334] [target_detector]: IMAGE_RECEIVED: actual=(640, 480), requested=(640, 480), encoding=rgb8, frame_id=camera_color_optical_frame; 정규화는 실제 크기 기준
+[INFO] [1791252522.246443144] [target_detector]: TARGET_STATE: found=False, ex=+0.000000, ey=+0.000000, area_ratio=0.000000

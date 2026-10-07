@@ -1,0 +1,806 @@
+{
+  "purpose": "Local ROS Image arrival measurement; not physical camera FPS or accuracy evaluation",
+  "recorded_at_utc": "2026-10-06T05:44:03.382049+00:00",
+  "host": "pa18",
+  "topic": "/camera/camera/color/image_raw",
+  "seconds_requested": 10.0,
+  "subscription_qos": "best_effort / keep_last depth 1 / volatile",
+  "environment": {
+    "ROS_DOMAIN_ID": "30",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+    "ROS_AUTOMATIC_DISCOVERY_RANGE": "SUBNET",
+    "ROS_STATIC_PEERS": null,
+    "CYCLONEDDS_URI": null
+  },
+  "source_sha256": "d02694ed947aec59badbac641b1ba73477870b2cddf3f68d06b2340cf194392c",
+  "samples": [
+    {
+      "arrival_seconds": 0.3216379099999358,
+      "stamp": {
+        "sec": 1791265444,
+        "nanosec": 892318359
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 0.4854949460000171,
+      "stamp": {
+        "sec": 1791265445,
+        "nanosec": 59339844
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 0.651361210999994,
+      "stamp": {
+        "sec": 1791265445,
+        "nanosec": 226362061
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 0.8196383899999091,
+      "stamp": {
+        "sec": 1791265445,
+        "nanosec": 393383301
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 0.9874004280000008,
+      "stamp": {
+        "sec": 1791265445,
+        "nanosec": 560413330
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 1.1522961139999097,
+      "stamp": {
+        "sec": 1791265445,
+        "nanosec": 727443359
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 1.3207301879999704,
+      "stamp": {
+        "sec": 1791265445,
+        "nanosec": 894473877
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 1.488570487000061,
+      "stamp": {
+        "sec": 1791265446,
+        "nanosec": 61504639
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 1.6550904450000417,
+      "stamp": {
+        "sec": 1791265446,
+        "nanosec": 228535400
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 1.8223105899999155,
+      "stamp": {
+        "sec": 1791265446,
+        "nanosec": 395566406
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 1.9893517630000588,
+      "stamp": {
+        "sec": 1791265446,
+        "nanosec": 562596191
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 2.156318846999966,
+      "stamp": {
+        "sec": 1791265446,
+        "nanosec": 729626953
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 2.321912108999868,
+      "stamp": {
+        "sec": 1791265446,
+        "nanosec": 896656982
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 2.4906631809999453,
+      "stamp": {
+        "sec": 1791265447,
+        "nanosec": 63687012
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 2.657088556999952,
+      "stamp": {
+        "sec": 1791265447,
+        "nanosec": 230717285
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 2.8244377549999626,
+      "stamp": {
+        "sec": 1791265447,
+        "nanosec": 397747559
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 2.99137288299994,
+      "stamp": {
+        "sec": 1791265447,
+        "nanosec": 564779297
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 3.158457946999988,
+      "stamp": {
+        "sec": 1791265447,
+        "nanosec": 731811279
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 3.32548447399995,
+      "stamp": {
+        "sec": 1791265447,
+        "nanosec": 898843506
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 3.4920827900000404,
+      "stamp": {
+        "sec": 1791265448,
+        "nanosec": 65875977
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 3.659578300000021,
+      "stamp": {
+        "sec": 1791265448,
+        "nanosec": 232909668
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 3.8265950580000663,
+      "stamp": {
+        "sec": 1791265448,
+        "nanosec": 399942383
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 3.993700735999937,
+      "stamp": {
+        "sec": 1791265448,
+        "nanosec": 566972412
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 4.160676699000078,
+      "stamp": {
+        "sec": 1791265448,
+        "nanosec": 734002441
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 4.327645919999895,
+      "stamp": {
+        "sec": 1791265448,
+        "nanosec": 901032471
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 4.494829080000045,
+      "stamp": {
+        "sec": 1791265449,
+        "nanosec": 68062744
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 4.661845249999942,
+      "stamp": {
+        "sec": 1791265449,
+        "nanosec": 235093262
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 4.828835678999894,
+      "stamp": {
+        "sec": 1791265449,
+        "nanosec": 402123779
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 4.995890734999875,
+      "stamp": {
+        "sec": 1791265449,
+        "nanosec": 569147461
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 5.163104504999865,
+      "stamp": {
+        "sec": 1791265449,
+        "nanosec": 736171875
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 5.329941311000084,
+      "stamp": {
+        "sec": 1791265449,
+        "nanosec": 903195313
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 5.496938059000058,
+      "stamp": {
+        "sec": 1791265450,
+        "nanosec": 70218750
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 5.663441313000021,
+      "stamp": {
+        "sec": 1791265450,
+        "nanosec": 237241943
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 5.831112972000028,
+      "stamp": {
+        "sec": 1791265450,
+        "nanosec": 404264893
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 5.997979966999992,
+      "stamp": {
+        "sec": 1791265450,
+        "nanosec": 571293945
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 6.164739078999901,
+      "stamp": {
+        "sec": 1791265450,
+        "nanosec": 738322998
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 6.3321545649998825,
+      "stamp": {
+        "sec": 1791265450,
+        "nanosec": 905352295
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 6.499121133000017,
+      "stamp": {
+        "sec": 1791265451,
+        "nanosec": 72381348
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 6.6640588769998885,
+      "stamp": {
+        "sec": 1791265451,
+        "nanosec": 239411621
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 6.833043140999962,
+      "stamp": {
+        "sec": 1791265451,
+        "nanosec": 406440674
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 7.00011627799995,
+      "stamp": {
+        "sec": 1791265451,
+        "nanosec": 573462158
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 7.165136147999874,
+      "stamp": {
+        "sec": 1791265451,
+        "nanosec": 740483398
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 7.334219350000012,
+      "stamp": {
+        "sec": 1791265451,
+        "nanosec": 907504150
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 7.5012200690000554,
+      "stamp": {
+        "sec": 1791265452,
+        "nanosec": 74524902
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 7.66621872099995,
+      "stamp": {
+        "sec": 1791265452,
+        "nanosec": 241545410
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 7.835234395000043,
+      "stamp": {
+        "sec": 1791265452,
+        "nanosec": 408565674
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 8.00239418000001,
+      "stamp": {
+        "sec": 1791265452,
+        "nanosec": 575600830
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 8.167412848999902,
+      "stamp": {
+        "sec": 1791265452,
+        "nanosec": 742637207
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 8.336323898000046,
+      "stamp": {
+        "sec": 1791265452,
+        "nanosec": 909673096
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 8.503361821999988,
+      "stamp": {
+        "sec": 1791265453,
+        "nanosec": 76708984
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 8.668457490000037,
+      "stamp": {
+        "sec": 1791265453,
+        "nanosec": 243745361
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 8.837428744999897,
+      "stamp": {
+        "sec": 1791265453,
+        "nanosec": 410781982
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 9.004421300999866,
+      "stamp": {
+        "sec": 1791265453,
+        "nanosec": 577815674
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 9.171504926999887,
+      "stamp": {
+        "sec": 1791265453,
+        "nanosec": 744849609
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 9.338462575999984,
+      "stamp": {
+        "sec": 1791265453,
+        "nanosec": 911883789
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 9.50551791099997,
+      "stamp": {
+        "sec": 1791265454,
+        "nanosec": 78918213
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 9.670552474000033,
+      "stamp": {
+        "sec": 1791265454,
+        "nanosec": 245953857
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    },
+    {
+      "arrival_seconds": 9.839572192999867,
+      "stamp": {
+        "sec": 1791265454,
+        "nanosec": 412988770
+      },
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 320,
+      "height": 240,
+      "step": 960,
+      "payload_bytes": 230400
+    }
+  ],
+  "status": "complete",
+  "error": null,
+  "kernel_counters_before": {
+    "Ip.ReasmTimeout": 0,
+    "Ip.ReasmFails": 0,
+    "Udp.InErrors": 0,
+    "Udp.RcvbufErrors": 0
+  },
+  "elapsed_seconds": 10.000993489999928,
+  "kernel_counters_after": {
+    "Ip.ReasmTimeout": 0,
+    "Ip.ReasmFails": 0,
+    "Udp.InErrors": 0,
+    "Udp.RcvbufErrors": 0
+  },
+  "kernel_counters_delta": {
+    "Ip.ReasmTimeout": 0,
+    "Ip.ReasmFails": 0,
+    "Udp.InErrors": 0,
+    "Udp.RcvbufErrors": 0
+  },
+  "image_messages": 58,
+  "arrival_hz_between_first_and_last": 5.988694427299022,
+  "observed_header_rate_hz": 5.986973347396135,
+  "max_arrival_gap_seconds": 0.16908320200013804,
+  "max_observed_stamp_gap_seconds": 0.167036621,
+  "source_stamps_strictly_increasing": true,
+  "input_formats": [
+    [
+      320,
+      240,
+      "rgb8"
+    ]
+  ]
+}

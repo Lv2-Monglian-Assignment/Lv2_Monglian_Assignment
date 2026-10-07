@@ -1,0 +1,10 @@
+SSH 대상: pa18@pa18.local
+저장 폴더: /home/pa12/Desktop/vision_project/data/captures/capture-002
+Pi 암호가 필요하면 터미널에 입력하세요.
+HOST=pa18
+ROS=lyrical
+DOMAIN=97
+{"purpose": "Real D435 color capture, not labeled evaluation", "recorded_at_utc": "2026-10-05T07:24:42Z", "ros_domain_id": "97", "rmw_implementation": "rmw_cyclonedds_cpp", "subscription_reliability": "2", "camera_info_count": 59, "frames_requested": 60, "frames_received": 60, "success": true, "sha256": "41f05bbf6c4d33e9de691e1147ce8bf90e0d540b9dd8d63f270ed06586f0f129", "arrival_fps": 30.111209356955833, "max_source_stamp_gap_seconds": 0.03340458869934082, "source_stamps_strictly_increasing": true}
+/tmp/vision-color-Up5N06N3/capture
+CAPTURE_EXIT=0
+LOCAL_RESULTS=/home/pa12/Desktop/vision_project/data/captures/capture-002

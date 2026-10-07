@@ -1,0 +1,11 @@
+{
+  "files": {
+    "tracker_perception/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracker_perception/detector.py": "8a90236277be47421aa8e5bb7588776e634483a2718042a9fcde0e2ff27a3230",
+    "tracker_perception/target_detector.py": "456d9b0422fdd0f967d790abda558837b4f4d47930e1d3d539e41367363631fd",
+    "config/perception.yaml": "3828989a5f58eba42b22cf2b8e8111c12cac2c5f5c0978417e81b75577a435d8"
+  },
+  "detector_code_changed": false,
+  "configuration_changed": false,
+  "change": "Run identical detector on Pi; transmit PointStamped only"
+}

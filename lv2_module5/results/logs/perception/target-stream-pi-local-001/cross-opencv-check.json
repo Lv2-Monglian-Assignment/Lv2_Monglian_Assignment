@@ -1,0 +1,21 @@
+{
+  "scope": "One identical actual camera PNG; not all frames or localization accuracy",
+  "image_sha256": "0a1fb3a52b641ea5eba730d34dcbd1a998fc1871c0cd845c8456c7d6f547d0c1",
+  "pc_opencv": "4.6.0",
+  "pi_opencv": "4.10.0",
+  "pc_mask_sha256": "019f82748e2fed2df8f4a292342c30ef29063b4d305360e2539dc1cfc35c22cb",
+  "pi_mask_sha256": "019f82748e2fed2df8f4a292342c30ef29063b4d305360e2539dc1cfc35c22cb",
+  "pc_point": [
+    -0.2674094612847771,
+    0.1665943058625409,
+    0.0154638671875
+  ],
+  "pi_point": [
+    -0.2674094612847771,
+    0.1665943058625409,
+    0.0154638671875
+  ],
+  "mask_and_point_equal": true,
+  "detector_source_changed": false,
+  "execution_tool": "Codex terminal tools"
+}

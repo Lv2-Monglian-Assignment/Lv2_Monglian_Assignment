@@ -1,0 +1,18 @@
+{
+  "documents_checked": [
+    "vision_todo.md",
+    "team.md",
+    "AI_CONTRIBUTIONS.md",
+    "docs/perception_report.md",
+    "docs/submission/ISSUE_DRAFT.md",
+    "docs/submission/PR_DRAFT.md",
+    "docs/submission/CODE_REVIEW.md"
+  ],
+  "local_evidence_links_valid": true,
+  "scene_annotation_executed": false,
+  "accuracy_evaluation_executed": false,
+  "published_issue_or_pr": false,
+  "external_review_received": false,
+  "completed_original_stages": 5,
+  "total_original_stages": 7
+}

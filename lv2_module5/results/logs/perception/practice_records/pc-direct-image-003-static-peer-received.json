@@ -1,0 +1,24 @@
+{
+  "evidence_source": "PC Image echo output supplied in conversation",
+  "execution_host": "PC",
+  "topic": "/camera/camera/color/image_raw",
+  "message_type": "sensor_msgs/msg/Image",
+  "printed_field": "header",
+  "environment_scope": "echo process only",
+  "ros_static_peers": "10.2.12.61",
+  "cyclonedds_uri": "file://<repository-root>/config/cyclonedds-pc-wifi.xml",
+  "qos": "best_effort / keep_last depth 1",
+  "header": {
+    "stamp": {
+      "sec": 1791252450,
+      "nanosec": 262468506
+    },
+    "frame_id": "camera_color_optical_frame"
+  },
+  "image_message_received": true,
+  "image_pixels_saved": false,
+  "continuous_reception_verified": false,
+  "existing_target_detector_restart_with_configuration_completed": false,
+  "new_live_zero_target_received": false,
+  "root_cause_confirmed": false
+}

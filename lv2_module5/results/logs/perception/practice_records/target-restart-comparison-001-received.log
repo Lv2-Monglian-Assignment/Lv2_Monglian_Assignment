@@ -1,0 +1,3 @@
+[INFO] [1791267345.225396183] [target_detector]: TARGET_NODE_READY: /camera/camera/color/image_raw -> /target; HSV=(92, 80, 26)..(120, 255, 255), kernel=5, min_area=400.0; best_effort / keep_last 1; 영상 수신 대기
+[INFO] [1791267345.594556318] [target_detector]: IMAGE_RECEIVED: actual=(320, 240), requested=(640, 480), encoding=rgb8, frame_id=camera_color_optical_frame; 정규화는 실제 크기 기준
+[INFO] [1791267345.594830764] [target_detector]: TARGET_STATE: found=True, ex=-0.237350, ey=+0.158515, area_ratio=0.013900

@@ -1,0 +1,7 @@
+[INFO] [launch]: All log files can be found below /home/pa12/.ros/log/2026-10-06-16-08-26-061297-pa12-Legion-Pro-5-16IAX10-104295
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [target_detector-1]: process started with pid [104302]
+[target_detector-1] [INFO] [1791270506.553693931] [target_detector]: TARGET_NODE_READY: /perception_layout_probe/image -> /perception_layout_probe/target; HSV=(92, 80, 26)..(120, 255, 255), kernel=5, min_area=400.0; best_effort / keep_last 1; 영상 수신 대기
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [target_detector-1]: sending signal 'SIGINT' to process[target_detector-1]
+[INFO] [target_detector-1]: process has finished cleanly [pid 104302]
