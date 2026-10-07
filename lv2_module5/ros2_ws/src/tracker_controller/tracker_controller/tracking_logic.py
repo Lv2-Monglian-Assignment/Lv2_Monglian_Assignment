@@ -15,11 +15,12 @@ IDLE, TRACKING, LOST, SEARCHING = 'IDLE', 'TRACKING', 'LOST', 'SEARCHING'
 
 @dataclass
 class AxisConfig:
-    kp: float               # [deg/s per 1.0 정규화 오차]
+    kp: float               # half_fov_deg > 0: [1/s] 각도 오차 [deg] -> 속도 [deg/s] / 0: [deg/s per 1.0 정규화 오차]
     direction: int          # +1/-1: 오른쪽·아래 목표(ex, ey > 0)를 줄이는 모터 속도 부호
     speed_limit: float      # [deg/s]
     deadband: float         # 정규화 오차. 이보다 작으면 0
     enabled: bool = True
+    half_fov_deg: float = 0.0   # 화면 반폭(반높이) 시야각 [deg]. >0이면 정규화 오차를 카메라 각도로 바꿔 Kp를 곱한다
 
 
 @dataclass
@@ -43,11 +44,18 @@ class Output:
     search_elapsed: float = math.nan
 
 
+def error_angle_deg(error, half_fov_deg):
+    """정규화 오차 e (-1~+1, 화면 끝 = 1) -> 광축에서 목표까지 각도 [deg] = atan(e x tan(시야각/2)).
+    핀홀 카메라에서 화면 끝 픽셀의 각도가 시야각/2이고, 픽셀 거리는 tan(각도)에 비례하기 때문이다."""
+    return math.degrees(math.atan(error * math.tan(math.radians(half_fov_deg))))
+
+
 def p_command(error, axis: AxisConfig):
-    """command = clamp(direction x Kp x error, -limit, +limit) [deg/s]"""
+    """command = clamp(direction x Kp x 오차, -limit, +limit) [deg/s]. 오차는 각도 [deg] (half_fov_deg > 0) 또는 정규화 값"""
     if not axis.enabled or abs(error) < axis.deadband:
         return 0.0
-    return max(-axis.speed_limit, min(axis.speed_limit, axis.direction * axis.kp * error))
+    err = error_angle_deg(error, axis.half_fov_deg) if axis.half_fov_deg > 0 else error
+    return max(-axis.speed_limit, min(axis.speed_limit, axis.direction * axis.kp * err))
 
 
 def angle_command(desired_deg, current_deg, s: SearchConfig, limit_deg):

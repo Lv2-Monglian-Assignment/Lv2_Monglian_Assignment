@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OpenCR 시리얼 브리지 노드 (라즈베리파이에서 실행). 펌웨어: firmware/opencr_tracker (작업 이슈 #14).
+"""OpenCR 시리얼 브리지 노드 (라즈베리파이에서 실행). 펌웨어: firmware/opencr_tracker (작업 이슈 #14, 프로토콜 #7).
 
 입력
   /pan_tilt/command    Vector3Stamped  x=팬, y=틸트 [deg/s] (tracker_controller 50 Hz)
@@ -7,6 +7,7 @@
   Pi -> OpenCR  "V <pan_dps> <tilt_dps>" 50 Hz. 명령이 cmd_timeout_s 동안 안 오면 "V 0.00 0.00"
                 (제어 노드가 죽어도 0을 보내 정지. 브리지가 죽으면 보드 타임아웃 300 ms가 정지시킨다)
                 종료 시 "X"(속도 0, 토크 유지), torque_off_on_exit면 "O"(토크 OFF)
+                시작 시 "B <pan_tick> <tilt_tick>": config/device.yaml의 home_ticks(장비마다 다른 기준 자세, scripts/test/pose_tool.py의 h 키로 저장)
   /pan_tilt/joint_states  JointState  OpenCR 상태 줄 "S <ms> <pan_deg> <tilt_deg> <pan_dps> <tilt_dps> <state>"를
                 position [rad]·velocity [rad/s]로. header.stamp = 줄을 받은 ROS 시각
 dry_run:=true 이면 시리얼을 열지 않고 관절 각도를 명령 적분으로 흉내 낸다(모터 출력 끈 시험·bag 재현).
@@ -18,6 +19,7 @@ import time
 from datetime import datetime
 
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from geometry_msgs.msg import Vector3Stamped
 from sensor_msgs.msg import JointState
@@ -35,9 +37,11 @@ class OpencrBridge(Node):
         rate = p('bridge_rate_hz', 50.0)                               # [Hz] 펌웨어 CMD_TIMEOUT_MS(300 ms)보다 충분히 짧게
         self.cmd_timeout = p('cmd_timeout_s', 0.2)                     # [s] 제어 명령이 이보다 오래되면 0 전송 #todo
         self.torque_off_on_exit = p('torque_off_on_exit', False)       # true: 종료 시 토크 OFF (틸트 처짐 주의)
+        self.home_ticks = list(p('home_ticks', [-1, -1]))              # 기준 자세 tick. 음수면 펌웨어 기본값 사용
         self.sim_limits = (p('sim_pan_limit_deg', 180.0), p('sim_tilt_limit_deg', 40.0))  # 펌웨어 LIMIT_DEG와 같게
         log_dir = os.path.expanduser(p('log_dir', '~/lv2_module5_logs'))
-        run_id = p('run_id', '') or datetime.now().strftime('bridge_%Y%m%d_%H%M%S')
+        run_id = p('run_id', 'auto')
+        run_id = run_id if run_id not in ('', 'auto') else datetime.now().strftime('bridge_%Y%m%d_%H%M%S')
         os.makedirs(log_dir, exist_ok=True)
         self.serial_log = open(os.path.join(log_dir, f'{run_id}_serial.log'), 'w')
 
@@ -51,6 +55,9 @@ class OpencrBridge(Node):
         if not self.dry_run:
             import serial  # python3-serial
             self.ser = serial.Serial(self.port, self.baud, timeout=0)
+            self.send('')                  # 포트를 열 때 섞이는 잡음 바이트를 줄바꿈으로 비운다
+            if len(self.home_ticks) == 2 and min(self.home_ticks) >= 0:
+                self.send(f'B {int(self.home_ticks[0])} {int(self.home_ticks[1])}')   # 회신 'B ...'를 기록에서 확인
 
         self.create_subscription(Vector3Stamped, p('command_topic', '/pan_tilt/command'), self.on_command, 10)
         self.joint_pub = self.create_publisher(JointState, p('joint_state_topic', '/pan_tilt/joint_states'), 10)
@@ -84,7 +91,7 @@ class OpencrBridge(Node):
                 self.publish_joint(['pan', 'tilt'], st[0:2], st[2:4])
             elif line.startswith('E '):
                 self.get_logger().error(f'OpenCR {line}')
-            elif line.startswith('READY'):
+            elif line.startswith(('READY', 'B ')):
                 self.get_logger().info(f'OpenCR {line}')
 
     def publish_joint(self, names, pos_deg, vel_dps):
@@ -126,8 +133,11 @@ def main():
     node = OpencrBridge()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):   # Ctrl+C / launch 종료(SIGINT·SIGTERM)
         pass
+    except Exception:
+        if rclpy.ok():   # 종료 신호로 context가 닫힌 뒤 콜백이 발행하다 난 오류만 무시
+            raise
     finally:
         node.close()
         node.destroy_node()
