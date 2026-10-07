@@ -19,12 +19,12 @@
 | 소프트웨어 (Raspberry Pi) | 역할 | 카메라·인지·제어 노드, OpenCR 빌드·업로드·시리얼 (모두 Pi에서 실행) |
 | | OS · 아키텍처 | Ubuntu Server 26.04.1 LTS · aarch64 |
 | | ROS2 | Lyrical (공식 apt 패키지, resolute 빌드) |
-| | RMW 구현체 | **rmw_cyclonedds_cpp** (결정 2026-10-06, 이전 실측은 rmw_fastrtps_cpp) |
-| | ROS_DOMAIN_ID | **28** (결정 2026-10-06) |
-| | Python | 3.14.4 (시스템 Python. apt·ROS가 이 버전에 묶여 있어 바꾸지 않음) |
-| | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5, 시스템 Python용 apt 패키지) |
+| | RMW 구현체 | rmw_fastrtps_cpp (기본값, `ros2 doctor --report`로 확인) |
+| | ROS_DOMAIN_ID | 28 (Raspberry Pi·PC 모두 `~/.bashrc` 맨 위에 `export ROS_DOMAIN_ID=28`) |
+| | Python | 3.14.4 |
+| | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |
 | | rosbag2 | 0.33.3 (저장 형식: TODO mcap / sqlite3) |
-| | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR:OpenCR 1.5.1 |
+| | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR 보드 패키지 1.5.3 (FQBN `ROBOTIS:OpenCR:OpenCR`) |
 | | OpenCR 보드 패키지 주소 | `https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/arduino/opencr_release/package_opencr_index.json` |
 | | DYNAMIXEL 라이브러리 | Dynamixel2Arduino (커밋 `cfbbaf7`, `~/Arduino/libraries`) |
 | | OpenCR 업로더 | `opencr_ld` arm64 소스 빌드 (보드 패키지의 업로더는 x86용이라 Pi에서 실행 불가) |
@@ -45,13 +45,9 @@
 | | 회전 범위 · 속도 상한 | 기구 범위 팬 ±180° (틸트 모터 케이블 때문에 연속 회전 금지) · 틸트 ±40°, 기준 자세(IDLE) 팬 0°·틸트 180° (모터 원시값 = tick 0·2048) · 속도 상한 120°/s (Kp 계단 응답 시험과 같은 값) |
 | 목표물 | 대상 | 파란색 단일 색 직육면체·원기둥 (밑면 3 × 3 cm, 높이 6 cm) · TODO 사진 `results/images/target.jpg` |
 
-> **TODO (제출 장비 담당자 확인 후 이 블록 삭제)**
-> 표의 값은 실험용 Raspberry Pi에서 확인했습니다. 모터 ID·통신 속도·프로토콜·회전 범위·속도 상한과 ROS_DOMAIN_ID는 **제출용 장비**에서 직접 확인해 채웁니다. OpenCV·arduino-cli·OpenCR 보드 패키지·Dynamixel2Arduino 버전도 제출용 Raspberry Pi에서 같은지 확인합니다. 장비마다 값이 다를 수 있으므로 다른 장비의 값을 복사하지 않습니다.
-
-- 카메라 토픽: Color `/camera/camera/color/image_raw` · CameraInfo `/camera/camera/color/camera_info` · 정렬 Depth `/camera/camera/aligned_depth_to_color/image_raw` (16UC1, mm)
-- Color 영상의 `header.stamp`는 시스템 시간 기준으로 확인했습니다. 노드 시작 시 `frame's time domain is HARDWARE_CLOCK`, `Depth stream start failure` 경고가 나오지만 이후 Color·Depth 모두 30 Hz로 들어옵니다(udev 규칙 설치 후에도 동일, 한계로 기록).
-- 모터 ID·baud·프로토콜 확인 방법과 날짜: 2026-10-03, OpenCR Serial3에서 baud 7종 × Protocol 1.0/2.0 ping 스캔 → 1 Mbps·Protocol 2.0에서 응답 (`firmware/dxl_scan`, TODO 저장소 반영)
-- 발제 기본 환경(PC에서 인지)과 달리 **모든 노드를 Pi에서 실행**합니다. 근거: Pi→PC 영상 전송 시 PC 수신 3.3~6 Hz, Pi 단독 실행 시 `/target` 28.7~30 Hz (2026-10-06 실측). 차이와 영향은 [report.md](report.md) 한계에 기록합니다.
+- 카메라 Color 토픽 이름: TODO (카메라 노드를 실행한 상태에서 `ros2 topic list | grep color`로 확인) · 정렬 Depth 토픽은 `/camera/camera/aligned_depth_to_color/image_raw` · 30 Hz
+- 모터 ID·baud·프로토콜은 실제 장비에서 확인한 값입니다. 확인 방법과 날짜: TODO
+- PC는 Raspberry Pi SSH 접속과 Isaac Sim 실행에 사용합니다. OpenCR 빌드·업로드·시리얼 확인은 Raspberry Pi에서 수행합니다.
 
 ## 2. 폴더 구조
 
