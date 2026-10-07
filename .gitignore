@@ -69,3 +69,13 @@ ros2_ws/log
 # ROS specific
 # Need to check if this need to submit
 *.bag
+
+# 실제 위치(lv2_module5/ros2_ws/)의 빌드 산출물·파이썬 캐시·ROS 2 bag 폴더
+# (위 ros2_ws/build·install·log는 저장소 맨 위 기준이라 lv2_module5/ros2_ws/ 아래에는 적용되지 않음. *.bag은 ROS 1 형식)
+__pycache__/
+lv2_module5/ros2_ws/build/
+lv2_module5/ros2_ws/install/
+lv2_module5/ros2_ws/log/
+lv2_module5/build/
+# bag 원본은 용량 때문에 제외(튜터 안내). 위치·해시는 recordings/<run_id>_info.txt와 recordings/README.md에 남긴다
+lv2_module5/recordings/*/
