@@ -1,0 +1,4 @@
+test,run_id,condition,date,verdict,longest_search_s
+assignment_B_search,found_20261007_123855,dry_run virtual,2026-10-07,PASS,1.334
+assignment_B_search,cancel_20261007_123855,dry_run virtual,2026-10-07,PASS,0.4975
+assignment_B_search,notfound_20261007_123855,dry_run virtual,2026-10-07,PASS,2.997

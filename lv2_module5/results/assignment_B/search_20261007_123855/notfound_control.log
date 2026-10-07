@@ -1,0 +1,53 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-07-12-39-28-008719-pa23-23857
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [controller_node-1]: process started with pid [23935]
+[INFO] [opencr_bridge-2]: process started with pid [23936]
+[opencr_bridge-2] [INFO] [1791344370.610562363] [opencr_bridge]: run_id=assignment_B_notfound_20261007_123855 dry_run=True port=/dev/ttyACM0
+[controller_node-1] [INFO] [1791344370.669968808] [tracker_controller]: run_id=assignment_B_notfound_20261007_123855 search=True pan(kp=2.0/s, dir=-1, limit=120.0) tilt(kp=2.5/s, dir=1, limit=120.0)
+[controller_node-1] [INFO] [1791344370.671657447] [tracker_controller]: tracking enabled=True
+[controller_node-1] [INFO] [1791344370.675304852] [tracker_controller]: state None -> LOST (input_timeout)
+[controller_node-1] [INFO] [1791344371.936750960] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[controller_node-1] [INFO] [1791344375.836855377] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-1] [INFO] [1791344376.138973297] [tracker_controller]: state LOST -> SEARCHING (predicted)
+[controller_node-1] [INFO] [1791344379.159512969] [tracker_controller]: state SEARCHING -> LOST (search_failed)
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [opencr_bridge-2]: sending signal 'SIGINT' to process[opencr_bridge-2]
+[INFO] [controller_node-1]: sending signal 'SIGINT' to process[controller_node-1]
+[controller_node-1] [INFO] [1791344382.262911733] [tracker_controller]: stats {'reacquired_in_view': 1, 'reacquired_search': 0, 'search_failed': 1} stale_inputs=0
+[controller_node-1] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:427
+[opencr_bridge-2] Traceback (most recent call last):
+[controller_node-1] Traceback (most recent call last):
+[opencr_bridge-2]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_bridge/lib/tracker_bridge/opencr_bridge", line 33, in <module>
+[opencr_bridge-2]     sys.exit(load_entry_point('tracker-bridge', 'console_scripts', 'opencr_bridge')())
+[opencr_bridge-2]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/build/tracker_bridge/tracker_bridge/opencr_bridge.py", line 143, in main
+[opencr_bridge-2]     node.destroy_node()
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2708, in destroy_node
+[opencr_bridge-2]     self.destroy_service(self._services[0])
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+[opencr_bridge-2] KeyboardInterrupt
+[controller_node-1]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_controller/lib/tracker_controller/controller_node", line 33, in <module>
+[controller_node-1]     sys.exit(load_entry_point('tracker-controller', 'console_scripts', 'controller_node')())
+[controller_node-1]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/build/tracker_controller/tracker_controller/controller_node.py", line 290, in main
+[controller_node-1]     node.destroy_node()
+[controller_node-1]     ~~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2704, in destroy_node
+[controller_node-1]     self.destroy_subscription(self._subscriptions[0])
+[controller_node-1]     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2620, in destroy_subscription
+[controller_node-1]     subscription.destroy()
+[controller_node-1]     ~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/subscription.py", line 160, in destroy
+[controller_node-1]     self._destroy()
+[controller_node-1]     ~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/subscription.py", line 345, in _destroy
+[controller_node-1]     super()._destroy()
+[controller_node-1]     ~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/subscription.py", line 163, in _destroy
+[controller_node-1]     self.handle.destroy_when_not_in_use()
+[controller_node-1]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-1] KeyboardInterrupt
+[ERROR] [opencr_bridge-2]: process has died [pid 23936, exit code -2, cmd '/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_bridge/lib/tracker_bridge/opencr_bridge --ros-args -r __node:=opencr_bridge --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/camera.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/control.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/device.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/hsv.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/safety.yaml --params-file /tmp/opencr_bridge_launch_vgbk8jm9.yaml'].
+[ERROR] [controller_node-1]: process has died [pid 23935, exit code -2, cmd '/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_controller/lib/tracker_controller/controller_node --ros-args -r __node:=tracker_controller --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/camera.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/control.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/device.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/hsv.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/safety.yaml --params-file /tmp/tracker_controller_launch_gt7g8x7p.yaml'].

@@ -1,0 +1,8 @@
+case,expected,status,pan_cmd,tilt_cmd,timeout_s,cmd_zero_s,inputs_received,verdict
+center,"x=0, z>0: 회전 없음",TRACKING:ok,0,0,,,90/90,PASS
+right,x=+0.4: 팬 음수(오른쪽으로 회전),TRACKING:ok,-23.87,0,,,90/90,PASS
+left,x=-0.4: 팬 양수,TRACKING:ok,23.87,0,,,90/90,PASS
+nodetect,"z=0: LOST:no_detection, 명령 0",LOST:no_detection,0,0,,,90/90,PASS
+silence,"발행 중단: 0.5 s 뒤 LOST:input_timeout, 명령 0",LOST:input_timeout,0,0,0.5216,0.5216,60/60,PASS
+stale,"같은 stamp 재전송: 신선한 입력 아님 → input_timeout, 명령 0",LOST:input_timeout,0,0,,,1/1,PASS
+down,y=+0.4: 틸트 양수(아래로 회전),TRACKING:ok,0,22.5,,,90/90,PASS
