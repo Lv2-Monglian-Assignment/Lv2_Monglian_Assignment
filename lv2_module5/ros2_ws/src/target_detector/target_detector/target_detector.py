@@ -9,7 +9,7 @@
   /target               PointStamped  x=ex, y=ey, z=면적비 (미검출: 0, 0, 0)
   /target_depth         PointStamped  x=depth_valid(0/1), y=유효 픽셀 비율, z=z_m (무효면 0)
   /target/position_cam  PointStamped  카메라 광학 좌표 X, Y, Z [m] (무효·미검출이면 NaN)
-규칙 (architecture.md 1. 인지)
+규칙 (docs/interface.md)
   - 카메라가 멈추면 발행하지 않는다(이전 영상에 새 시각을 붙이지 않음). stamp가 증가하지 않는 영상은 버린다.
   - 정상 영상에서 미검출이면 z=0을 발행한다(침묵 아님). 이전 좌표를 다시 쓰지 않는다.
   - 깊이는 후보 판단에 쓸 수 있다: size_check(실제 면적 검증)와 object_tracker(번호 유지).
@@ -17,7 +17,7 @@
   - object_tracker를 쓰면 /target은 '잡은 번호'의 물체다. 그 물체가 안 보이면 다른 물체가 보여도 z=0
     (relock_after_s가 지나면 새 물체를 고른다). 기억 위치를 /target으로 내보내지 않는다.
 입력 (object_tracker용, 선택)
-  /pan_tilt/joint_states  sensor_msgs/JointState  모터 각도 [rad]·속도 [rad/s] (tracker_controller가 발행)
+  /pan_tilt/joint_states  sensor_msgs/JointState  모터 각도 [rad]·속도 [rad/s] (opencr_bridge가 발행)
 """
 import csv
 import math
@@ -32,6 +32,7 @@ import rclpy
 from cv_bridge import CvBridge
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+from rclpy.executors import ExternalShutdownException
 from geometry_msgs.msg import PointStamped
 from sensor_msgs.msg import CameraInfo, Image, JointState
 from std_msgs.msg import String
@@ -57,7 +58,7 @@ class TargetDetector(Node):
         super().__init__('target_detector')
         p = lambda name, default: self.declare_parameter(name, default).value  # noqa: E731
 
-        # ---- 토픽 (#todo 팀 합의: architecture.md 토픽 총괄) ----
+        # ---- 토픽 (docs/interface.md) ----
         color_topic = p('color_topic', '/camera/camera/color/image_raw')
         depth_topic = p('depth_topic', '/camera/camera/aligned_depth_to_color/image_raw')
         info_topic = p('info_topic', '/camera/camera/color/camera_info')
@@ -67,7 +68,7 @@ class TargetDetector(Node):
         snapshot_topic = p('snapshot_topic', '/target/save_snapshot')    # #todo 합의
         self.publish_position = p('publish_position', True)
 
-        # ---- 검출 설정 (config/perception.yaml) ----
+        # ---- 검출 설정 (config/hsv.yaml) ----
         self.cfg = DetectorConfig(
             hsv_lower=tuple(p('hsv_lower', [100, 120, 50])),
             hsv_upper=tuple(p('hsv_upper', [130, 255, 255])),
@@ -102,7 +103,7 @@ class TargetDetector(Node):
             sync_error_s=float(p('track_sync_error_s', 0.02)),
             fast_rotation_deg_s=float(p('track_fast_rotation_deg_s', 30.0))))
         self.lock = TargetLock(relock_after_s=float(p('relock_after_s', 3.0)))
-        # 모터 각도 -> 기하 각도 변환값. tracker_controller(config/tracker.yaml)와 반드시 같은 값 #todo
+        # 모터 각도 -> 기하 각도 변환값. config/control.yaml의 공용 값(/**)을 제어 노드와 함께 쓴다
         self.pan_direction = int(p('pan_direction', 1))
         self.tilt_direction = int(p('tilt_direction', 1))
         self.cam_forward = float(p('cam_forward_m', 0.0))
@@ -117,7 +118,8 @@ class TargetDetector(Node):
         self.save_dir = os.path.expanduser(p('save_dir', '~/lv2_module5_results/images'))
         self.save_every_n = int(p('save_every_n', 0))          # 0: 주기 저장 안 함
         self.show_window = p('show_window', False)             # 모니터가 있는 PC에서만 true
-        self.run_id = p('run_id', '') or datetime.now().strftime('det_%Y%m%d_%H%M%S')
+        run_id = p('run_id', 'auto')
+        self.run_id = run_id if run_id not in ('', 'auto') else datetime.now().strftime('det_%Y%m%d_%H%M%S')
         log_dir = os.path.expanduser(p('log_dir', '~/lv2_module5_logs'))
         os.makedirs(log_dir, exist_ok=True)
         os.makedirs(self.save_dir, exist_ok=True)
@@ -159,7 +161,7 @@ class TargetDetector(Node):
         if self.use_tracker:
             self.create_subscription(JointState, joint_topic, self.on_joint, 10)
             if geo is None:
-                self.get_logger().warn('tracker_controller 없음: 회전 보정 없이 카메라 좌표로 번호를 유지합니다')
+                self.get_logger().warning('tracker_controller 없음: 회전 보정 없이 카메라 좌표로 번호를 유지합니다')
         self.target_pub = self.create_publisher(PointStamped, target_topic, out_qos)
         self.depth_pub = self.create_publisher(PointStamped, depth_out_topic, out_qos)
         self.pos_pub = self.create_publisher(PointStamped, position_topic, out_qos)
@@ -182,7 +184,7 @@ class TargetDetector(Node):
             return
         if list(msg.name[:2]) != ['pan', 'tilt']:      # dry_run의 시뮬레이션 각도(pan_sim)는 실제 카메라 자세가 아니다
             if not self.sim_joint_warned:
-                self.get_logger().warn(f'joint_states {list(msg.name)} 무시: 실제 모터 각도가 아님 (회전 보정 없이 동작)')
+                self.get_logger().warning(f'joint_states {list(msg.name)} 무시: 실제 모터 각도가 아님 (회전 보정 없이 동작)')
                 self.sim_joint_warned = True
             return
         t = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
@@ -365,8 +367,11 @@ def main():
     node = TargetDetector()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):   # Ctrl+C / launch 종료(SIGINT·SIGTERM)
         pass
+    except Exception:
+        if rclpy.ok():   # 종료 신호로 context가 닫힌 뒤 콜백이 발행하다 난 오류만 무시
+            raise
     finally:
         node.close()
         node.destroy_node()
