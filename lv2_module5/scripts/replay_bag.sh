@@ -15,9 +15,20 @@ SAVE_N=${4:-30}
 [ -d "$BAG" ] || { echo "bag 없음: $BAG"; exit 1; }
 [ -e "$OUT" ] && { echo "이미 있음: $OUT (다른 태그 사용)"; exit 1; }
 
-ros2 bag record -o "$OUT" --use-sim-time /target_replay /target_replay/depth /target_replay/position_cam &
+LOG=~/lv2_module5_logs/${RUN_ID}_${TAG}_bag_record.log
+mkdir -p ~/lv2_module5_logs
+# set -m: 스크립트 안에서 & 로 띄운 기록기는 SIGINT 무시로 시작해 아래 kill -INT로 끝나지 않는다(Lyrical, 2026-10-07 Pi 시험)
+# --disable-keyboard-controls: 키보드 제어가 터미널을 읽다 정지하지 않게
+set -m
+ros2 bag record -o "$OUT" --use-sim-time --disable-keyboard-controls \
+  --topics /target_replay /target_replay/depth /target_replay/position_cam > "$LOG" 2>&1 &
 REC=$!
-sleep 2   # 기록기가 구독을 마친 뒤 재생 시작 (앞 프레임 누락 방지)
+set +m
+for _ in $(seq 1 100); do   # 최대 20 s: 기록기가 준비된 뒤 재생 시작 (Pi에서 시작에 수 초 걸림, 앞 프레임 누락 방지)
+  grep -q "Listening for topics" "$LOG" 2>/dev/null && break
+  kill -0 $REC 2>/dev/null || break
+  sleep 0.2
+done
 # 재생은 launch 안에서 한다. 검출기는 스스로 끝나지 않으므로 bag 길이 + 15 s 뒤 Ctrl+C(INT)로 끝낸다
 timeout -s INT "$(( $(ros2 bag info "$BAG" | awk '/^Duration/{print int($2)+15}') ))" \
   ros2 launch tracker_bringup replay.launch.py bag:="$BAG" run_id:="${RUN_ID}_${TAG}" save_every_n:="$SAVE_N" $CONFIG_ARG || true
