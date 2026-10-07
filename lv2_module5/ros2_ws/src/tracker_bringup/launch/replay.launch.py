@@ -4,7 +4,8 @@
 터미널 1: ros2 launch tracker_bringup replay.launch.py
 터미널 2: ros2 bag play recordings/<run_id> --clock
 선택 인자: bag:=<bag 폴더>(주면 이 launch가 영상·CameraInfo·정렬 Depth·모터 각도만 --clock으로 함께 재생),
-          run_id:=<이름>(재처리 기록 <run_id>_detect.csv, 기본 auto), config_dir:=<폴더>(다른 설정으로 재처리, 회귀 비교)
+          run_id:=<이름>(재처리 기록 <run_id>_detect.csv, 기본 auto), config_dir:=<폴더>(다른 설정으로 재처리, 회귀 비교),
+          save_every_n:=<N>(N 프레임마다 재처리 원본·마스크·검출 이미지 저장, 기본 0=끔)
 """
 import os
 import tempfile
@@ -44,7 +45,8 @@ def _setup(context):
                                                    target_topic='/target_replay',
                                                    depth_out_topic='/target_replay/depth',
                                                    position_topic='/target_replay/position_cam',
-                                                   run_id=LaunchConfiguration('run_id').perform(context))],
+                                                   run_id=LaunchConfiguration('run_id').perform(context),
+                                                   save_every_n=int(LaunchConfiguration('save_every_n').perform(context)))],
                     output='screen')]
     bag = LaunchConfiguration('bag').perform(context)
     if bag:   # 저장된 /target·상태·명령은 재생하지 않는다(새 검출 결과와 섞지 않음)
@@ -56,6 +58,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('bag', default_value='', description='함께 재생할 bag 폴더 (비우면 검출기만 실행)'),
         DeclareLaunchArgument('run_id', default_value='auto', description='재처리 기록 이름'),
+        DeclareLaunchArgument('save_every_n', default_value='0', description='N 프레임마다 재처리 이미지 저장, 0=끔'),
         DeclareLaunchArgument('config_dir', default_value=DEFAULT_CONFIG, description='설정 폴더 (*.yaml 전부 사용)'),
         OpaqueFunction(function=_setup),
     ])

@@ -205,38 +205,33 @@ ros2 topic pub --once /tracking_enable std_msgs/msg/Bool "{data: false}"
 
 ## 7. bag 기록 및 재현
 
-자세한 파일 위치·메타데이터·해시는 [recordings/README.md](recordings/README.md)에 있습니다.
+bag 목록·접근 위치·메타데이터·재현 확인 기록은 [recordings/README.md](recordings/README.md)에 있습니다.
 
 ```bash
-# 기록 (영상·목표·깊이 유효성·상태·명령·모터 각도)  (TODO: 명령 토픽은 #7 합의 후 확정)
-ros2 bag record -o recordings/<run_id> \
-  /camera/camera/color/image_raw /camera/camera/color/camera_info /camera/camera/aligned_depth_to_color/image_raw \
-  /target /target_depth /tracking_status /pan_tilt/joint_states /<motor_cmd_topic>
-
-# 정보 확인
-ros2 bag info recordings/<run_id>
+# 기록 (Pi): full.launch.py run_id:=<run_id>로 실행·추적 중인 상태에서
+scripts/record_bag.sh <run_id> 30          # recordings/<run_id>/ + <run_id>_info.txt(커밋·설정·bag info·sha256)
 ```
 
-**재현할 때는 반드시 모터 출력을 비활성화합니다.**
+**재현할 때는 반드시 모터 출력을 비활성화합니다.** 재현 스크립트는 제어·브리지 노드를 띄우지 않습니다.
 
 | 재현 | 방법 |
 |---|---|
-| 입력 재처리 | bag의 영상·정렬 Depth·모터 각도만 검출기로 전달하고 결과는 `/target_replay`로 분리 출력 |
-| 결과 재분석 | 저장된 `/target`·상태·명령으로 지표 재계산 |
+| 입력 재처리 | `scripts/replay_bag.sh <run_id>`: bag의 영상·CameraInfo·정렬 Depth·모터 각도만 `--clock`으로 재생 → `target_detector`(`use_sim_time`)가 **`/target_replay`** 로 출력 → `recordings/<run_id>_replay/`로 기록 |
+| 결과 재분석 | `python3 scripts/analyze_bag.py recordings/<run_id> --csv ~/lv2_module5_logs/<run_id>.csv --replay recordings/<run_id>_replay --save`: 저장된 `/target`·상태·명령으로 지표를 다시 계산해 실행 중 CSV와 대조하고, 재처리 결과와 같은 영상 stamp끼리 비교 |
+
+토픽 선택·remap은 [replay.launch.py](ros2_ws/src/tracker_bringup/launch/replay.launch.py)에 있습니다. 직접 실행하려면 아래 명령을 씁니다.
 
 ```bash
-# 입력 재처리 예시 (TODO: 이식 PR에서 replay.launch.py로 교체)
+ros2 launch tracker_bringup replay.launch.py run_id:=<run_id>_replay      # 검출기만, 출력 /target_replay*
 ros2 bag play recordings/<run_id> --clock --topics \
-  /camera/camera/color/image_raw /camera/camera/color/camera_info /camera/camera/aligned_depth_to_color/image_raw /pan_tilt/joint_states
-ros2 run target_detector target_detector --ros-args -p use_sim_time:=true -r /target:=/target_replay
-
-# 결과 재분석
-python3 <analysis_script>.py recordings/<run_id>
+  /camera/camera/color/image_raw /camera/camera/color/camera_info \
+  /camera/camera/aligned_depth_to_color/image_raw /pan_tilt/joint_states
 ```
 
-- 저장된 `/target`과 새 검출 결과를 같은 토픽에 섞지 않습니다.
-- 과거 bag 시각과 현재 시각을 섞어 타임아웃·지연을 계산하지 않습니다.
+- 저장된 `/target`은 재생하지 않아, 새 검출 결과와 섞이지 않습니다.
+- 분석은 bag의 시각만 씁니다. 과거 bag 시각과 현재 벽시계를 섞어 타임아웃·지연을 계산하지 않습니다.
 - 검출의 번호 유지(같은 색 물체 여러 개 구분)는 촬영 순간의 모터 각도를 쓰므로 재처리에도 `/pan_tilt/joint_states`가 필요합니다.
+- 오프라인 재현은 실제 하드웨어 폐루프 시연과 별개입니다.
 
 ## 8. 결과 위치
 
