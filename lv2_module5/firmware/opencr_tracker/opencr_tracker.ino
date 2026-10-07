@@ -6,20 +6,27 @@
 //                I                        IDLE 자세(두 축 0°)로 이동 후 정지
 //                X                        즉시 정지 (속도 0, 토크 유지)
 //                O                        토크 OFF  (#7에 없는 추가안)
+//                H                        지금 자세를 기준 자세(0°)로 설정 (OFF·HOLD에서만) → 회신 B
+//                B <pan_tick> <tilt_tick> 기준 자세 tick(0~4095)을 지정 (OFF·HOLD에서만, 브리지가 시작 때 보냄) → 회신 B
+//                                         H·B는 #7에 없는 추가안. 값은 Pi의 config/device.yaml(home_ticks)에 저장한다
 // 토크는 0이 아닌 V 또는 I를 받을 때 켠다.
 //   OpenCR → Pi  S <ms> <pan_deg> <tilt_deg> <pan_dps> <tilt_dps> <state>   50 Hz
 //                E <code> <text>          오류·경고
+//                B <pan_tick> <tilt_tick> 현재 기준 자세 tick (H·B 처리 후)
 //
 // 제어 루프 100 Hz: 위치·속도 읽기 → 통신 타임아웃 검사 → 명령 선택(추종/IDLE 복귀 P) →
 // 각도 제한(한계에 가까울수록 바깥 방향 속도를 줄임) → 속도 상한 → 속도 쓰기.
-// 각도는 IDLE 기준 관절각이며 부호는 URDF와 같다: 팬 + = 왼쪽, 틸트 + = 위.
-// IDLE(임시 정의): 팬 원시값 0°(0 tick), 틸트 원시값 180°(2048 tick). Homing Offset은 쓰지 않는다.
+// 각도는 IDLE 기준 관절각이며 +는 tick 증가 방향이다: 팬 + = 왼쪽, 틸트 + = 아래(카메라가 아래를 봄).
+//   2026-10-06 실측(scripts/test/direction_test.py와 같은 절차). Pi 쪽 부호는 config/device.yaml의 direction이 맞춘다.
+// IDLE(기준 자세 0°): 2026-10-06 사용자가 정한 정면·수평 자세의 tick (팬 1654, 틸트 2007). Homing Offset은 쓰지 않는다.
 //
 // 상태: OFF(토크 OFF) / HOLD(토크 ON, 속도 0) / TRACK(속도 추종) / HOMING(IDLE로 이동) / FAULT
 // 보드 측 안전 정지:
-//   - 유효한 명령이 300 ms 없으면 속도 0(HOLD), 5 s 더 없으면 토크 OFF
+//   - 유효한 명령이 300 ms 없으면 속도 0(HOLD). 토크는 유지한다(틸트에 달린 카메라가 처지지 않게, 2026-10-06 팀 결정).
+//     토크를 끄려면 O 명령 또는 전원 차단
 //   - 모터 Bus Watchdog 200 ms: OpenCR가 멈춰도 모터가 스스로 정지
 //   - DXL 통신 실패·루프 지연 시 토크 OFF 후 FAULT (RESET 필요)
+// USB 출력은 막히지 않게 보낸다(LineOut): Pi가 읽지 않아도 제어 루프가 늦어지지 않는다.
 #include <Dynamixel2Arduino.h>
 #include <math.h>
 #include <stdlib.h>
@@ -28,10 +35,33 @@
 using namespace ControlTableItem;
 Dynamixel2Arduino dxl(Serial3, 84);  // OpenCR DXL 포트 / 방향 제어 핀
 
+// ---- 막히지 않는 USB 출력 ----
+// OpenCR의 기본 USB 출력은 Pi가 읽지 않아 송신 버퍼(2 KB)가 차면 호출마다 최대 100 ms 기다린다.
+// 그러면 10 ms 제어 루프가 늦어져 FAULT(토크 OFF, 틸트 처짐)가 난다(2026-10-05 실측: 시험 스크립트가 입력 대기 중 읽지 않아 발생).
+// 그래서 한 줄을 모아 CDC_Itf_Write로 한 번에 보내고, 자리가 없으면 기다리지 않고 그 줄을 버린 뒤 개수만 센다.
+extern "C" int32_t CDC_Itf_Write(uint8_t *p_buf, uint32_t length);  // 버퍼 자리 없으면 즉시 0 반환
+class LineOut : public Print {
+ public:
+  size_t write(uint8_t c) override {
+    if (used_ < sizeof(buf_)) buf_[used_++] = c;
+    return 1;
+  }
+  void send() {  // 줄바꿈을 붙여 한 번에 보낸다
+    write('\r'); write('\n');
+    if (CDC_Itf_Write(buf_, used_) <= 0) ++dropped;
+    used_ = 0;
+  }
+  uint32_t dropped = 0;
+ private:
+  uint8_t buf_[128];
+  size_t used_ = 0;
+};
+LineOut out;
+
 const uint32_t DXL_BAUD = 1000000;
 const uint8_t N = 2;
 const uint8_t IDS[N] = {11, 12};
-const int32_t IDLE_TICKS[N] = {0, 2048};           // 원시값 0°, 180°
+const int32_t IDLE_TICKS[N] = {1654, 2007};        // 기본 기준 자세 tick (2026-10-06 실측). 실행 중 H·B로 바뀐다
 const float LIMIT_DEG[N] = {180.0f, 40.0f};        // 소프트 한계 (둘 다 기구 여유를 고려한 값)
 const float ENABLE_LIMIT_DEG[N] = {170.0f, 45.0f}; // 토크를 켤 때 IDLE에서 이보다 멀면 거부
 const float SPEED_LIMIT_DPS = 120.0f;              // 펌웨어 속도 상한 (Kp 시험과 같은 값)
@@ -45,7 +75,7 @@ const uint32_t PERIOD_US = 10000;                  // 100 Hz 제어 루프
 const uint8_t STATUS_DIV = 2;                      // 상태 회신 50 Hz
 const uint32_t LATE_US = 5 * PERIOD_US;            // 이보다 늦으면 FAULT
 const uint32_t CMD_TIMEOUT_MS = 300;               // 보드 측 통신 타임아웃
-const uint32_t TORQUE_OFF_AFTER_MS = 5000;         // 타임아웃 후 이 시간 더 명령이 없으면 토크 OFF
+const uint32_t TORQUE_OFF_AFTER_MS = 0;            // 타임아웃 후 이 시간 더 명령이 없으면 토크 OFF. 0 = 끄지 않음(토크 유지)
 const uint8_t BUS_WATCHDOG_20MS = 10;              // 모터 Bus Watchdog 200 ms
 const int32_t PROFILE_ACCEL_RAW = 30;              // 214.577 rev/min² 단위 → 약 640°/s²
 
@@ -57,7 +87,9 @@ enum State { OFF, HOLD, TRACK, HOMING, FAULT };
 const char *STATE_NAMES[] = {"OFF", "HOLD", "TRACK", "HOMING", "FAULT"};
 State state = OFF;
 
+int32_t idle_ticks[N] = {IDLE_TICKS[0], IDLE_TICKS[1]};  // 지금 쓰는 기준 자세 tick (0~4095)
 int32_t base_ticks[N];         // 가장 가까운 IDLE 등가 위치(전원 투입 시 0~4095로 초기화되므로 보정)
+int32_t raw_ticks[N];          // 마지막으로 읽은 Present Position (여러 바퀴 누적값)
 float pos_deg[N], vel_dps[N];  // IDLE 기준 관절각, 측정 속도
 float cmd_dps[N] = {0, 0};     // Pi 명령
 uint32_t last_cmd_ms = 0, last_us = 0, home_start_ms = 0;
@@ -72,7 +104,7 @@ int32_t wrapTicks(int32_t t) {  // (−2048, 2048]
 }
 
 void sendError(int code, const char *text) {
-  Serial.print("E "); Serial.print(code); Serial.print(' '); Serial.println(text);
+  out.print("E "); out.print(code); out.print(' '); out.print(text); out.send();
 }
 
 void fault(const char *reason) {
@@ -97,6 +129,7 @@ bool readState() {
     int32_t v, p;
     memcpy(&v, buf, 4);
     memcpy(&p, buf + 4, 4);
+    raw_ticks[i] = p;
     pos_deg[i] = (p - base_ticks[i]) * DEG_PER_TICK;
     vel_dps[i] = v * DPS_PER_RAW;
   }
@@ -161,6 +194,28 @@ bool parseVelocity(const char *line, float &pan, float &tilt) {
   return *end == '\0';
 }
 
+// 기준 자세를 바꾼다. 움직이는 중(TRACK·HOMING)에는 기준이 바뀌면 각도 제한이 튀므로 거부한다.
+void setHome(const char *line, bool here) {
+  if (state != OFF && state != HOLD) { sendError(2, "H/B: stop first (X)"); return; }
+  if (!readState()) return;
+  int32_t t[N];
+  if (here) {
+    for (uint8_t i = 0; i < N; ++i) t[i] = ((raw_ticks[i] % 4096) + 4096) % 4096;
+  } else {
+    char *end;
+    t[0] = strtol(line + 1, &end, 10);
+    const char *cursor = end;
+    t[1] = strtol(cursor, &end, 10);
+    if (end == cursor || t[0] < 0 || t[0] > 4095 || t[1] < 0 || t[1] > 4095) { sendError(2, "B: need 2 ticks 0~4095"); return; }
+  }
+  for (uint8_t i = 0; i < N; ++i) {
+    idle_ticks[i] = t[i];
+    base_ticks[i] = raw_ticks[i] - wrapTicks(raw_ticks[i] - t[i]);
+    pos_deg[i] = (raw_ticks[i] - base_ticks[i]) * DEG_PER_TICK;
+  }
+  out.print("B "); out.print(idle_ticks[0]); out.print(' '); out.print(idle_ticks[1]); out.send();
+}
+
 void handleLine(const char *line) {
   const char c = line[0];
   const bool bare = line[1] == '\0';
@@ -187,6 +242,8 @@ void handleLine(const char *line) {
   } else if (c == 'O' && bare) {
     cmd_dps[0] = cmd_dps[1] = 0;
     if (state != OFF && state != FAULT) torqueOffAll();
+  } else if ((c == 'H' && bare) || c == 'B') {
+    setHome(line, c == 'H');
   } else {
     sendError(2, "bad command");
   }
@@ -219,10 +276,10 @@ float applyLimits(uint8_t i, float dps) {
 }
 
 void sendStatus() {
-  Serial.print("S "); Serial.print(millis());
-  for (uint8_t i = 0; i < N; ++i) { Serial.print(' '); Serial.print(pos_deg[i], 2); }
-  for (uint8_t i = 0; i < N; ++i) { Serial.print(' '); Serial.print(vel_dps[i], 2); }
-  Serial.print(' '); Serial.println(STATE_NAMES[state]);
+  out.print("S "); out.print(millis());
+  for (uint8_t i = 0; i < N; ++i) { out.print(' '); out.print(pos_deg[i], 2); }
+  for (uint8_t i = 0; i < N; ++i) { out.print(' '); out.print(vel_dps[i], 2); }
+  out.print(' '); out.print(STATE_NAMES[state]); out.send();
 }
 
 void setup() {
@@ -242,9 +299,9 @@ void setup() {
     // 속도 모드에서 위치는 전원 투입 때만 0~4095로 초기화되므로, 여기서 한 번 IDLE 기준을 잡는다.
     const int32_t p = dxl.readControlTableItem((uint8_t)PRESENT_POSITION, IDS[i], 10);
     if (!dxlOk()) { fault("read position"); return; }
-    base_ticks[i] = p - wrapTicks(p - IDLE_TICKS[i]);
+    base_ticks[i] = p - wrapTicks(p - idle_ticks[i]);
   }
-  Serial.println("READY opencr_tracker: V <pan_dps> <tilt_dps> | I | X | O, newline. Status S 50 Hz.");
+  out.print("READY opencr_tracker: V <pan_dps> <tilt_dps> | I | X | O, newline. Status S 50 Hz."); out.send();
   last_us = micros();
 }
 
@@ -267,7 +324,7 @@ void loop() {
       state = HOLD;
       if (!timeout_reported) { sendError(1, "command timeout; stop"); timeout_reported = true; }
     }
-    if (silent_ms > CMD_TIMEOUT_MS + TORQUE_OFF_AFTER_MS) {
+    if (TORQUE_OFF_AFTER_MS > 0 && silent_ms > CMD_TIMEOUT_MS + TORQUE_OFF_AFTER_MS) {
       if (torqueOffAll()) sendError(1, "command timeout; torque off");
       return;
     }

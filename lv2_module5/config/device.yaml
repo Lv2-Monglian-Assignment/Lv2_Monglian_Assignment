@@ -4,6 +4,8 @@ opencr_bridge:
   ros__parameters:
     serial_port: /dev/ttyACM0                  # #todo 실제 OpenCR 포트 (/dev/serial/by-id/... 권장). /dev/ttyUSB0는 라이다
     serial_baud: 115200                        # 펌웨어 Serial.begin과 같게
+    home_ticks: [1654, 2007]                   # 기준 자세(0°) tick [팬, 틸트], 0~4095. 장비마다 다름: scripts/test/pose_tool.py의 h 키로 저장
+                                               # 브리지가 시작할 때 펌웨어에 B로 보낸다. 2026-10-06 실험 장비 정면·수평
     dry_run: false                             # true: 시리얼 미사용, 관절 각도는 명령 적분(시뮬레이션, 이름 pan_sim·tilt_sim)
     bridge_rate_hz: 50.0                       # [Hz] V 전송 주기. 펌웨어 CMD_TIMEOUT_MS(300 ms)보다 충분히 짧게
     torque_off_on_exit: false                  # true: 종료 시 O(토크 OFF). 틸트(카메라)가 처질 수 있음
