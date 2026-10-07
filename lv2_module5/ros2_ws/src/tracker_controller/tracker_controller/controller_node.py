@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """팬·틸트 추적 제어 노드 (라즈베리파이에서 실행). 시리얼은 tracker_bridge/opencr_bridge가 맡는다.
 
+규약: lv2_module5/docs/interface.md
 입력 (같은 Pi의 인지 노드 -> 이 노드)
   /target              PointStamped  x=ex, y=ey(정규화 중심 오차), z=면적비(0=미검출)   매 영상
   /target/position_cam PointStamped  카메라 광학 좌표 [m] (깊이 무효·미검출이면 NaN)   매 영상, /target과 같은 stamp
@@ -10,7 +11,8 @@
   /pan_tilt/command    Vector3Stamped x=팬, y=틸트 [deg/s]  50 Hz (IDLE·LOST에서도 0을 계속 발행)
   /tracking_status     String "상태:사유"
 동작
-  TRACKING : 영상 중심 오차 P 제어 (발제 문제 3 식)
+  TRACKING : 영상 중심 오차 P 제어 (발제 문제 3 식). 정규화 오차를 카메라 각도로 바꿔 각도 Kp [1/s]를 곱한다
+             각도 오차 = atan(ex x tan(hfov/2)), 명령 = clamp(direction x Kp x 각도 오차) [deg/s]
   LOST     : 즉시 정지
   SEARCHING: (심화) 기준 좌표에 기억한 목표의 예측 위치로 카메라를 돌린다
 """
@@ -23,6 +25,7 @@ from datetime import datetime
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
+from rclpy.executors import ExternalShutdownException
 from geometry_msgs.msg import PointStamped, Vector3Stamped
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Bool, String
@@ -52,12 +55,15 @@ class TrackerNode(Node):
         self.base_frame = p('base_frame', 'pan_tilt_base')                   # #todo 합의
         auto_enable = p('auto_enable', False)
 
-        # ---- 제어 ----
-        self.pan_cfg = AxisConfig(kp=p('pan_kp', 20.0), direction=int(p('pan_direction', 1)),
-                                  speed_limit=p('pan_speed_limit_deg_s', 30.0), deadband=p('pan_deadband', 0.03))
-        self.tilt_cfg = AxisConfig(kp=p('tilt_kp', 15.0), direction=int(p('tilt_direction', 1)),
+        # ---- 제어: Kp는 각도 오차 [deg] -> 속도 [deg/s] 단위 [1/s] (report 3-1 계단 응답과 같은 단위) ----
+        hfov_deg = p('hfov_deg', 55.7)                      # CameraInfo: 2*atan(W/(2*fx))
+        vfov_deg = p('vfov_deg', 43.2)                      # CameraInfo: 2*atan(H/(2*fy))
+        self.pan_cfg = AxisConfig(kp=p('pan_kp', 2.0), direction=int(p('pan_direction', 1)),
+                                  speed_limit=p('pan_speed_limit_deg_s', 30.0), deadband=p('pan_deadband', 0.03),
+                                  half_fov_deg=hfov_deg / 2)
+        self.tilt_cfg = AxisConfig(kp=p('tilt_kp', 2.5), direction=int(p('tilt_direction', 1)),
                                    speed_limit=p('tilt_speed_limit_deg_s', 20.0), deadband=p('tilt_deadband', 0.05),
-                                   enabled=p('tilt_enabled', True))
+                                   enabled=p('tilt_enabled', True), half_fov_deg=vfov_deg / 2)
         search = SearchConfig(enabled=p('search_enabled', False), delay_s=p('search_delay_s', 0.3),
                               timeout_s=p('search_timeout_s', 3.0), kp=p('search_kp', 2.0),
                               speed_limit=p('search_speed_limit_deg_s', 20.0),
@@ -69,8 +75,8 @@ class TrackerNode(Node):
                                    require_increasing_stamp=p('require_increasing_stamp', True))
 
         # ---- 카메라·기구 기하 (#todo 측정) ----
-        self.hfov = math.radians(p('hfov_deg', 69.0))       # #todo CameraInfo: 2*atan(W/(2*fx))
-        self.vfov = math.radians(p('vfov_deg', 42.0))       # #todo CameraInfo: 2*atan(H/(2*fy))
+        self.hfov = math.radians(hfov_deg)
+        self.vfov = math.radians(vfov_deg)
         self.cam_forward = p('cam_forward_m', 0.0)          # #todo 틸트 축 -> 광학 중심, 앞 방향 [m]
         self.cam_up = p('cam_up_m', 0.0)                    # #todo 틸트 축 -> 광학 중심, 위 방향 [m]
         self.pose_time_source = p('pose_time_source', 'stamp')  # stamp: 영상 stamp 시각의 자세 / receive: 수신 시각-지연
@@ -84,7 +90,8 @@ class TrackerNode(Node):
         self.joint_vel = (math.nan, math.nan)   # [deg/s] 펌웨어 측정 속도 (기록용)
 
         # ---- 기록 ----
-        self.run_id = p('run_id', '') or datetime.now().strftime('run_%Y%m%d_%H%M%S')
+        run_id = p('run_id', 'auto')
+        self.run_id = run_id if run_id not in ('', 'auto') else datetime.now().strftime('run_%Y%m%d_%H%M%S')
         log_dir = os.path.expanduser(p('log_dir', '~/lv2_module5_logs'))
         os.makedirs(log_dir, exist_ok=True)
         self.csv_file = open(os.path.join(log_dir, f'{self.run_id}.csv'), 'w', newline='')
@@ -119,8 +126,8 @@ class TrackerNode(Node):
         self.create_timer(1.0, self.flush_logs)
         self.get_logger().info(
             f'run_id={self.run_id} search={search.enabled} '
-            f'pan(kp={self.pan_cfg.kp}, dir={self.pan_cfg.direction}) '
-            f'tilt(kp={self.tilt_cfg.kp}, dir={self.tilt_cfg.direction})')
+            f'pan(kp={self.pan_cfg.kp}/s, dir={self.pan_cfg.direction}, limit={self.pan_cfg.speed_limit}) '
+            f'tilt(kp={self.tilt_cfg.kp}/s, dir={self.tilt_cfg.direction}, limit={self.tilt_cfg.speed_limit})')
         if auto_enable:
             self.set_enabled(True)
 
@@ -273,8 +280,11 @@ def main():
     node = TrackerNode()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):   # Ctrl+C / launch 종료(SIGINT·SIGTERM)
         pass
+    except Exception:
+        if rclpy.ok():   # 종료 신호로 context가 닫힌 뒤 콜백이 발행하다 난 오류만 무시
+            raise
     finally:
         node.close()
         node.destroy_node()

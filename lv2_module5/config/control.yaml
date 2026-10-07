@@ -9,7 +9,7 @@
     # ---- 모터 속도 부호: target_detector(번호 유지 회전 보정)도 같은 값을 써야 해서 공통으로 둔다 ----
     pan_direction: -1                          # 실측(2026-10-05, 샘플 펌웨어): 속도 + = 카메라 뒤에서 볼 때 왼쪽 -> 오른쪽 목표엔 −
     tilt_direction: 1                          # 실측(2026-10-05, 샘플 펌웨어): 속도 + = tick 증가 = 카메라 아래쪽
-                                               # #todo opencr_tracker 주석은 '틸트 + = 위'라고 적혀 있어 반대. Pi에서 V 0 5로 다시 확인
+                                               # 2026-10-06 방향 시험(scripts/test/direction_test.py, 15 deg/s x 2 s)으로 확인: 팬 + = 왼쪽, 틸트 + = 아래
 
 tracker_controller:
   ros__parameters:
@@ -21,13 +21,15 @@ tracker_controller:
     base_frame: pan_tilt_base                  # #todo
     auto_enable: false
 
-    # ---- TRACKING: 영상 중심 오차 P 제어 ----
-    pan_kp: 20.0                               # [deg/s per 1.0 정규화 오차] #todo Kp 비교 2종
-    pan_speed_limit_deg_s: 30.0                # [deg/s] 펌웨어 상한 120 이내 #todo
+    # ---- TRACKING: 영상 중심 오차를 카메라 각도로 바꾼 P 제어 ----
+    # 명령 [deg/s] = clamp(direction x Kp x atan(e x tan(시야각/2)) [deg]), 시야각은 camera.yaml의 hfov_deg·vfov_deg
+    # Kp는 report 3-1 계단 응답의 각도 루프 Kp [1/s] 그대로 (근거: docs/kp_conversion.md)
+    pan_kp: 2.0                                # [1/s] 팀 결정 (0.1만 올려도 계단 응답 오버슈트 급증) #todo Kp 비교 2종
+    pan_speed_limit_deg_s: 120.0               # [deg/s] 팀 속도 상한(Kp 계단 시험 조건), 펌웨어 상한과 같음. 화면 끝 오차 명령 55.7
     pan_deadband: 0.03                         # [정규화] #todo
     tilt_enabled: true
-    tilt_kp: 15.0                              # #todo
-    tilt_speed_limit_deg_s: 20.0               # [deg/s] #todo
+    tilt_kp: 2.5                               # [1/s] 팀 결정 (오버슈트 없이 2.0보다 상승 25 % 빠름)
+    tilt_speed_limit_deg_s: 120.0              # [deg/s] 화면 끝 오차 명령 54.0
     tilt_deadband: 0.05                        # [정규화] #todo
 
     # ---- SEARCHING (심화): 기억한 목표 예측 위치로 이동 ----
@@ -45,7 +47,8 @@ tracker_controller:
     memory_window_s: 0.1                       # [s] 속도 추정 구간. 0.1 또는 0.25 (이전 0.5: 반응이 느림) #todo
     memory_max_speed_m_s: 0.5                  # [m/s] 추정 속도 상한 #todo
     memory_horizon_s: 1.0                      # [s] 외삽 최대 시간
-    memory_max_age_s: 3.0                      # [s] 이보다 오래된 기억은 사용 안 함
+    memory_max_age_s: 4.0                      # [s] 이보다 오래된 기억은 사용 안 함. search_delay_s + search_timeout_s(3.3)보다 길게:
+                                               # 짧으면 탐색이 시간 상한 전에 search_unavailable로 끝남(2026-10-06 도전 B 시험)
 
     # ---- 기록 ----
     log_dir: ~/lv2_module5_logs

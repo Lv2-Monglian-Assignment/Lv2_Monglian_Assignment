@@ -1,5 +1,5 @@
 # 정지 규칙. 정지 계층: 인지(카메라 멈추면 발행 중단) -> 제어(z=0 즉시 0, 입력 타임아웃) -> 브리지(제어 명령 끊기면 0 전송)
-#   -> OpenCR(V가 300 ms 없으면 속도 0, 5 s 더 없으면 토크 OFF) -> 모터 Bus Watchdog(200 ms)
+#   -> OpenCR(V가 300 ms 없으면 속도 0, 토크 유지: 카메라 처짐 방지, 2026-10-06 결정) -> 모터 Bus Watchdog(200 ms)
 tracker_controller:
   ros__parameters:
     input_timeout_s: 0.5                       # [s] 발제 기본값

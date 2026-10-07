@@ -1,6 +1,6 @@
 """ROS 없이 상태·명령·좌표 규칙을 시험한다: python3 -m pytest test/"""
 import math
-from tracker_controller.tracking_logic import (AxisConfig, SearchConfig, TrackingLogic,
+from tracker_controller.tracking_logic import (AxisConfig, SearchConfig, TrackingLogic, error_angle_deg, p_command,
                                              TRACKING, LOST, IDLE, SEARCHING)
 from tracker_controller import geometry as g
 
@@ -111,3 +111,18 @@ def test_memory_short_window_still_estimates_speed():
     for i in range(6):
         m.add(i / 30, (1.0, 0.3 * i / 30, 0.0), True)                      # 왼쪽으로 0.3 m/s
     assert abs(m.velocity[1] - 0.3) < 1e-6
+
+
+def test_angle_kp_matches_angle_loop():
+    """각도 Kp [1/s]: 화면 오차를 실제 각도로 바꿔 곱한다. 팬 Kp 2.0, 시야각 55.7° (fx 605.85)"""
+    pan = AxisConfig(kp=2.0, direction=-1, speed_limit=120.0, deadband=0.03, half_fov_deg=55.7 / 2)
+    assert math.isclose(error_angle_deg(1.0, 55.7 / 2), 27.85, abs_tol=1e-6)        # 화면 끝 = 시야각/2
+    ex10 = math.tan(math.radians(10)) / math.tan(math.radians(55.7 / 2))           # 목표가 오른쪽 10°에 있을 때
+    assert math.isclose(p_command(ex10, pan), -20.0, abs_tol=1e-6)                 # 2.0 x 10° = 20°/s, 오른쪽(−)
+    assert math.isclose(p_command(-1.0, pan), 2.0 * 27.85, abs_tol=1e-6)           # 화면 왼쪽 끝 55.7°/s
+    assert p_command(0.02, pan) == 0.0                                              # 데드밴드(정규화 0.03) 안
+
+
+def test_angle_kp_respects_speed_limit():
+    tilt = AxisConfig(kp=2.5, direction=1, speed_limit=20.0, deadband=0.05, half_fov_deg=43.2 / 2)
+    assert p_command(1.0, tilt) == 20.0 and p_command(-1.0, tilt) == -20.0
