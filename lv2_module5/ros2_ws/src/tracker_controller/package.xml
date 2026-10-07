@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>tracker_controller</name>
+  <version>0.1.0</version>
+  <description>Lv2 module 5 pan-tilt camera tracking control (target error -> pan/tilt velocity command)</description>
+  <maintainer email="todo@example.com">todo</maintainer>  <!-- #todo 담당자 -->
+  <license>TODO</license>  <!-- #todo 팀 합의 -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <test_depend>python3-pytest</test_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
