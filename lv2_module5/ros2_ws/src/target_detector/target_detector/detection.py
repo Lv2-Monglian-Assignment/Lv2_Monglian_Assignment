@@ -1,6 +1,6 @@
 """파란색 목표 검출과 깊이·3D 좌표 계산 (ROS에 의존하지 않는 순수 함수).
 
-흐름(architecture.md 1. 인지):
+흐름(docs/interface.md 2절):
   영상 -> (축소) -> HSV -> inRange 마스크 -> open·close 잡음 제거 -> findContours -> (좌표 원본 복원)
   -> 면적 >= min_area 후보
   -> (깊이가 있으면) 후보마다 깊이 중앙값 Z, 실제 면적 [cm^2], 카메라 좌표 X, Y, Z
@@ -28,7 +28,7 @@ import numpy as np
 
 @dataclass
 class DetectorConfig:
-    hsv_lower: tuple = (100, 120, 50)     # OpenCV HSV: H 0~179, S·V 0~255. 실제 사용값은 config/perception.yaml
+    hsv_lower: tuple = (100, 120, 50)     # OpenCV HSV: H 0~179, S·V 0~255. 기본값은 단위 시험용, 실제 사용값은 config/hsv.yaml
     hsv_upper: tuple = (130, 255, 255)    # 파란색 #todo
     morph_kernel: int = 5                 # 잡음 제거 커널 [px] (open -> close)
     min_area_px: float = 150.0            # 후보 최소 면적 [px^2] #todo 거리 범위에 맞게
