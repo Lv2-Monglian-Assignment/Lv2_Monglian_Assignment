@@ -1,0 +1,71 @@
+{
+  "execution_tool": "Codex terminal tools",
+  "packages_built": [
+    "target_detector",
+    "tracker_bringup"
+  ],
+  "build_command": "colcon build --symlink-install --packages-select target_detector tracker_bringup",
+  "build_passed": true,
+  "synthetic_detector_tests_passed": 7,
+  "synthetic_provenance_tests_passed": 8,
+  "launch_check": {
+    "node_ready": true,
+    "clean_child_exit": true,
+    "traceback": false,
+    "domain": 187,
+    "camera_started": false,
+    "actual_camera_stream_test": false,
+    "execution_tool": "Codex terminal tools"
+  },
+  "original_pi_measurements_reused_as_provenance": true,
+  "new_package_real_camera_test": false,
+  "git_commit_or_push_performed": false,
+  "source_code_and_config_preserved": true,
+  "preexisting_non_perception_files_preserved": true,
+  "changed_preexisting_files": [
+    ".gitignore",
+    "README.md",
+    "lv2_module5/README.md",
+    "lv2_module5/config/hsv.yaml",
+    "lv2_module5/report.md",
+    "lv2_module5/ros2_ws/src/tracker_bringup/launch/perception.launch.py",
+    "lv2_module5/team.md"
+  ],
+  "copied_source_files": 122,
+  "script_help_checks": [
+    {
+      "script": "detect_image.py",
+      "exit_code": 0
+    },
+    {
+      "script": "capture_ros_image.py",
+      "exit_code": 0
+    },
+    {
+      "script": "capture_ros_dataset.py",
+      "exit_code": 0
+    },
+    {
+      "script": "label_perception_dataset.py",
+      "exit_code": 0
+    },
+    {
+      "script": "evaluate_perception_dataset.py",
+      "exit_code": 0
+    },
+    {
+      "script": "observe_ros_images.py",
+      "exit_code": 0
+    },
+    {
+      "script": "check_target_headers.py",
+      "exit_code": 0
+    },
+    {
+      "script": "check_target_stream.py",
+      "exit_code": 0
+    }
+  ],
+  "local_markdown_links_ok": true,
+  "new_document_language_scan_ok": true
+}

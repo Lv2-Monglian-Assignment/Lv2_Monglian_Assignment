@@ -1,0 +1,10 @@
+{
+  "purpose": "Synthetic software integration and output-preservation verification only",
+  "synthetic_generated_images": 40,
+  "csv_rows": 40,
+  "per_frame_output_folders": 40,
+  "expected_confusion_counts_verified": true,
+  "existing_output_preserved": true,
+  "is_real_camera_evaluation": false,
+  "execution_tool": "Codex terminal tools"
+}

@@ -1,0 +1,3904 @@
+{
+  "purpose": "Short target delivery observation; not accuracy or long-term stability evaluation",
+  "recorded_at_utc": "2026-10-06T06:46:32.572980+00:00",
+  "topic": "/target",
+  "seconds_requested": 10.0,
+  "criteria": {
+    "min_messages": 30,
+    "max_gap_seconds": 0.5,
+    "frame_id": "camera_color_optical_frame"
+  },
+  "subscription_qos": "best_effort / keep_last depth 1 / volatile",
+  "environment": {
+    "ROS_DOMAIN_ID": "30",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+    "ROS_AUTOMATIC_DISCOVERY_RANGE": "SUBNET",
+    "ROS_STATIC_PEERS": "10.2.12.61",
+    "CYCLONEDDS_URI": "file:///home/pa12/Desktop/vision_project/config/cyclonedds-pc-wifi.xml"
+  },
+  "source_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2",
+  "samples": [
+    {
+      "arrival_seconds": 0.09367715199914528,
+      "stamp": {
+        "sec": 1791269192,
+        "nanosec": 801276855
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2664176220253605,
+        0.1674953679578484,
+        0.015616861979166667
+      ]
+    },
+    {
+      "arrival_seconds": 0.1294074350007577,
+      "stamp": {
+        "sec": 1791269192,
+        "nanosec": 834634033
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26708394505033556,
+        0.16714191251864274,
+        0.015520833333333333
+      ]
+    },
+    {
+      "arrival_seconds": 0.1584458840006846,
+      "stamp": {
+        "sec": 1791269192,
+        "nanosec": 867990967
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26715217353321463,
+        0.16731036912790767,
+        0.015525716145833333
+      ]
+    },
+    {
+      "arrival_seconds": 0.18866062600136502,
+      "stamp": {
+        "sec": 1791269192,
+        "nanosec": 901348145
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668062815821573,
+        0.1676777313120752,
+        0.015568033854166666
+      ]
+    },
+    {
+      "arrival_seconds": 0.2255347329992219,
+      "stamp": {
+        "sec": 1791269192,
+        "nanosec": 934705078
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665868388171595,
+        0.16697802420287833,
+        0.015631510416666668
+      ]
+    },
+    {
+      "arrival_seconds": 0.25686930300071253,
+      "stamp": {
+        "sec": 1791269192,
+        "nanosec": 968062256
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665229247188273,
+        0.16701486820571745,
+        0.0155810546875
+      ]
+    },
+    {
+      "arrival_seconds": 0.2918121639995661,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 1419189
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672305255994137,
+        0.1676683069835619,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 0.3254228209989378,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 34776367
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26765937543712415,
+        0.16727995174150223,
+        0.015514322916666667
+      ]
+    },
+    {
+      "arrival_seconds": 0.3628424880007515,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 68133301
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26682457716885466,
+        0.1670858801602184,
+        0.015621744791666666
+      ]
+    },
+    {
+      "arrival_seconds": 0.39739507700141985,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 101490479
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26660680824484695,
+        0.16705603557961457,
+        0.015634765625
+      ]
+    },
+    {
+      "arrival_seconds": 0.48388036400137935,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 168204590
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671404488991243,
+        0.16715037161101237,
+        0.015548502604166667
+      ]
+    },
+    {
+      "arrival_seconds": 0.49040563400194515,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 201561523
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26735359768907563,
+        0.16707808123249304,
+        0.015494791666666667
+      ]
+    },
+    {
+      "arrival_seconds": 0.5267071460002626,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 234918701
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26709976924416584,
+        0.16710118425635656,
+        0.015576171875
+      ]
+    },
+    {
+      "arrival_seconds": 0.5595831280006678,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 268275635
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668872011692243,
+        0.16707946201760795,
+        0.0155908203125
+      ]
+    },
+    {
+      "arrival_seconds": 0.5935475369988126,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 301631836
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26739852446964923,
+        0.16740020187168886,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 0.6260681940002542,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 334987793
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670868328958881,
+        0.16649664625255176,
+        0.0155029296875
+      ]
+    },
+    {
+      "arrival_seconds": 0.6594461659988156,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 368343750
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26717338794370926,
+        0.16654341408200868,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 0.6924628279994067,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 401699707
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666123282907321,
+        0.1666410189532255,
+        0.0156005859375
+      ]
+    },
+    {
+      "arrival_seconds": 0.7235051749994454,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 435055664
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671409872522239,
+        0.1667672071630361,
+        0.015491536458333333
+      ]
+    },
+    {
+      "arrival_seconds": 0.7624707750001107,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 468411621
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.266616690185011,
+        0.16693175615251502,
+        0.0155712890625
+      ]
+    },
+    {
+      "arrival_seconds": 0.7992422570023336,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 501767578
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2682693070091976,
+        0.16656652688209922,
+        0.0153955078125
+      ]
+    },
+    {
+      "arrival_seconds": 0.8255797609999718,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 535123535
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2677236018840733,
+        0.16693205385075036,
+        0.0154345703125
+      ]
+    },
+    {
+      "arrival_seconds": 0.8627734250003414,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 568479492
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26704105995530425,
+        0.16714170565914727,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 0.8931462069995177,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 601835449
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26702125574832775,
+        0.16759046358231136,
+        0.015572916666666667
+      ]
+    },
+    {
+      "arrival_seconds": 0.9265179860012722,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 635191162
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673759702118733,
+        0.16702678134396198,
+        0.015517578125
+      ]
+    },
+    {
+      "arrival_seconds": 0.9621517400009907,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 668547119
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2679064740615774,
+        0.1669088874830121,
+        0.015436197916666667
+      ]
+    },
+    {
+      "arrival_seconds": 0.9944413190023624,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 701902832
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674163344523709,
+        0.16743396512332703,
+        0.015514322916666667
+      ]
+    },
+    {
+      "arrival_seconds": 1.02886724900236,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 735258545
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671727311569182,
+        0.1673604571401995,
+        0.015555013020833333
+      ]
+    },
+    {
+      "arrival_seconds": 1.0636294510004518,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 768614502
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667949437713252,
+        0.16730148782582457,
+        0.015582682291666667
+      ]
+    },
+    {
+      "arrival_seconds": 1.0900748599997314,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 801970215
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665984157986111,
+        0.16664771412037022,
+        0.015625
+      ]
+    },
+    {
+      "arrival_seconds": 1.1273604660018464,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 835325928
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26686948542233385,
+        0.16720504638348335,
+        0.015556640625
+      ]
+    },
+    {
+      "arrival_seconds": 1.160582043001341,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 868681641
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668772417815853,
+        0.1672701339555182,
+        0.015579427083333333
+      ]
+    },
+    {
+      "arrival_seconds": 1.1919257970002946,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 902037354
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.267342478077071,
+        0.1672795188018957,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 1.2281604230010998,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 935393066
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665456081081081,
+        0.16742174867174858,
+        0.015657552083333335
+      ]
+    },
+    {
+      "arrival_seconds": 1.259150566002063,
+      "stamp": {
+        "sec": 1791269193,
+        "nanosec": 968748779
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26700661798066533,
+        0.16704635349410754,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 1.2954717319989868,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 2104248
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668473995395563,
+        0.16695328124273273,
+        0.015553385416666666
+      ]
+    },
+    {
+      "arrival_seconds": 1.3290969859990582,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 35459961
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26716626489187034,
+        0.16738694988878394,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 1.361291474000609,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 68815430
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685239606088984,
+        0.167101985736907,
+        0.015646158854166668
+      ]
+    },
+    {
+      "arrival_seconds": 1.3982062739996763,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 102171143
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672298095088161,
+        0.1668061677861741,
+        0.0155078125
+      ]
+    },
+    {
+      "arrival_seconds": 1.429605872999673,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 135526611
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26738143720441404,
+        0.16725696269048881,
+        0.015486653645833333
+      ]
+    },
+    {
+      "arrival_seconds": 1.4600315570023668,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 168882080
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671692913385827,
+        0.1668031496062992,
+        0.0155029296875
+      ]
+    },
+    {
+      "arrival_seconds": 1.4937586769992777,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 202237793
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26733480694778694,
+        0.16716063269505763,
+        0.015555013020833333
+      ]
+    },
+    {
+      "arrival_seconds": 1.5298436150005728,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 235593262
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26675938501184016,
+        0.16700416724706316,
+        0.015579427083333333
+      ]
+    },
+    {
+      "arrival_seconds": 1.5609311200023512,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 268948730
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2664982112465702,
+        0.16661760619638077,
+        0.0156201171875
+      ]
+    },
+    {
+      "arrival_seconds": 1.594670489001146,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 302304443
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26689253743063557,
+        0.1670592957107459,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 1.6339476149987604,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 335660400
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673821349731946,
+        0.16722905497739926,
+        0.0154833984375
+      ]
+    },
+    {
+      "arrival_seconds": 1.6605115780002961,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 369016113
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668921101333893,
+        0.16683936843820557,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 1.6933856739997282,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 402371826
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26721621078739616,
+        0.16719823470504663,
+        0.015530598958333334
+      ]
+    },
+    {
+      "arrival_seconds": 1.72770375500113,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 435727539
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668308370733744,
+        0.16718360412390254,
+        0.015594075520833334
+      ]
+    },
+    {
+      "arrival_seconds": 1.7643916439992609,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 469083252
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671517698653023,
+        0.1671617764783683,
+        0.015587565104166666
+      ]
+    },
+    {
+      "arrival_seconds": 1.7940729290021409,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 502438965
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26759802631578944,
+        0.16676959064327476,
+        0.015462239583333334
+      ]
+    },
+    {
+      "arrival_seconds": 1.8282965460020932,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 535794678
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674837693544442,
+        0.16681346335325575,
+        0.0155224609375
+      ]
+    },
+    {
+      "arrival_seconds": 1.8615467720010201,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 569150146
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673042545193889,
+        0.1671269100318194,
+        0.015515950520833334
+      ]
+    },
+    {
+      "arrival_seconds": 1.8959871670012944,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 602505859
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26711131514515574,
+        0.16673428937857057,
+        0.015511067708333333
+      ]
+    },
+    {
+      "arrival_seconds": 1.9274060200004897,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 635861572
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672698806027551,
+        0.1671348740181339,
+        0.015517578125
+      ]
+    },
+    {
+      "arrival_seconds": 1.9618923550006002,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 669217041
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672457216872514,
+        0.16686088433000706,
+        0.015550130208333334
+      ]
+    },
+    {
+      "arrival_seconds": 1.9955652940006985,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 702572754
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671907770553691,
+        0.16740757247390003,
+        0.015520833333333333
+      ]
+    },
+    {
+      "arrival_seconds": 2.0283995350000623,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 735928223
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26679925827145007,
+        0.16727213564364476,
+        0.0155615234375
+      ]
+    },
+    {
+      "arrival_seconds": 2.0595643510023365,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 769283936
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26732320778174695,
+        0.16699192757582135,
+        0.015491536458333333
+      ]
+    },
+    {
+      "arrival_seconds": 2.095544192001398,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 802639404
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26697562358276655,
+        0.1669829641258211,
+        0.0155517578125
+      ]
+    },
+    {
+      "arrival_seconds": 2.127614111999719,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 835994873
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670613367618248,
+        0.1668118527847748,
+        0.0155078125
+      ]
+    },
+    {
+      "arrival_seconds": 2.1642759909991582,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 869350342
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26720693529842166,
+        0.16733258423051467,
+        0.0155712890625
+      ]
+    },
+    {
+      "arrival_seconds": 2.1964524409995647,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 902706055
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26690384548247453,
+        0.16719760973793213,
+        0.015540364583333334
+      ]
+    },
+    {
+      "arrival_seconds": 2.2324061670005904,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 936061523
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26694145077267334,
+        0.16695991539053215,
+        0.015517578125
+      ]
+    },
+    {
+      "arrival_seconds": 2.2613726970012067,
+      "stamp": {
+        "sec": 1791269194,
+        "nanosec": 969416992
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669539854314792,
+        0.1671846682001951,
+        0.01556640625
+      ]
+    },
+    {
+      "arrival_seconds": 2.293475816000864,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 2772461
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26708289703315885,
+        0.16678519488074456,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 2.329228754999349,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 36127930
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26693201846229025,
+        0.16694892332391026,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 2.358738105001976,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 69483154
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26700382395004885,
+        0.16717579996279236,
+        0.015553385416666666
+      ]
+    },
+    {
+      "arrival_seconds": 2.3911465860001044,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 102838623
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26679304134474835,
+        0.16702556205192445,
+        0.015589192708333333
+      ]
+    },
+    {
+      "arrival_seconds": 2.429234010000073,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 136194092
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26673881297590485,
+        0.16692294542377983,
+        0.015603841145833333
+      ]
+    },
+    {
+      "arrival_seconds": 2.4619845369998075,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 169549561
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685184701622455,
+        0.16673978135227355,
+        0.015582682291666667
+      ]
+    },
+    {
+      "arrival_seconds": 2.494964796002023,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 202904785
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26717589201632314,
+        0.16704378989222565,
+        0.015555013020833333
+      ]
+    },
+    {
+      "arrival_seconds": 2.529977416001202,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 236260254
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668945074372105,
+        0.16757149824084722,
+        0.015574544270833334
+      ]
+    },
+    {
+      "arrival_seconds": 2.5627669410023373,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 269615479
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671428602727242,
+        0.1670264135731062,
+        0.015476888020833333
+      ]
+    },
+    {
+      "arrival_seconds": 2.594685070002015,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 302970703
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26658408427961244,
+        0.16793213413434244,
+        0.015623372395833333
+      ]
+    },
+    {
+      "arrival_seconds": 2.6268459070015524,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 336325928
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675076754385965,
+        0.1670612573099414,
+        0.015462239583333334
+      ]
+    },
+    {
+      "arrival_seconds": 2.6641315490014676,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 369681152
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668366835703332,
+        0.16687273456015603,
+        0.01556640625
+      ]
+    },
+    {
+      "arrival_seconds": 2.7000904800006538,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 403036133
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26696447230929987,
+        0.16721598165563686,
+        0.015576171875
+      ]
+    },
+    {
+      "arrival_seconds": 2.7302197819990397,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 436391357
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666706768286339,
+        0.1674406640539196,
+        0.015642903645833334
+      ]
+    },
+    {
+      "arrival_seconds": 2.7644881500018528,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 469746338
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671556925498426,
+        0.16703217908359563,
+        0.015511067708333333
+      ]
+    },
+    {
+      "arrival_seconds": 2.79652714400072,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 503101318
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26734411728589985,
+        0.16684749558526,
+        0.0154638671875
+      ]
+    },
+    {
+      "arrival_seconds": 2.830866098000115,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 536456299
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26701497599666035,
+        0.16706411326793286,
+        0.015595703125
+      ]
+    },
+    {
+      "arrival_seconds": 2.8749865950012463,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 569811279
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26660097891043016,
+        0.16707896138790446,
+        0.015615234375
+      ]
+    },
+    {
+      "arrival_seconds": 2.8969664639989787,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 603166260
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26730453322148834,
+        0.1671516200062913,
+        0.0155224609375
+      ]
+    },
+    {
+      "arrival_seconds": 2.9308858900003543,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 636521240
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667309065886207,
+        0.16675202954600887,
+        0.0155712890625
+      ]
+    },
+    {
+      "arrival_seconds": 2.969525677999627,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 669875977
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671487964224575,
+        0.16724880340984521,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 2.99427420000211,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 703230957
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26670596255384194,
+        0.1673263744152654,
+        0.015618489583333334
+      ]
+    },
+    {
+      "arrival_seconds": 3.0299219049993553,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 736585693
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674507886076394,
+        0.16680437395698391,
+        0.015496419270833334
+      ]
+    },
+    {
+      "arrival_seconds": 3.074009563999425,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 769940674
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672013845158131,
+        0.1670286115775724,
+        0.0155078125
+      ]
+    },
+    {
+      "arrival_seconds": 3.0999055430002045,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 803295410
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673925210760137,
+        0.16727475192686636,
+        0.015509440104166666
+      ]
+    },
+    {
+      "arrival_seconds": 3.1316381450014887,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 836650146
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26660299961821476,
+        0.16697903651256424,
+        0.015631510416666668
+      ]
+    },
+    {
+      "arrival_seconds": 3.165509975999157,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 870004883
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26669688510904727,
+        0.16752959523229785,
+        0.015597330729166666
+      ]
+    },
+    {
+      "arrival_seconds": 3.1998592720010492,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 903359619
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.266593792419338,
+        0.16704198716833146,
+        0.015587565104166666
+      ]
+    },
+    {
+      "arrival_seconds": 3.231208803001209,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 936714111
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669930890684012,
+        0.16649618827808083,
+        0.015514322916666667
+      ]
+    },
+    {
+      "arrival_seconds": 3.263270874002046,
+      "stamp": {
+        "sec": 1791269195,
+        "nanosec": 970068848
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675255809463635,
+        0.1671313360011233,
+        0.015455729166666666
+      ]
+    },
+    {
+      "arrival_seconds": 3.2966664470004616,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 3423340
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667351616045647,
+        0.16753847313548795,
+        0.015594075520833334
+      ]
+    },
+    {
+      "arrival_seconds": 3.330005154999526,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 36778076
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26716217868119596,
+        0.16720831004936207,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 3.362810218000959,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 70132568
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666937130691694,
+        0.16711982968369837,
+        0.015608723958333333
+      ]
+    },
+    {
+      "arrival_seconds": 3.3978143419990374,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 103487061
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26655237449589764,
+        0.1671517927501969,
+        0.01560546875
+      ]
+    },
+    {
+      "arrival_seconds": 3.4310627990016656,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 136841553
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26658931679721504,
+        0.16750652741514357,
+        0.015584309895833334
+      ]
+    },
+    {
+      "arrival_seconds": 3.463133201999881,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 170196045
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26708644440963525,
+        0.16679125475726336,
+        0.0155859375
+      ]
+    },
+    {
+      "arrival_seconds": 3.4955760150005517,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 203550537
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26725246767994415,
+        0.16704839273235497,
+        0.01552734375
+      ]
+    },
+    {
+      "arrival_seconds": 3.52926423900135,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 236905029
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26779634604579294,
+        0.16715157793697605,
+        0.01544921875
+      ]
+    },
+    {
+      "arrival_seconds": 3.5635220100011793,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 270259277
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672623896363254,
+        0.16713556629995546,
+        0.015485026041666667
+      ]
+    },
+    {
+      "arrival_seconds": 3.596405442000105,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 303612061
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668480054901144,
+        0.16742503214149215,
+        0.015613606770833333
+      ]
+    },
+    {
+      "arrival_seconds": 3.6268216650023533,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 336964844
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26720347113204257,
+        0.1669315076457932,
+        0.0155517578125
+      ]
+    },
+    {
+      "arrival_seconds": 3.664184885001305,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 370317627
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26662761912220256,
+        0.16617387722900928,
+        0.015587565104166666
+      ]
+    },
+    {
+      "arrival_seconds": 3.6957132880015706,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 403670166
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26677574171029683,
+        0.16655133798720173,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 3.728574151002249,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 437022949
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671037936690749,
+        0.1670915785432591,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 3.7590104680020886,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 470375488
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669471447786746,
+        0.16714777742840828,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 3.7979902699989907,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 503728027
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26739565859369546,
+        0.16710642808881435,
+        0.015524088541666667
+      ]
+    },
+    {
+      "arrival_seconds": 3.829468130999885,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 537080566
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667857608129234,
+        0.16723061779862197,
+        0.015616861979166667
+      ]
+    },
+    {
+      "arrival_seconds": 3.8588835340015066,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 570433105
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26664116222129614,
+        0.16741233706096162,
+        0.015621744791666666
+      ]
+    },
+    {
+      "arrival_seconds": 3.8987101429993345,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 603785645
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26694564176245217,
+        0.167070416811796,
+        0.015576171875
+      ]
+    },
+    {
+      "arrival_seconds": 3.9287803740007803,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 637137939
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671441698021182,
+        0.16731016002415444,
+        0.015572916666666667
+      ]
+    },
+    {
+      "arrival_seconds": 3.9629576160004945,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 670490479
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26752780979323837,
+        0.16684930031666192,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 3.998688684001536,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 703842773
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26693030104712046,
+        0.16705075625363577,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 4.037660545000108,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 737195313
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26739760517289657,
+        0.16692070325260153,
+        0.015501302083333333
+      ]
+    },
+    {
+      "arrival_seconds": 4.064862087001529,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 770547607
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671185412065763,
+        0.16683653497855816,
+        0.015476888020833333
+      ]
+    },
+    {
+      "arrival_seconds": 4.096332188000815,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 803899902
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26682198864228407,
+        0.16737305060609226,
+        0.0156201171875
+      ]
+    },
+    {
+      "arrival_seconds": 4.130294906000927,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 837252197
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26719881414629026,
+        0.1670488333858048,
+        0.015509440104166666
+      ]
+    },
+    {
+      "arrival_seconds": 4.161956027000997,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 870604492
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670458115183246,
+        0.16754682955206496,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 4.193961707998824,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 903956543
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2664820085603384,
+        0.16794349714655374,
+        0.015654296875
+      ]
+    },
+    {
+      "arrival_seconds": 4.231249668999226,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 937308838
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685184701622455,
+        0.16727479516282504,
+        0.015582682291666667
+      ]
+    },
+    {
+      "arrival_seconds": 4.263835403002304,
+      "stamp": {
+        "sec": 1791269196,
+        "nanosec": 970660889
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26674039565716673,
+        0.16707076243170818,
+        0.0155908203125
+      ]
+    },
+    {
+      "arrival_seconds": 4.29890816400075,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 4013184
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669510640704392,
+        0.1671086517714206,
+        0.015589192708333333
+      ]
+    },
+    {
+      "arrival_seconds": 4.331818967999425,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 37365234
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670243073706221,
+        0.16703926351861517,
+        0.015568033854166666
+      ]
+    },
+    {
+      "arrival_seconds": 4.364482637000037,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 70717285
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26722047519217346,
+        0.16730331353365932,
+        0.01552734375
+      ]
+    },
+    {
+      "arrival_seconds": 4.396853738999198,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 104069336
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670083254791078,
+        0.16733762115870193,
+        0.0155419921875
+      ]
+    },
+    {
+      "arrival_seconds": 4.430535839001095,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 137421387
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665833853841349,
+        0.16728664954773625,
+        0.015634765625
+      ]
+    },
+    {
+      "arrival_seconds": 4.4617033260001335,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 170773438
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670560910868959,
+        0.16710527847629683,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 4.495674636000331,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 204125244
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668321020848562,
+        0.16698702330815726,
+        0.015587565104166666
+      ]
+    },
+    {
+      "arrival_seconds": 4.540497571000742,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 237477295
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675938091233971,
+        0.16686447457547923,
+        0.015485026041666667
+      ]
+    },
+    {
+      "arrival_seconds": 4.562107911999192,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 270829346
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671653345562544,
+        0.16665487421383648,
+        0.01552734375
+      ]
+    },
+    {
+      "arrival_seconds": 4.596462359000725,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 304187988
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685899111343436,
+        0.1671078004298077,
+        0.015568033854166666
+      ]
+    },
+    {
+      "arrival_seconds": 4.630538755001908,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 337546875
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669830077170194,
+        0.16716600321251487,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 4.664120132001699,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 370905518
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669681157145846,
+        0.16693956197251864,
+        0.015556640625
+      ]
+    },
+    {
+      "arrival_seconds": 4.697985201000847,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 404264404
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26702039907824443,
+        0.16708433713906648,
+        0.015538736979166667
+      ]
+    },
+    {
+      "arrival_seconds": 4.727031999002065,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 437623291
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2664759633711059,
+        0.16734631112035198,
+        0.015655924479166666
+      ]
+    },
+    {
+      "arrival_seconds": 4.764339227000164,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 470982178
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.266594730455885,
+        0.16682873981625926,
+        0.0156494140625
+      ]
+    },
+    {
+      "arrival_seconds": 4.7977504010013945,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 504341064
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26675445246061635,
+        0.16705440540917327,
+        0.01556640625
+      ]
+    },
+    {
+      "arrival_seconds": 4.82812940200165,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 537699951
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26776506755330376,
+        0.16663763985644925,
+        0.015419921875
+      ]
+    },
+    {
+      "arrival_seconds": 4.864911115000723,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 571058838
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26692942942942954,
+        0.16685362688269645,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 4.89770618699913,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 604417725
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26692969184752374,
+        0.16744632257466135,
+        0.015598958333333333
+      ]
+    },
+    {
+      "arrival_seconds": 4.931262297999638,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 637776611
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26706879590766003,
+        0.167134487583071,
+        0.015511067708333333
+      ]
+    },
+    {
+      "arrival_seconds": 4.963556197999424,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 671135742
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673213161209068,
+        0.16729055882078542,
+        0.0155078125
+      ]
+    },
+    {
+      "arrival_seconds": 4.9978328380020685,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 704494629
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.267085230444491,
+        0.1670359128230177,
+        0.015550130208333334
+      ]
+    },
+    {
+      "arrival_seconds": 5.029683599001146,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 737853760
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26683553847226593,
+        0.16677024137410068,
+        0.0155615234375
+      ]
+    },
+    {
+      "arrival_seconds": 5.060069185001339,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 771212646
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26636768876898076,
+        0.16740254574383448,
+        0.015685221354166667
+      ]
+    },
+    {
+      "arrival_seconds": 5.096890215001622,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 804571777
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685796207209106,
+        0.1671342292407445,
+        0.015563151041666667
+      ]
+    },
+    {
+      "arrival_seconds": 5.130448054998851,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 837930664
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671241008450311,
+        0.16717997066834275,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 5.164758433998941,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 871289795
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668081637976004,
+        0.16742479568770652,
+        0.0156005859375
+      ]
+    },
+    {
+      "arrival_seconds": 5.197629526999663,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 904648926
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675259267045057,
+        0.16703191787541177,
+        0.015485026041666667
+      ]
+    },
+    {
+      "arrival_seconds": 5.231172955001966,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 938008057
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26774228639240505,
+        0.16695220932958274,
+        0.0154296875
+      ]
+    },
+    {
+      "arrival_seconds": 5.264548732000549,
+      "stamp": {
+        "sec": 1791269197,
+        "nanosec": 971367188
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26715587309910854,
+        0.16722426149274602,
+        0.015519205729166667
+      ]
+    },
+    {
+      "arrival_seconds": 5.295915196998976,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 4726318
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672961551935541,
+        0.16694415250773625,
+        0.015486653645833333
+      ]
+    },
+    {
+      "arrival_seconds": 5.330876967000222,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 38085449
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669997158097237,
+        0.16700113676110534,
+        0.015511067708333333
+      ]
+    },
+    {
+      "arrival_seconds": 5.364171895002073,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 71444580
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666907929055816,
+        0.16686257462470286,
+        0.0156005859375
+      ]
+    },
+    {
+      "arrival_seconds": 5.396498812999198,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 104803955
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668951128408735,
+        0.16709852679970752,
+        0.015577799479166666
+      ]
+    },
+    {
+      "arrival_seconds": 5.431084815001668,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 138163086
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670139615599275,
+        0.1666612890098134,
+        0.015553385416666666
+      ]
+    },
+    {
+      "arrival_seconds": 5.466382250000606,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 171522217
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26737579327513067,
+        0.16719551675373695,
+        0.0154736328125
+      ]
+    },
+    {
+      "arrival_seconds": 5.49658410900156,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 204881592
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665988311417241,
+        0.16713165889746975,
+        0.015595703125
+      ]
+    },
+    {
+      "arrival_seconds": 5.530119098999421,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 238240967
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26651624352691766,
+        0.16688504269048512,
+        0.0156103515625
+      ]
+    },
+    {
+      "arrival_seconds": 5.56454778799889,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 271600098
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670912958115183,
+        0.1669083769633507,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 5.597810920000484,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 304955811
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26720173280284787,
+        0.1673498412033645,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 5.630978711000353,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 338311768
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670316476658649,
+        0.16723422119954895,
+        0.0155615234375
+      ]
+    },
+    {
+      "arrival_seconds": 5.666132715999993,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 371667480
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666919435187114,
+        0.16717003402069017,
+        0.015628255208333334
+      ]
+    },
+    {
+      "arrival_seconds": 5.697088829001586,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 405023438
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26705919768576614,
+        0.16690773270133358,
+        0.01556640625
+      ]
+    },
+    {
+      "arrival_seconds": 5.73060113199972,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 438379395
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2664058159722223,
+        0.16749782986111109,
+        0.015625
+      ]
+    },
+    {
+      "arrival_seconds": 5.769802208000328,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 471735107
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2664123956059189,
+        0.1674844924974875,
+        0.015655924479166666
+      ]
+    },
+    {
+      "arrival_seconds": 5.798415827001008,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 505091064
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26722555921970975,
+        0.16686252442769411,
+        0.015546875
+      ]
+    },
+    {
+      "arrival_seconds": 5.830516473000898,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 538446777
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26708296290485667,
+        0.1672532510546316,
+        0.0155615234375
+      ]
+    },
+    {
+      "arrival_seconds": 5.864425570001913,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 571802734
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26721529743804834,
+        0.1672069600270291,
+        0.0155224609375
+      ]
+    },
+    {
+      "arrival_seconds": 5.898396402000799,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 605158691
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2663240687753616,
+        0.16741277355807588,
+        0.015642903645833334
+      ]
+    },
+    {
+      "arrival_seconds": 5.934884984999371,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 638514404
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26724718733647307,
+        0.16726364904936328,
+        0.0155517578125
+      ]
+    },
+    {
+      "arrival_seconds": 5.964211886999692,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 671870361
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675751937372888,
+        0.16697582813193984,
+        0.015472005208333334
+      ]
+    },
+    {
+      "arrival_seconds": 5.9972755550006696,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 705226318
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673944108893558,
+        0.16714300303454693,
+        0.015494791666666667
+      ]
+    },
+    {
+      "arrival_seconds": 6.030806632999884,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 738582031
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672373844780508,
+        0.1672212303671029,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 6.065214196001762,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 771937988
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675189094801868,
+        0.167079955073532,
+        0.015457356770833333
+      ]
+    },
+    {
+      "arrival_seconds": 6.094554930001323,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 805293945
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670139251750444,
+        0.16731314081350657,
+        0.015574544270833334
+      ]
+    },
+    {
+      "arrival_seconds": 6.131514241998957,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 838649658
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26722119169540537,
+        0.16721357160274503,
+        0.015574544270833334
+      ]
+    },
+    {
+      "arrival_seconds": 6.164322704000369,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 872005615
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670294453749259,
+        0.16697794177512576,
+        0.015548502604166667
+      ]
+    },
+    {
+      "arrival_seconds": 6.196920401998796,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 905361572
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26683987958715594,
+        0.1671133641460474,
+        0.015611979166666666
+      ]
+    },
+    {
+      "arrival_seconds": 6.230709889001446,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 938717529
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26637290776817035,
+        0.16710262064335382,
+        0.015623372395833333
+      ]
+    },
+    {
+      "arrival_seconds": 6.264842900000076,
+      "stamp": {
+        "sec": 1791269198,
+        "nanosec": 972073242
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668435308280121,
+        0.16686105004826857,
+        0.015548502604166667
+      ]
+    },
+    {
+      "arrival_seconds": 6.2976989220005635,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 5429199
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26692337245040515,
+        0.16676926166526965,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 6.3318406120015425,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 38785156
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26703122818955893,
+        0.1671620544853899,
+        0.015546875
+      ]
+    },
+    {
+      "arrival_seconds": 6.364899337000679,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 72141113
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26721997036262213,
+        0.16705965248721527,
+        0.015559895833333334
+      ]
+    },
+    {
+      "arrival_seconds": 6.400190494001436,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 105496826
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26768978701362556,
+        0.16664179191834047,
+        0.01544921875
+      ]
+    },
+    {
+      "arrival_seconds": 6.431497802001104,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 138852783
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26735928689012656,
+        0.16698510268175065,
+        0.015489908854166666
+      ]
+    },
+    {
+      "arrival_seconds": 6.465222998998797,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 172208740
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26751648192897665,
+        0.167439325488548,
+        0.015491536458333333
+      ]
+    },
+    {
+      "arrival_seconds": 6.500498976001836,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 205564697
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674033300111904,
+        0.16728709143469941,
+        0.015514322916666667
+      ]
+    },
+    {
+      "arrival_seconds": 6.537743386001239,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 238920654
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26721939892145546,
+        0.16716960815211693,
+        0.0154931640625
+      ]
+    },
+    {
+      "arrival_seconds": 6.567237800001749,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 272276611
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672659727333264,
+        0.16728510262970364,
+        0.015480143229166667
+      ]
+    },
+    {
+      "arrival_seconds": 6.600221124001109,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 305634033
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26695984991109717,
+        0.16704348685051543,
+        0.0155615234375
+      ]
+    },
+    {
+      "arrival_seconds": 6.631576963001862,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 338991455
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26626169438669434,
+        0.16721991221991198,
+        0.015657552083333335
+      ]
+    },
+    {
+      "arrival_seconds": 6.66279221700097,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 372348877
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674907173882584,
+        0.1669048619868292,
+        0.01548828125
+      ]
+    },
+    {
+      "arrival_seconds": 6.698785724001937,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 405706299
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674239643418983,
+        0.16742061411175183,
+        0.015519205729166667
+      ]
+    },
+    {
+      "arrival_seconds": 6.731272535002063,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 439063721
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2677694075362931,
+        0.16719949148769142,
+        0.0154345703125
+      ]
+    },
+    {
+      "arrival_seconds": 6.763868399000785,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 472421143
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26678505518994405,
+        0.1670655025128544,
+        0.0155810546875
+      ]
+    },
+    {
+      "arrival_seconds": 6.799266301000898,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 505778564
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675931037504382,
+        0.16698723565837123,
+        0.015478515625
+      ]
+    },
+    {
+      "arrival_seconds": 6.831410843002232,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 539135986
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671481486326218,
+        0.16708946676898742,
+        0.015553385416666666
+      ]
+    },
+    {
+      "arrival_seconds": 6.864861288999236,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 572493408
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670099270735197,
+        0.16676393105132778,
+        0.015548502604166667
+      ]
+    },
+    {
+      "arrival_seconds": 6.8959237710005254,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 605850830
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26681662661930633,
+        0.16698341807122621,
+        0.015579427083333333
+      ]
+    },
+    {
+      "arrival_seconds": 6.931962554001075,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 639208252
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26705351849914577,
+        0.1669247131847823,
+        0.015558268229166667
+      ]
+    },
+    {
+      "arrival_seconds": 6.96985943600157,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 672565674
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26672117627602543,
+        0.16666710187312858,
+        0.015582682291666667
+      ]
+    },
+    {
+      "arrival_seconds": 6.998319910999271,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 705923096
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26709022309711283,
+        0.1669206765820938,
+        0.0155029296875
+      ]
+    },
+    {
+      "arrival_seconds": 7.031854877001024,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 739280518
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26749421902268766,
+        0.16718382780686436,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 7.065411046001827,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 772637939
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668680337861374,
+        0.16744456054800877,
+        0.015576171875
+      ]
+    },
+    {
+      "arrival_seconds": 7.095925124001951,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 805995117
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673280769768092,
+        0.16741539186923712,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 7.134358177001559,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 839352539
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26719911527588736,
+        0.16727364208518006,
+        0.015545247395833333
+      ]
+    },
+    {
+      "arrival_seconds": 7.165842344002158,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 872709961
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671148851235924,
+        0.166988285744169,
+        0.0155615234375
+      ]
+    },
+    {
+      "arrival_seconds": 7.19934719199955,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 906067383
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26735782923755513,
+        0.16688181171089175,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 7.2311291090009036,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 939424561
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669163708498643,
+        0.16688011879074718,
+        0.015589192708333333
+      ]
+    },
+    {
+      "arrival_seconds": 7.267517553998914,
+      "stamp": {
+        "sec": 1791269199,
+        "nanosec": 972781982
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26740324955305506,
+        0.16735577990441802,
+        0.015476888020833333
+      ]
+    },
+    {
+      "arrival_seconds": 7.298230583000986,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 6139404
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26679445719451983,
+        0.16679155945012383,
+        0.015602213541666667
+      ]
+    },
+    {
+      "arrival_seconds": 7.331611674999294,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 39496582
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26681031102979613,
+        0.16698234303304862,
+        0.015568033854166666
+      ]
+    },
+    {
+      "arrival_seconds": 7.369271241001115,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 72854004
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669337131133229,
+        0.16691010418485538,
+        0.015535481770833333
+      ]
+    },
+    {
+      "arrival_seconds": 7.39830698500009,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 106211426
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675357994180952,
+        0.16707607412860312,
+        0.015476888020833333
+      ]
+    },
+    {
+      "arrival_seconds": 7.4324039759994776,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 139568604
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670833986347648,
+        0.16740936161320666,
+        0.015577799479166666
+      ]
+    },
+    {
+      "arrival_seconds": 7.463473657000577,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 172926025
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26701940150407355,
+        0.16727479516282504,
+        0.015582682291666667
+      ]
+    },
+    {
+      "arrival_seconds": 7.498287533999246,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 206283203
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666528503046128,
+        0.1669136930664346,
+        0.015584309895833334
+      ]
+    },
+    {
+      "arrival_seconds": 7.532376332001149,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 239640625
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666580919384531,
+        0.16737710279832807,
+        0.0156201171875
+      ]
+    },
+    {
+      "arrival_seconds": 7.565393180000683,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 272997803
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669619929776753,
+        0.16696421292899638,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 7.599970677001693,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 306353760
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.267072146919266,
+        0.16690565906077737,
+        0.015550130208333334
+      ]
+    },
+    {
+      "arrival_seconds": 7.631345842000883,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 339709961
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26714969055090665,
+        0.16728585541608537,
+        0.015559895833333334
+      ]
+    },
+    {
+      "arrival_seconds": 7.665608225001051,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 373065918
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26703830835342207,
+        0.16702011203111694,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 7.702743001998897,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 406422119
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666948843509064,
+        0.16715056377486046,
+        0.015621744791666666
+      ]
+    },
+    {
+      "arrival_seconds": 7.733240301000478,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 439778076
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670824162386893,
+        0.1671962524310286,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 7.766111147000629,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 473134033
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669508564863171,
+        0.16717745398416994,
+        0.015582682291666667
+      ]
+    },
+    {
+      "arrival_seconds": 7.799180620000698,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 506490234
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26647434730601205,
+        0.16718515243972903,
+        0.015647786458333333
+      ]
+    },
+    {
+      "arrival_seconds": 7.834065742001258,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 539846191
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26666307846207377,
+        0.16709594641614464,
+        0.015592447916666667
+      ]
+    },
+    {
+      "arrival_seconds": 7.865913452998939,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 573202148
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674581887030609,
+        0.1668188936806795,
+        0.0154736328125
+      ]
+    },
+    {
+      "arrival_seconds": 7.897469121002359,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 606558350
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671924853616634,
+        0.1670238596122156,
+        0.0154736328125
+      ]
+    },
+    {
+      "arrival_seconds": 7.931765010001982,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 639914307
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2666110821608478,
+        0.16708297145504028,
+        0.015616861979166667
+      ]
+    },
+    {
+      "arrival_seconds": 7.966542866000964,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 673270508
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670950605615068,
+        0.1670889343975356,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 7.996801763001713,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 706626465
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26707641145232863,
+        0.16668122372451039,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 8.03254324000227,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 739982666
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667342706594324,
+        0.16667391253941755,
+        0.015598958333333333
+      ]
+    },
+    {
+      "arrival_seconds": 8.066303100000368,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 773338623
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26753563538817593,
+        0.1672993080393669,
+        0.015472005208333334
+      ]
+    },
+    {
+      "arrival_seconds": 8.099495915001171,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 806694824
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668583891388511,
+        0.16718766349272773,
+        0.015555013020833333
+      ]
+    },
+    {
+      "arrival_seconds": 8.131830664002337,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 840050781
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26737314464748313,
+        0.1671127097481853,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 8.165922379001131,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 873406982
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667992008774679,
+        0.1670550564666828,
+        0.0155810546875
+      ]
+    },
+    {
+      "arrival_seconds": 8.199263171001803,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 906762939
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670274151436032,
+        0.16709979692486196,
+        0.015584309895833334
+      ]
+    },
+    {
+      "arrival_seconds": 8.234670849000395,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 940119141
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685638789973476,
+        0.167525776195131,
+        0.015540364583333334
+      ]
+    },
+    {
+      "arrival_seconds": 8.265113451001525,
+      "stamp": {
+        "sec": 1791269200,
+        "nanosec": 973475098
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671009679339075,
+        0.16693753063081995,
+        0.015498046875
+      ]
+    },
+    {
+      "arrival_seconds": 8.302425256999413,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 6831299
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26696604373584254,
+        0.16711869082883196,
+        0.015568033854166666
+      ]
+    },
+    {
+      "arrival_seconds": 8.33285938699919,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 40187256
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26663179234459744,
+        0.16752784151485636,
+        0.01560546875
+      ]
+    },
+    {
+      "arrival_seconds": 8.367602630001784,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 73543457
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675067027652192,
+        0.1668811843596302,
+        0.015480143229166667
+      ]
+    },
+    {
+      "arrival_seconds": 8.400182773999404,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 106899658
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671454586644361,
+        0.1673579162600492,
+        0.01556640625
+      ]
+    },
+    {
+      "arrival_seconds": 8.43392386800042,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 140255615
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26683455073829715,
+        0.16680731548387845,
+        0.0155419921875
+      ]
+    },
+    {
+      "arrival_seconds": 8.4659439140014,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 173611816
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26655667499739666,
+        0.16727802075740214,
+        0.0156298828125
+      ]
+    },
+    {
+      "arrival_seconds": 8.499567834001937,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 206967773
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671816565307051,
+        0.16681244393182101,
+        0.0155224609375
+      ]
+    },
+    {
+      "arrival_seconds": 8.532492998001544,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 240323975
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671521596858638,
+        0.16705031995346123,
+        0.015543619791666666
+      ]
+    },
+    {
+      "arrival_seconds": 8.564000193000538,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 273680176
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26709718144964006,
+        0.16701163183523207,
+        0.015524088541666667
+      ]
+    },
+    {
+      "arrival_seconds": 8.600308168999618,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 307036621
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26709466362779005,
+        0.16675937569131516,
+        0.0155322265625
+      ]
+    },
+    {
+      "arrival_seconds": 8.63408675699975,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 340393066
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669914780664991,
+        0.16720074275868485,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 8.668248301000858,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 373749512
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2676932113051406,
+        0.1673039834490498,
+        0.015472005208333334
+      ]
+    },
+    {
+      "arrival_seconds": 8.699995433002186,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 407105713
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26738916762985543,
+        0.16730237119540473,
+        0.015489908854166666
+      ]
+    },
+    {
+      "arrival_seconds": 8.731735492001462,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 440462158
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2671234519448806,
+        0.16727135298563856,
+        0.0155517578125
+      ]
+    },
+    {
+      "arrival_seconds": 8.767278934999922,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 473818604
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667330308260977,
+        0.16665358998500537,
+        0.015558268229166667
+      ]
+    },
+    {
+      "arrival_seconds": 8.801018271999055,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 507174805
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2670897311602557,
+        0.16687002876474633,
+        0.015528971354166667
+      ]
+    },
+    {
+      "arrival_seconds": 8.832388065002306,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 540531250
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674555324707203,
+        0.16706042382588773,
+        0.015472005208333334
+      ]
+    },
+    {
+      "arrival_seconds": 8.867181501002051,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 573887451
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26767527497547994,
+        0.16723880248470405,
+        0.01548828125
+      ]
+    },
+    {
+      "arrival_seconds": 8.899888314001146,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 607243896
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26690350808418717,
+        0.16695414314586376,
+        0.015569661458333333
+      ]
+    },
+    {
+      "arrival_seconds": 8.93242263600041,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 640600098
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26722854660099216,
+        0.16719226693681719,
+        0.015530598958333334
+      ]
+    },
+    {
+      "arrival_seconds": 8.967987973999698,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 673956543
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26724736464243193,
+        0.1670961161308398,
+        0.015491536458333333
+      ]
+    },
+    {
+      "arrival_seconds": 8.999322371000744,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 707312744
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26676957149819,
+        0.16691700315603816,
+        0.0155859375
+      ]
+    },
+    {
+      "arrival_seconds": 9.033222101999854,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 740668945
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26680043676480836,
+        0.1673067330224356,
+        0.015589192708333333
+      ]
+    },
+    {
+      "arrival_seconds": 9.068891096001607,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 774025146
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2675651260137025,
+        0.16729571565063375,
+        0.015520833333333333
+      ]
+    },
+    {
+      "arrival_seconds": 9.101001114999235,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 807381348
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668175085140395,
+        0.1668800968399592,
+        0.015611979166666666
+      ]
+    },
+    {
+      "arrival_seconds": 9.13298176600074,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 840737549
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2672127842296157,
+        0.16752415079863284,
+        0.015556640625
+      ]
+    },
+    {
+      "arrival_seconds": 9.164481390002038,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 874093750
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26714090544032415,
+        0.16683631305724328,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 9.200741282998933,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 907449951
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26708054218128535,
+        0.16697572860698245,
+        0.015550130208333334
+      ]
+    },
+    {
+      "arrival_seconds": 9.233345603999624,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 940806152
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26719652230971125,
+        0.16714552347623196,
+        0.0155029296875
+      ]
+    },
+    {
+      "arrival_seconds": 9.26868045000083,
+      "stamp": {
+        "sec": 1791269201,
+        "nanosec": 974162354
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26667849885368905,
+        0.16718105923764526,
+        0.015618489583333334
+      ]
+    },
+    {
+      "arrival_seconds": 9.300623171002371,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 7518311
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26726257704699874,
+        0.16687883775769877,
+        0.015491536458333333
+      ]
+    },
+    {
+      "arrival_seconds": 9.333996788001969,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 40874512
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669820695473682,
+        0.16725811501930915,
+        0.015594075520833334
+      ]
+    },
+    {
+      "arrival_seconds": 9.36671066100098,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 74230469
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26677682517312185,
+        0.16699913584113374,
+        0.0155908203125
+      ]
+    },
+    {
+      "arrival_seconds": 9.399597280000307,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 107586670
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26698437827088134,
+        0.16683064684948715,
+        0.015550130208333334
+      ]
+    },
+    {
+      "arrival_seconds": 9.433375639000587,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 140942627
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26679316640584244,
+        0.167248159740335,
+        0.0156005859375
+      ]
+    },
+    {
+      "arrival_seconds": 9.467773553998995,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 174298828
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26660311211585774,
+        0.16699104389703076,
+        0.0156591796875
+      ]
+    },
+    {
+      "arrival_seconds": 9.500345569002093,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 207654785
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26696523702228747,
+        0.16716271920631603,
+        0.015530598958333334
+      ]
+    },
+    {
+      "arrival_seconds": 9.53349613699902,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 241010742
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2669875401228108,
+        0.1668649547600772,
+        0.015550130208333334
+      ]
+    },
+    {
+      "arrival_seconds": 9.566960725998797,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 274366699
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2673781100394871,
+        0.16764481485364158,
+        0.015525716145833333
+      ]
+    },
+    {
+      "arrival_seconds": 9.600580820999312,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 307722900
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26685381319177,
+        0.16714317106739288,
+        0.015636393229166667
+      ]
+    },
+    {
+      "arrival_seconds": 9.63275031500234,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 341079102
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2667907884668893,
+        0.16717735577814874,
+        0.015598958333333333
+      ]
+    },
+    {
+      "arrival_seconds": 9.664133105001383,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 374435059
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26715093688879576,
+        0.16700908656980526,
+        0.015533854166666666
+      ]
+    },
+    {
+      "arrival_seconds": 9.700666796001315,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 407791260
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26739482942244575,
+        0.16714010522150058,
+        0.015537109375
+      ]
+    },
+    {
+      "arrival_seconds": 9.734100571000454,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 441147217
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26715688200775434,
+        0.16721971893301651,
+        0.0155322265625
+      ]
+    },
+    {
+      "arrival_seconds": 9.769069038000453,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 474503418
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26634023078257857,
+        0.16653001908728082,
+        0.015633138020833333
+      ]
+    },
+    {
+      "arrival_seconds": 9.801249192001706,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 507859375
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2674766820373088,
+        0.16741904212953262,
+        0.015530598958333334
+      ]
+    },
+    {
+      "arrival_seconds": 9.830430509999132,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 541215332
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2668262188742415,
+        0.16682825323754383,
+        0.015556640625
+      ]
+    },
+    {
+      "arrival_seconds": 9.867729482000868,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 574571289
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665818962523011,
+        0.16714395702360677,
+        0.0156201171875
+      ]
+    },
+    {
+      "arrival_seconds": 9.899383258001762,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 607927246
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.2665580125864887,
+        0.16719269728683508,
+        0.015603841145833333
+      ]
+    },
+    {
+      "arrival_seconds": 9.93514699500156,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 641283203
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26739279276914474,
+        0.16720871832563353,
+        0.015501302083333333
+      ]
+    },
+    {
+      "arrival_seconds": 9.96775691700168,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 674639160
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.26681037476989344,
+        0.16738072082711022,
+        0.0156201171875
+      ]
+    },
+    {
+      "arrival_seconds": 10.000147277001815,
+      "stamp": {
+        "sec": 1791269202,
+        "nanosec": 707995117
+      },
+      "frame_id": "camera_color_optical_frame",
+      "point": [
+        -0.267174836686928,
+        0.16715165700179307,
+        0.015530598958333334
+      ]
+    }
+  ],
+  "publisher_qos_ok": true,
+  "passed": true,
+  "errors": [],
+  "elapsed_seconds": 10.000173180000274,
+  "publishers": [
+    {
+      "node_name": "target_detector",
+      "node_namespace": "/",
+      "reliability": "BEST_EFFORT",
+      "history": "KEEP_LAST",
+      "depth": 1,
+      "durability": "VOLATILE"
+    }
+  ],
+  "messages_received": 297,
+  "invalid_messages": 0,
+  "source_stamps_strictly_increasing": true,
+  "max_arrival_gap_seconds": 0.0864852869999595,
+  "max_observed_stamp_gap_seconds": 0.066714111,
+  "silence_after_last_message_seconds": 2.5902998459059745e-05,
+  "arrival_hz_between_first_and_last": 29.87946223679953
+}

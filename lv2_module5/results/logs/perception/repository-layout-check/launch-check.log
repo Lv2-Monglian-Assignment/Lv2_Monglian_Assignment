@@ -1,0 +1,24 @@
+[INFO] [launch]: All log files can be found below /home/pa12/.ros/log/2026-10-06-16-06-47-630656-pa12-Legion-Pro-5-16IAX10-103961
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [target_detector-1]: process started with pid [103967]
+[target_detector-1] [INFO] [1791270408.146658968] [target_detector]: TARGET_NODE_READY: /perception_layout_probe/image -> /perception_layout_probe/target; HSV=(92, 80, 26)..(120, 255, 255), kernel=5, min_area=400.0; best_effort / keep_last 1; 영상 수신 대기
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [target_detector-1]: sending signal 'SIGINT' to process[target_detector-1]
+[target_detector-1] Traceback (most recent call last):
+[target_detector-1]   File "/home/pa12/Desktop/vision_project/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/target_detector/lib/target_detector/target_detector", line 33, in <module>
+[target_detector-1]     sys.exit(load_entry_point('target-detector', 'console_scripts', 'target_detector')())
+[target_detector-1]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[target_detector-1]   File "/home/pa12/Desktop/vision_project/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/build/target_detector/target_detector/target_detector.py", line 148, in main
+[target_detector-1]     node.destroy_node()
+[target_detector-1]   File "/opt/ros/lyrical/lib/python3.12/site-packages/rclpy/node.py", line 2702, in destroy_node
+[target_detector-1]     self.destroy_publisher(self._publishers[0])
+[target_detector-1]   File "/opt/ros/lyrical/lib/python3.12/site-packages/rclpy/node.py", line 2609, in destroy_publisher
+[target_detector-1]     publisher.destroy()
+[target_detector-1]   File "/opt/ros/lyrical/lib/python3.12/site-packages/rclpy/publisher.py", line 101, in destroy
+[target_detector-1]     self._destroy()
+[target_detector-1]   File "/opt/ros/lyrical/lib/python3.12/site-packages/rclpy/publisher.py", line 189, in _destroy
+[target_detector-1]     super()._destroy()
+[target_detector-1]   File "/opt/ros/lyrical/lib/python3.12/site-packages/rclpy/publisher.py", line 104, in _destroy
+[target_detector-1]     self.handle.destroy_when_not_in_use()
+[target_detector-1] KeyboardInterrupt
+[ERROR] [target_detector-1]: process has died [pid 103967, exit code -2, cmd '/home/pa12/Desktop/vision_project/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/target_detector/lib/target_detector/target_detector --ros-args -r __node:=target_detector --params-file /home/pa12/Desktop/vision_project/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/tracker_bringup/share/tracker_bringup/config/hsv.yaml --params-file /tmp/launch_params_6t4x_v6v'].

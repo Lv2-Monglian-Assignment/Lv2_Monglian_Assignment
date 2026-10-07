@@ -1,0 +1,9 @@
+{
+  "node_ready": true,
+  "clean_child_exit": true,
+  "traceback": false,
+  "domain": 187,
+  "camera_started": false,
+  "actual_camera_stream_test": false,
+  "execution_tool": "Codex terminal tools"
+}

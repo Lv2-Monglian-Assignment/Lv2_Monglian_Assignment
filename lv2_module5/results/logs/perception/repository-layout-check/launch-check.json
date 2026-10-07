@@ -1,0 +1,12 @@
+{
+  "start_camera": false,
+  "domain": 187,
+  "discovery": "LOCALHOST",
+  "input_topic": "/perception_layout_probe/image",
+  "output_topic": "/perception_layout_probe/target",
+  "node_ready": true,
+  "camera_started": false,
+  "actual_camera_stream_test": false,
+  "launch_exit_code": 0,
+  "execution_tool": "Codex terminal tools"
+}

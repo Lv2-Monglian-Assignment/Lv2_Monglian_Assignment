@@ -1,0 +1,569 @@
+{
+  "purpose": "Real D435 color capture, not labeled evaluation",
+  "recorded_at_utc": "2026-10-05T07:30:09Z",
+  "ros_domain_id": "97",
+  "rmw_implementation": "rmw_cyclonedds_cpp",
+  "subscription_reliability": "2",
+  "camera_info_count": 59,
+  "command": [
+    "ros2",
+    "launch",
+    "realsense2_camera",
+    "rs_launch.py",
+    "enable_color:=true",
+    "enable_depth:=false",
+    "rgb_camera.color_profile:=640x480x30",
+    "rgb_camera.color_format:=RGB8",
+    "initial_reset:=false",
+    "wait_for_device_timeout:=15.0"
+  ],
+  "frames_requested": 60,
+  "frames_received": 60,
+  "frames": [
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 202259033,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7169.968377227
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 235660400,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7169.994410755
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 269064941,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.025774779
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 302453857,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.061128352
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 335842285,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.09225623
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 369230225,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.125800193
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 402614502,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.158525573
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 435997803,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.192779621
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 469380371,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.22554213
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 502761475,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.25882454
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 536141357,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.293478454
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 569520508,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.326315388
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 602898682,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.359344542
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 636274658,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.392497361
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 669649658,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.425708346
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 703023438,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.459358586
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 736397949,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.492448017
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 769771729,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.526147886
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 803144531,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.558864025
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 836518555,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.593647956
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 869891846,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.625918192
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 903264404,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.659287676
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 936635498,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.692482772
+    },
+    {
+      "stamp_sec": 1791185406,
+      "stamp_nanosec": 970005859,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.726355751
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 3375732,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.759580366
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 36745605,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.792845277
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 70114746,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.826158224
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 103483398,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.859481413
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 136851807,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.892678362
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 170219482,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.926394842
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 203586670,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.959873954
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 236954102,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7170.993612823
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 270321289,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.026579608
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 303687744,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.059570207
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 337050537,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.092838525
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 370412842,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.125798199
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 403774658,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.159649696
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 437135986,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.193070791
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 470496826,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.226644384
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 503857178,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.260073849
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 537217041,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.292996227
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 570576660,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.32663143
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 603935791,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.359716547
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 637294189,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.393106456
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 670652344,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.426664401
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 704010254,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.460180902
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 737367432,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.49328
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 770724121,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.526464301
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 804080566,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.559999394
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 837436279,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.593217361
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 870791748,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.626765436
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 904146729,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.659940145
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 937501221,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.69365531
+    },
+    {
+      "stamp_sec": 1791185407,
+      "stamp_nanosec": 970855225,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.726748056
+    },
+    {
+      "stamp_sec": 1791185408,
+      "stamp_nanosec": 4208984,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.760097671
+    },
+    {
+      "stamp_sec": 1791185408,
+      "stamp_nanosec": 37562012,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.793333101
+    },
+    {
+      "stamp_sec": 1791185408,
+      "stamp_nanosec": 70914795,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.82785598
+    },
+    {
+      "stamp_sec": 1791185408,
+      "stamp_nanosec": 104267090,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.860176124
+    },
+    {
+      "stamp_sec": 1791185408,
+      "stamp_nanosec": 137618896,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.893575886
+    },
+    {
+      "stamp_sec": 1791185408,
+      "stamp_nanosec": 170970215,
+      "frame_id": "camera_color_optical_frame",
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "received_monotonic": 7171.926723225
+    }
+  ],
+  "success": true,
+  "sha256": "fb2b021c9af46c992cd47534d1151713c77bef5dfd1150e0c20c15d82ef4dbcf",
+  "arrival_fps": 30.12746473822493,
+  "max_source_stamp_gap_seconds": 0.03340458869934082,
+  "source_stamps_strictly_increasing": true
+}

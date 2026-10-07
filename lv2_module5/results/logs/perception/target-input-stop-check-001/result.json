@@ -1,0 +1,21 @@
+{
+  "evidence_source": "Full command/output including returned prompt supplied in conversation; read-only PC process checks",
+  "baseline": "results/target-header-check-002/result.json",
+  "camera_stop_evidence": "practice_records/pi-camera-stop-input-test-001-received.log",
+  "camera_pid": 7483,
+  "camera_finished_cleanly": true,
+  "target_detector_pid": 45277,
+  "target_detector_running_after_observation": true,
+  "publisher_count_before_echo": 1,
+  "publisher_node": "target_detector",
+  "publisher_qos": "best_effort / keep_last depth 1 / volatile",
+  "echo_timeout_seconds": 15,
+  "echo_header_or_point_in_output": false,
+  "echo_error_in_output": false,
+  "ctrl_c_in_observation_output": false,
+  "prompt_returned": true,
+  "exit_code_not_recorded": true,
+  "passed_for_observation_window": true,
+  "long_term_stability_verified": false,
+  "labeled_accuracy_evaluation": false
+}

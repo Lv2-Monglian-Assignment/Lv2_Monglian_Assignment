@@ -1,0 +1,31 @@
+{
+  "recorded_at_utc": "2026-10-06T06:17:19.912040+00:00",
+  "evidence": "전달된 재시작 로그 및 Codex 읽기 전용 PC/Pi 프로세스 조회",
+  "target_detector_pid": 91340,
+  "pi_camera_pid": 1781,
+  "actual_size": [
+    320,
+    240
+  ],
+  "configured_size": [
+    640,
+    480
+  ],
+  "encoding": "rgb8",
+  "frame_id": "camera_color_optical_frame",
+  "found": true,
+  "rounded_logged_point": [
+    -0.23735,
+    0.158515,
+    0.0139
+  ],
+  "log_file": "target-restart-comparison-001-received.log",
+  "next_pi_observation_directory_exists": false,
+  "next_measurement": "image-stream-check-004",
+  "next_measurement_state": "prepared_not_run",
+  "limits": [
+    "검출 로그는 사진의 목표 일치 확인이나 연속 수신률의 증명이 아니다.",
+    "found 상태가 유지되면 TARGET_STATE 로그가 반복되지 않으며 무출력만으로 무수신을 판정하지 않는다."
+  ],
+  "practice_executed_by_codex": false
+}

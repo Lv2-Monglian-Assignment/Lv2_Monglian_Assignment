@@ -1,0 +1,9 @@
+{
+  "purpose": "Camera stopped; detector still present; expect no re-publication",
+  "observed_message_count": 0,
+  "target_publisher_qos_ok": true,
+  "detector_pid_on_pi": 4362,
+  "camera_pid_stopped_cleanly": 3583,
+  "expected_no_publication_passed": true,
+  "note": "Original stream passed=false checks a flowing stream; it is not the pass criterion for this stopped-input observation."
+}

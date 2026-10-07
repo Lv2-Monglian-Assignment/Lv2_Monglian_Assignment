@@ -1,0 +1,14 @@
+# 인지(target_detector) 설정 — 파란 단색 물체 선택값
+# HSV는 OpenCV 범위(H 0~179, S/V 0~255).
+# 예제 05에서 전달된 선택값. 같은 설정의 세 장면 검증은 아직 완료 전이다.
+target_detector:
+  ros__parameters:
+    image_topic: /camera/camera/color/image_raw
+    target_topic: /target
+    input_encoding: rgb8          # 설계: rgb8 → COLOR_RGB2HSV
+    width: 640
+    height: 480
+    hsv_lower: [92, 80, 26]
+    hsv_upper: [120, 255, 255]
+    kernel_size: 5                # morphology open/close 커널(홀수)
+    min_area_px: 400              # 이보다 작은 컨투어는 후보 제외

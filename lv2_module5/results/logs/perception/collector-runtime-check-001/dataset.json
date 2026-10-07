@@ -1,0 +1,62 @@
+{
+  "purpose": "Real camera evaluation frames; labels describe physical scene setup",
+  "recorded_at_utc": "2026-10-06T06:49:52.035267+00:00",
+  "host": "pa18",
+  "topic": "/camera/camera/color/image_raw",
+  "scene": "unlabelled",
+  "label_basis": "Collector runtime check only; no accuracy ground truth",
+  "frames_requested": 2,
+  "interval_seconds": 0.5,
+  "timeout_seconds": 15.0,
+  "source_sha256": "b88515a179e2b15b5abd77b00683b840b0c8c0b2697bec59822b64d4fb6cc821",
+  "environment": {
+    "ROS_DISTRO": "lyrical",
+    "ROS_DOMAIN_ID": "30",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+    "CYCLONEDDS_URI": null
+  },
+  "subscription_qos": "best_effort / keep_last depth 1 / volatile",
+  "camera_launched_by_this_tool": false,
+  "frames": [
+    {
+      "file": "frame-001.png",
+      "sha256": "481097002b7513afd4ed12bf56fa1e49a532e672aeb2c24600bfc44fbe1167a7",
+      "target_present": null,
+      "arrival_seconds": 0.04149140299978171,
+      "header": {
+        "stamp": {
+          "sec": 1791269395,
+          "nanosec": 280576172
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    },
+    {
+      "file": "frame-002.png",
+      "sha256": "7d36902bb1394278bc6bc139fc8cda2b1118dbec6e4b32ad54f00986a04f5414",
+      "target_present": null,
+      "arrival_seconds": 0.5704669509996165,
+      "header": {
+        "stamp": {
+          "sec": 1791269395,
+          "nanosec": 814292725
+        },
+        "frame_id": "camera_color_optical_frame"
+      },
+      "encoding": "rgb8",
+      "width": 640,
+      "height": 480,
+      "file_encoding": "BGR passed to OpenCV imwrite"
+    }
+  ],
+  "images_received": 16,
+  "error": null,
+  "success": true,
+  "opencv_version": "4.10.0",
+  "elapsed_seconds": 0.8304490499995154,
+  "frames_saved": 2
+}

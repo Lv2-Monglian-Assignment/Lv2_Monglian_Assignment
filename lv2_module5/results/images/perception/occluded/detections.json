@@ -1,0 +1,24 @@
+{
+  "config": "config/perception.yaml",
+  "hsv_lower": [
+    92,
+    80,
+    26
+  ],
+  "hsv_upper": [
+    120,
+    255,
+    255
+  ],
+  "kernel_size": 5,
+  "min_area_px": 400.0,
+  "results": [
+    {
+      "image": "data/captures/capture-003/color.png",
+      "found": true,
+      "x": 0.05265658280085184,
+      "y": 0.43183850283990044,
+      "z": 0.008151041666666666
+    }
+  ]
+}

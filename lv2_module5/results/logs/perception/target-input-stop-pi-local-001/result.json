@@ -1,0 +1,46 @@
+{
+  "purpose": "Short target delivery observation; not accuracy or long-term stability evaluation",
+  "recorded_at_utc": "2026-10-06T06:50:18.240047+00:00",
+  "topic": "/target",
+  "seconds_requested": 10.0,
+  "criteria": {
+    "min_messages": 30,
+    "max_gap_seconds": 0.5,
+    "frame_id": "camera_color_optical_frame"
+  },
+  "subscription_qos": "best_effort / keep_last depth 1 / volatile",
+  "environment": {
+    "ROS_DOMAIN_ID": "30",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+    "ROS_AUTOMATIC_DISCOVERY_RANGE": "SUBNET",
+    "ROS_STATIC_PEERS": "10.2.12.61",
+    "CYCLONEDDS_URI": "file:///home/pa12/Desktop/vision_project/config/cyclonedds-pc-wifi.xml"
+  },
+  "source_sha256": "ab893eea661ca02be1b0da4ed8d91722cd67867f78dce1e76eeba0f85d4588c2",
+  "samples": [],
+  "publisher_qos_ok": true,
+  "passed": false,
+  "errors": [
+    "관측 메시지 수가 지정한 최소 기준보다 적습니다.",
+    "관측 stamp가 단조 증가하지 않거나 대조할 메시지가 부족합니다.",
+    "관측 간격 또는 마지막 메시지 이후 무수신 시간이 지정한 상한을 넘었습니다."
+  ],
+  "elapsed_seconds": 10.000201096001547,
+  "publishers": [
+    {
+      "node_name": "target_detector",
+      "node_namespace": "/",
+      "reliability": "BEST_EFFORT",
+      "history": "KEEP_LAST",
+      "depth": 1,
+      "durability": "VOLATILE"
+    }
+  ],
+  "messages_received": 0,
+  "invalid_messages": 0,
+  "source_stamps_strictly_increasing": false,
+  "max_arrival_gap_seconds": null,
+  "max_observed_stamp_gap_seconds": null,
+  "silence_after_last_message_seconds": 10.000201096001547,
+  "arrival_hz_between_first_and_last": null
+}

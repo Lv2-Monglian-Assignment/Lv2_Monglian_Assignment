@@ -1,0 +1,339 @@
+{
+  "purpose": "Live header/QoS interface check; not labeled accuracy evaluation",
+  "recorded_at_utc": "2026-10-06T02:18:30.006312+00:00",
+  "image_topic": "/camera/camera/color/image_raw",
+  "target_topic": "/target",
+  "requested_pairs": 10,
+  "timeout_seconds": 45.0,
+  "expect_zero": true,
+  "environment": {
+    "ROS_DOMAIN_ID": "30",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+    "ROS_AUTOMATIC_DISCOVERY_RANGE": "SUBNET",
+    "ROS_STATIC_PEERS": "10.2.12.61",
+    "CYCLONEDDS_URI": "file:///home/pa12/Desktop/vision_project/config/cyclonedds-pc-wifi.xml"
+  },
+  "source_sha256": "b6817e92de0538515e3a7359b74a908d230188af17c05955644b1ed1ed0721bf",
+  "image_messages": 12,
+  "target_messages": 13,
+  "pending_entries_evicted": 0,
+  "pairs": [
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253109,
+            "nanosec": 138187012
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253109,
+            "nanosec": 138187012
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253109,
+            "nanosec": 805333496
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253109,
+            "nanosec": 805333496
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253112,
+            "nanosec": 40273193
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253112,
+            "nanosec": 40273193
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253113,
+            "nanosec": 341222656
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253113,
+            "nanosec": 341222656
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253114,
+            "nanosec": 808947266
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253114,
+            "nanosec": 808947266
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253119,
+            "nanosec": 245450439
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253119,
+            "nanosec": 245450439
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253120,
+            "nanosec": 579746826
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253120,
+            "nanosec": 579746826
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253123,
+            "nanosec": 281693115
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253123,
+            "nanosec": 281693115
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253124,
+            "nanosec": 282418945
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253124,
+            "nanosec": 282418945
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    },
+    {
+      "input": {
+        "header": {
+          "stamp": {
+            "sec": 1791253125,
+            "nanosec": 49628418
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "width": 640,
+        "height": 480,
+        "encoding": "rgb8"
+      },
+      "output": {
+        "header": {
+          "stamp": {
+            "sec": 1791253125,
+            "nanosec": 49628418
+          },
+          "frame_id": "camera_color_optical_frame"
+        },
+        "point": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "header_equal": true,
+      "point_is_zero": true
+    }
+  ],
+  "header_mismatches": 0,
+  "nonzero_or_invalid_pairs": 0,
+  "target_publishers": [
+    {
+      "node_name": "target_detector",
+      "node_namespace": "/",
+      "reliability": "BEST_EFFORT",
+      "history": "KEEP_LAST",
+      "depth": 1,
+      "durability": "VOLATILE"
+    }
+  ],
+  "target_qos_ok": true,
+  "passed": true,
+  "error": null,
+  "unmatched_image_headers": 2,
+  "unmatched_target_headers": 3
+}
