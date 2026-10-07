@@ -18,8 +18,9 @@ report.md 문제 3(P 추적)과 README 5절에 옮겨 적을 원본 기록이다
 | 화면 끝 각도 (e = 1) | 27.85° | 21.60° | 시야각/2 |
 | 화면 끝 명령 | 55.7°/s | 54.0°/s | 속도 상한 120°/s 안 |
 | 데드밴드 (정규화) | 0.03 (약 0.9°) | 0.05 (약 1.1°) | `config/control.yaml` |
+| 속도 상한 | 120°/s | 120°/s | `config/control.yaml` (팀 상한, Kp 계단 시험 조건) |
 
-코드: `ros2_ws/src/tracker_controller/tracker_controller/tracking_logic.py`의 `error_angle_deg`, `p_command`. 설정: `config/control.yaml`의 `pan_kp`, `tilt_kp`, `hfov_deg`, `vfov_deg`. 시험: `test_tracking_logic.py`의 `test_angle_kp_*`, `test_config_files.py`의 `test_tracking_kp_is_team_angle_kp`.
+코드: `ros2_ws/src/tracker_controller/tracker_controller/tracking_logic.py`의 `error_angle_deg`, `p_command`. 설정: `config/control.yaml`의 `pan_kp`, `tilt_kp`, `config/camera.yaml`(/**)의 `hfov_deg`, `vfov_deg`. 시험: `test_tracking_logic.py`의 `test_angle_kp_*`.
 
 ## 2. 왜 계단 응답의 Kp를 그대로 쓸 수 있나
 - 계단 응답 시험의 루프: `명령 = Kp × (목표 각도 − 모터 각도)`. 이 시험으로 Kp를 정했다.
