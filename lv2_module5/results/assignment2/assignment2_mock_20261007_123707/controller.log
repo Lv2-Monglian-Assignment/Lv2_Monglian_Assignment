@@ -1,0 +1,16 @@
+[INFO] [1791344230.837838774] [tracker_controller]: run_id=assignment2_mock_20261007_123707 search=False pan(kp=2.0/s, dir=-1, limit=120.0) tilt(kp=2.5/s, dir=1, limit=120.0)
+[INFO] [1791344230.839211192] [tracker_controller]: tracking enabled=True
+[INFO] [1791344230.842344804] [tracker_controller]: state None -> LOST (input_timeout)
+[INFO] [1791344231.959924328] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[INFO] [1791344235.358641847] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[INFO] [1791344237.456931939] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[INFO] [1791344240.859724787] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[INFO] [1791344242.978196210] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[INFO] [1791344246.376890414] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[INFO] [1791344254.019890923] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[INFO] [1791344256.419684735] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[INFO] [1791344264.079004135] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[INFO] [1791344267.477599951] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[ros2run]: Received signal:  Interrupt
+[INFO] [1791344268.479277994] [tracker_controller]: stats {'reacquired_in_view': 5, 'reacquired_search': 0, 'search_failed': 0} stale_inputs=89
+Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:427

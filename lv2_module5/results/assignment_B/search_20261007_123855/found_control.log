@@ -1,0 +1,66 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-07-12-38-56-830784-pa23-23561
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [controller_node-1]: process started with pid [23574]
+[INFO] [opencr_bridge-2]: process started with pid [23575]
+[opencr_bridge-2] [INFO] [1791344339.284985171] [opencr_bridge]: run_id=assignment_B_found_20261007_123855 dry_run=True port=/dev/ttyACM0
+[controller_node-1] [INFO] [1791344339.306555514] [tracker_controller]: run_id=assignment_B_found_20261007_123855 search=True pan(kp=2.0/s, dir=-1, limit=120.0) tilt(kp=2.5/s, dir=1, limit=120.0)
+[controller_node-1] [INFO] [1791344339.307824358] [tracker_controller]: tracking enabled=True
+[controller_node-1] [INFO] [1791344339.311056396] [tracker_controller]: state None -> LOST (input_timeout)
+[controller_node-1] [INFO] [1791344342.206457731] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[controller_node-1] [INFO] [1791344346.106293168] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-1] [INFO] [1791344346.408579309] [tracker_controller]: state LOST -> SEARCHING (predicted)
+[controller_node-1] [INFO] [1791344347.766429563] [tracker_controller]: state SEARCHING -> TRACKING (reacquired_search)
+[controller_node-1] [INFO] [1791344351.606783666] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [opencr_bridge-2]: sending signal 'SIGINT' to process[opencr_bridge-2]
+[INFO] [controller_node-1]: sending signal 'SIGINT' to process[controller_node-1]
+[controller_node-1] [INFO] [1791344351.619353725] [tracker_controller]: stats {'reacquired_in_view': 1, 'reacquired_search': 1, 'search_failed': 0} stale_inputs=0
+[controller_node-1] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:427
+[controller_node-1] Traceback (most recent call last):
+[controller_node-1]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_controller/lib/tracker_controller/controller_node", line 33, in <module>
+[controller_node-1]     sys.exit(load_entry_point('tracker-controller', 'console_scripts', 'controller_node')())
+[controller_node-1]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/build/tracker_controller/tracker_controller/controller_node.py", line 290, in main
+[controller_node-1]     node.destroy_node()
+[controller_node-1]     ~~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2702, in destroy_node
+[controller_node-1]     self.destroy_publisher(self._publishers[0])
+[controller_node-1]     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2609, in destroy_publisher
+[controller_node-1]     publisher.destroy()
+[controller_node-1]     ~~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 101, in destroy
+[controller_node-1]     self._destroy()
+[controller_node-1]     ~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 189, in _destroy
+[controller_node-1]     super()._destroy()
+[controller_node-1]     ~~~~~~~~~~~~~~~~^^
+[controller_node-1]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 104, in _destroy
+[controller_node-1]     self.handle.destroy_when_not_in_use()
+[controller_node-1]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-1] KeyboardInterrupt
+[opencr_bridge-2] Traceback (most recent call last):
+[opencr_bridge-2]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_bridge/lib/tracker_bridge/opencr_bridge", line 33, in <module>
+[opencr_bridge-2]     sys.exit(load_entry_point('tracker-bridge', 'console_scripts', 'opencr_bridge')())
+[opencr_bridge-2]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/build/tracker_bridge/tracker_bridge/opencr_bridge.py", line 143, in main
+[opencr_bridge-2]     node.destroy_node()
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2702, in destroy_node
+[opencr_bridge-2]     self.destroy_publisher(self._publishers[0])
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+[opencr_bridge-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2609, in destroy_publisher
+[opencr_bridge-2]     publisher.destroy()
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 101, in destroy
+[opencr_bridge-2]     self._destroy()
+[opencr_bridge-2]     ~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 189, in _destroy
+[opencr_bridge-2]     super()._destroy()
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 104, in _destroy
+[opencr_bridge-2]     self.handle.destroy_when_not_in_use()
+[opencr_bridge-2]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-2] KeyboardInterrupt
+[ERROR] [controller_node-1]: process has died [pid 23574, exit code -2, cmd '/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_controller/lib/tracker_controller/controller_node --ros-args -r __node:=tracker_controller --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/camera.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/control.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/device.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/hsv.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/safety.yaml --params-file /tmp/tracker_controller_launch_zr9s5ufv.yaml'].
+[ERROR] [opencr_bridge-2]: process has died [pid 23575, exit code -2, cmd '/home/pa23/pr_test/assignment/lv2_module5/ros2_ws/install/tracker_bridge/lib/tracker_bridge/opencr_bridge --ros-args -r __node:=opencr_bridge --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/camera.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/control.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/device.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/hsv.yaml --params-file /home/pa23/pr_test/assignment/lv2_module5/results/assignment_B/search_20261007_123855/config/safety.yaml --params-file /tmp/opencr_bridge_launch_qbl62j7z.yaml'].
