@@ -59,6 +59,9 @@ lv2_module5/results/logs/raw/
 
 # Build directories
 build/
+ros2_ws/build
+ros2_ws/install
+ros2_ws/log
 
 # DS_Store files
 .DS_Store
