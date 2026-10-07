@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>target_detector</name>
+  <version>0.1.0</version>
+  <description>Lv2 module 5 perception: blue target detection from RealSense D435 (HSV, contour, depth)</description>
+  <maintainer email="todo@example.com">todo</maintainer>  <!-- #todo 인지 담당 -->
+  <license>TODO</license>  <!-- #todo 팀 합의 -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>tracker_controller</exec_depend>  <!-- object_tracker의 회전축 좌표 변환(geometry.py). 없으면 회전 보정 없이 동작 -->
+
+  <test_depend>python3-pytest</test_depend>
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
