@@ -20,7 +20,7 @@ TOPICS=(/camera/camera/color/image_raw /camera/camera/color/camera_info
 
 echo "기록 시작: $OUT (${SECONDS_MAX}s, Ctrl+C로 먼저 끝낼 수 있음)"
 # 정해진 시간 뒤 SIGINT로 끝내야 metadata.yaml이 정상으로 닫힌다
-timeout -s INT "$SECONDS_MAX" ros2 bag record -o "$OUT" "${TOPICS[@]}" || true
+timeout -s INT "$SECONDS_MAX" ros2 bag record -o "$OUT" --topics "${TOPICS[@]}" || true
 
 cp -r "$LV2/config" "$LV2/recordings/${RUN_ID}_config"
 {

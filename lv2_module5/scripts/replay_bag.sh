@@ -15,7 +15,7 @@ SAVE_N=${4:-30}
 [ -d "$BAG" ] || { echo "bag 없음: $BAG"; exit 1; }
 [ -e "$OUT" ] && { echo "이미 있음: $OUT (다른 태그 사용)"; exit 1; }
 
-ros2 bag record -o "$OUT" --use-sim-time /target_replay /target_replay/depth /target_replay/position_cam &
+ros2 bag record -o "$OUT" --use-sim-time --topics /target_replay /target_replay/depth /target_replay/position_cam &
 REC=$!
 sleep 2   # 기록기가 구독을 마친 뒤 재생 시작 (앞 프레임 누락 방지)
 # 재생은 launch 안에서 한다. 검출기는 스스로 끝나지 않으므로 bag 길이 + 15 s 뒤 Ctrl+C(INT)로 끝낸다
