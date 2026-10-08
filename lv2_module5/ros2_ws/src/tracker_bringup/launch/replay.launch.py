@@ -7,6 +7,7 @@
           run_id:=<이름>(재처리 기록 <run_id>_detect.csv, 기본 auto), config_dir:=<폴더>(다른 설정으로 재처리, 회귀 비교),
           save_every_n:=<N>(N 프레임마다 재처리 원본·마스크·검출 이미지 저장, 기본 0=끔)
 """
+import atexit
 import os
 import tempfile
 from glob import glob
@@ -26,6 +27,7 @@ def override(node, **values):
     """launch 인자 값을 config와 같은 노드 이름 항목의 임시 yaml로 써서 맨 뒤 파일로 넘긴다.
     dict(와일드카드 /**)나 ros_arguments의 -p로 넘기면 config/*.yaml의 노드 이름 항목에 덮여 무시된다(2026-10-07 시험)."""
     f = tempfile.NamedTemporaryFile('w', prefix=f'{node}_launch_', suffix='.yaml', delete=False)
+    atexit.register(lambda path=f.name: os.path.exists(path) and os.remove(path))   # launch가 끝나면 지운다(/tmp에 쌓임)
     yaml.safe_dump({node: {'ros__parameters': values}}, f)
     f.close()
     return f.name
