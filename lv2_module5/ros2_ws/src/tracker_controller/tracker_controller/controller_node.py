@@ -35,6 +35,17 @@ from tracker_controller.tracking_logic import AxisConfig, SearchConfig, Tracking
 
 COMMAND_UNIT = 'deg/s'
 PAIR_WAIT_S = 0.15     # /target과 /target/position_cam 짝을 기다리는 시간
+BOARD_MAX_AGE_S = 1.0       # [s] 보드 상태(50 Hz)가 이보다 오래 안 오면 브리지가 멈춘 것으로 본다
+
+
+def keep_previous(path):
+    """같은 이름의 기록이 있으면 지우지 않고 <이름>.prevN으로 옮긴다(같은 run_id를 다시 써도 이전 기록 보존)."""
+    if os.path.exists(path):
+        n = 1
+        while os.path.exists(f'{path}.prev{n}'):
+            n += 1
+        os.rename(path, f'{path}.prev{n}')
+    return path
 
 
 class TrackerNode(Node):
@@ -60,10 +71,11 @@ class TrackerNode(Node):
         vfov_deg = p('vfov_deg', 43.2)                      # CameraInfo: 2*atan(H/(2*fy))
         self.pan_cfg = AxisConfig(kp=p('pan_kp', 2.0), direction=int(p('pan_direction', 1)),
                                   speed_limit=p('pan_speed_limit_deg_s', 30.0), deadband=p('pan_deadband', 0.03),
-                                  half_fov_deg=hfov_deg / 2)
+                                  half_fov_deg=hfov_deg / 2, limit_deg=p('pan_limit_deg', 175.0))
         self.tilt_cfg = AxisConfig(kp=p('tilt_kp', 2.5), direction=int(p('tilt_direction', 1)),
                                    speed_limit=p('tilt_speed_limit_deg_s', 20.0), deadband=p('tilt_deadband', 0.05),
-                                   enabled=p('tilt_enabled', True), half_fov_deg=vfov_deg / 2)
+                                   enabled=p('tilt_enabled', True), half_fov_deg=vfov_deg / 2,
+                                   limit_deg=p('tilt_limit_deg', 38.0))
         search = SearchConfig(enabled=p('search_enabled', False), delay_s=p('search_delay_s', 0.3),
                               timeout_s=p('search_timeout_s', 3.0), kp=p('search_kp', 2.0),
                               speed_limit=p('search_speed_limit_deg_s', 20.0),
@@ -94,7 +106,7 @@ class TrackerNode(Node):
         self.run_id = run_id if run_id not in ('', 'auto') else datetime.now().strftime('run_%Y%m%d_%H%M%S')
         log_dir = os.path.expanduser(p('log_dir', '~/lv2_module5_logs'))
         os.makedirs(log_dir, exist_ok=True)
-        self.csv_file = open(os.path.join(log_dir, f'{self.run_id}.csv'), 'w', newline='')
+        self.csv_file = open(keep_previous(os.path.join(log_dir, f'{self.run_id}.csv')), 'w', newline='')
         self.csv = csv.writer(self.csv_file)
         self.csv.writerow(['run_id', 'time_s', 'ros_time_s', 'target_seq', 'stamp_s', 'frame_id', 'detected',
                            'ex', 'ey', 'area_ratio', 'target_age_s', 'depth_valid',
@@ -117,6 +129,8 @@ class TrackerNode(Node):
         self.create_subscription(PointStamped, position_topic, self.on_position, qos)
         self.create_subscription(Bool, enable_topic, self.on_enable, 10)
         self.create_subscription(JointState, joint_topic, self.on_joint, 10)
+        self.create_subscription(String, p('board_state_topic', '/pan_tilt/board_state'), self.on_board, 10)
+        self.board = None                           # (보드 상태, 받은 단조 시각). 브리지가 없으면(모의 입력 시험) None
         self.status_pub = self.create_publisher(String, status_topic, 10)
         self.cmd_pub = self.create_publisher(Vector3Stamped, command_topic, 10)
         self.pred_pub = self.create_publisher(PointStamped, pred_topic, qos)
@@ -143,7 +157,8 @@ class TrackerNode(Node):
 
     # ================= 입력 =================
     def set_enabled(self, on):
-        self.logic.set_enabled(on)
+        if not self.logic.set_enabled(on):      # 이미 같은 상태면 추적·기억을 초기화하지 않는다
+            return
         self.memory.clear()
         self.get_logger().info(f'tracking enabled={on}')
 
@@ -160,6 +175,15 @@ class TrackerNode(Node):
         if len(msg.velocity) >= 2:
             self.joint_vel = (math.degrees(msg.velocity[0]), math.degrees(msg.velocity[1]))
 
+    def on_board(self, msg):
+        self.board = (msg.data, time.monotonic())
+
+    def board_state(self, now):
+        """보드 상태. 한 번이라도 받았는데 BOARD_MAX_AGE_S 넘게 끊기면(브리지 종료) NO_STATUS"""
+        if self.board is None:
+            return None
+        return self.board[0] if now - self.board[1] <= BOARD_MAX_AGE_S else 'NO_STATUS'
+
     def ros_now(self):
         return self.get_clock().now().nanoseconds * 1e-9
 
@@ -170,8 +194,11 @@ class TrackerNode(Node):
     def on_target(self, msg):
         now = time.monotonic()
         ns = self.stamp_ns(msg)
+        restarts = self.logic.stamp_restarts
         if not self.logic.on_target(msg.point.x, msg.point.y, msg.point.z, ns, now):
             return
+        if self.logic.stamp_restarts != restarts:
+            self.get_logger().warning('/target 시각이 크게 뒤로 갔습니다(bag 재재생·인지 재시작): 순서 검사 기준을 다시 잡습니다')
         self.last_frame_id, self.last_stamp_s = msg.header.frame_id, ns * 1e-9
         if self.logic.last[3]:                       # 검출된 프레임만 기억에 넣는다
             self.pending[ns] = (now, self.ros_now(), *self.logic.last[:3])
@@ -226,7 +253,7 @@ class TrackerNode(Node):
                 pred_norm = geo.to_normalized(
                     geo.base_to_cam(pred_base, pan_g, tilt_g, self.cam_forward, self.cam_up), self.hfov, self.vfov)
 
-        out = self.logic.step(now, joint, desired)
+        out = self.logic.step(now, joint, desired, self.board_state(now))
         if out.state != self.prev_state:
             self.get_logger().info(f'state {self.prev_state} -> {out.state} ({out.reason})')
             self.prev_state = out.state
@@ -259,11 +286,12 @@ class TrackerNode(Node):
         pn = pred_norm or (None, None)
         de = desired or (None, None)
         jt = joint or (None, None)
+        jv = self.joint_vel if joint is not None else (None, None)   # 모터 상태가 끊기면 속도도 비운다(마지막 값 유지 금지)
         self.csv.writerow([self.run_id, f(now - self.t0), f(self.ros_now(), 6), self.logic.seq, f(self.last_stamp_s, 6), self.last_frame_id,
                            int(last[3]), f(last[0], 4), f(last[1], 4), f(last[2], 5),
                            f(self.logic.target_age(now)), int(self.last_depth_valid),
                            out.state, out.reason, f(out.pan_cmd), f(out.tilt_cmd), COMMAND_UNIT,
-                           'joint_states', f(jt[0]), f(jt[1]), f(self.joint_vel[0]), f(self.joint_vel[1]),
+                           'joint_states', f(jt[0]), f(jt[1]), f(jv[0]), f(jv[1]),
                            f(pb[0]), f(pb[1]), f(pb[2]), f(pn[0]), f(pn[1]), f(de[0]), f(de[1]),
                            f(out.search_elapsed), self.joint_name])
 

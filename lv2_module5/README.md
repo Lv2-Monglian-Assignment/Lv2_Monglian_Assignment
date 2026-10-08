@@ -24,9 +24,10 @@
 | | Python | 3.14.4 |
 | | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |
 | | rosbag2 | 0.33.3 (저장 형식: TODO mcap / sqlite3) |
-| | arduino-cli · OpenCR 보드 패키지 | arduino-cli 1.5.1 · OpenCR 보드 패키지 1.5.3 (FQBN `ROBOTIS:OpenCR:OpenCR`) |
-| | OpenCR 보드 패키지 주소 | `https://raw.githubusercontent.com/ROBOTIS-GIT/OpenCR/master/arduino/opencr_release/package_opencr_index.json` |
-| | DYNAMIXEL 라이브러리 | Dynamixel2Arduino (커밋 `cfbbaf7`, `~/Arduino/libraries`) |
+| | arduino-cli · OpenCR 코어 | arduino-cli 1.5.1 · OpenCR 코어 1.5.3 (릴리스 파일 수동 설치, `core list`에는 1.0.0으로 표시) · FQBN `ROBOTIS:OpenCR:OpenCR` |
+| | OpenCR 코어 파일 | `https://github.com/ROBOTIS-GIT/OpenCR/releases/download/1.5.3/opencr.tar.bz2` (sha256 `418656e5…`) |
+| | 컴파일러 | `arm-none-eabi-g++ 14.2.1` (Ubuntu apt `gcc-arm-none-eabi`) |
+| | DYNAMIXEL 라이브러리 | Dynamixel2Arduino 0.8.1 (`~/pa-opencr-build/user/libraries`) |
 | | OpenCR 업로더 | `opencr_ld` arm64 소스 빌드 (보드 패키지의 업로더는 x86용이라 Pi에서 실행 불가) |
 | 소프트웨어 (PC) | 용도 | Raspberry Pi SSH 접속(`ssh -X`로 화면 확인) · Isaac Sim 실행 |
 | | OS · 아키텍처 | Ubuntu 24.04.5 LTS · x86_64 |
@@ -78,8 +79,12 @@ lv2_module5/
 ## 3. 설치 및 빌드
 
 ```bash
+# (PC, 한 번만, 선택) SSH 키를 만들어 Pi에 등록하면 접속할 때 비밀번호를 묻지 않음
+ssh-keygen -t ed25519            # 이미 키가 있으면 생략
+ssh-copy-id <user>@<pi-host>     # 본인 Pi의 사용자·호스트 (예: monglian@monglian.local)
+
 # Raspberry Pi에 SSH 접속 (PC 터미널, 화면 확인이 필요하면 -X)
-ssh -X <user>@<raspberrypi-ip>
+ssh -X <user>@<pi-host>
 
 # 의존성 설치 (Pi)
 sudo apt update
@@ -114,35 +119,248 @@ python3 -m pytest -q src
 
 ## 4. OpenCR 펌웨어 빌드·업로드
 
-보드 패키지의 업로더(`opencr_ld`)는 x86용이라 `arduino-cli upload`가 Pi에서 동작하지 않습니다. 업로더를 소스에서 한 번 빌드합니다.
+3절처럼 Pi에 SSH로 접속한 상태에서 진행합니다. 펌웨어 빌드·업로드는 모두 Pi에서 실행합니다.
+
+### OS·아키텍처 확인
+```bash
+hostname
+cat /etc/os-release
+uname -m
+df -h "$HOME"
+```
+`uname -m`이 `aarch64`인지 확인합니다 (예: 제출 장비는 Ubuntu 26.04.1 LTS, `aarch64`). 아래 arduino-cli는 ARM64용이므로 다른 아키텍처라면 그에 맞는 파일을 받아야 합니다. 다운로드·설치를 위해 5GB 이상의 여유 공간을 권장합니다.
+
+###  필수도구 준비
+```bash
+export BASE="$HOME/pa-opencr-build"
+set -o pipefail
+mkdir -p "$BASE"/{bin,downloads,data,user,sketches,output}
+sudo apt update
+sudo apt install -y build-essential curl git python3-serial \
+  gcc-arm-none-eabi libnewlib-arm-none-eabi \
+  libstdc++-arm-none-eabi-newlib usbutils file
+arm-none-eabi-g++ --version
+sudo usermod -aG dialout "$USER"
+```
+SSH를 종료하고 다시 접속하여 `id -nG` 출력에 `dialout`이 포함되는지 확인하세요. 새 세션에서는 아래 설정도 다시 적용합니다.
 
 ```bash
-# (한 번만) Dynamixel2Arduino 설치
-git clone https://github.com/ROBOTIS-GIT/Dynamixel2Arduino.git ~/Arduino/libraries/Dynamixel2Arduino
-git -C ~/Arduino/libraries/Dynamixel2Arduino checkout cfbbaf79581ecfcdec952a87916572885453f4ab
-
-# (한 번만) arm64 opencr_ld 빌드 → ~/bin/opencr_ld
-mkdir -p ~/opencr_tools && cd ~/opencr_tools && git init -q uploader-src && cd uploader-src
-git remote add origin https://github.com/ROBOTIS-GIT/OpenCR.git
-git sparse-checkout init --cone && git sparse-checkout set arduino/opencr_develop/opencr_ld
-git fetch -q --depth 1 --filter=blob:none origin 68ec75d8a400949580ecf263e0105ea9743b878e && git checkout -q --detach FETCH_HEAD
-make -C arduino/opencr_develop/opencr_ld
-mkdir -p ~/bin && ln -sf ~/opencr_tools/uploader-src/arduino/opencr_develop/opencr_ld/opencr_ld ~/bin/opencr_ld
-
-# 빌드 (TODO: 펌웨어 이름은 이식 PR에서 확정)
-cd ~/Lv2_Monglian_Assignment/lv2_module5
-arduino-cli compile --fqbn OpenCR:OpenCR:OpenCR --output-dir build/<sketch> firmware/<sketch>
-
-# 업로드: 출력에 "CRC OK"와 "[OK] Download"가 있어야 성공 (종료 코드만으로 판단하지 않음)
-opencr_ld /dev/ttyACM0 115200 build/<sketch>/<sketch>.ino.bin 1
-
-# 시리얼 확인 (다른 프로그램이 포트를 열고 있지 않을 때)
-python3 -m serial.tools.miniterm /dev/ttyACM0 115200 --eol LF
+export BASE="$HOME/pa-opencr-build"
+set -o pipefail
 ```
 
-- 보드 측 통신 타임아웃: 속도 명령이 **300 ms** 없으면 속도 0 (실측 310 ms에 `TIMEOUT`, 팬 1.6°만 움직이고 정지). 모터 Bus Watchdog 100 ms.
-- 업로드·시리얼 확인 기록: `results/logs/TODO`
-- 주의: OpenCR이 켜진 뒤 모터를 빼거나 꽂으면 활성화 때 응답 없음으로 FAULT가 날 수 있습니다. 모터 연결을 바꾼 뒤에는 OpenCR을 리셋(또는 재업로드)합니다.
+### Arduino CLI 1.5.1 설치
+
+```bash
+cd "$BASE/downloads"
+VER=1.5.1
+ASSET="arduino-cli_${VER}_Linux_ARM64.tar.gz"
+RELEASE="https://github.com/arduino/arduino-cli/releases/download"
+curl -fL -o "$ASSET" "$RELEASE/v$VER/$ASSET"
+curl -fL -o checksums.txt \
+  "$RELEASE/v$VER/${VER}-checksums.txt"
+grep "  $ASSET\$" checksums.txt | sha256sum -c -
+```
+
+체크섬 검증이 `OK`일 때만 압축을 풀어 실행합니다.
+
+```bash
+tar -xzf "$ASSET" -C "$BASE/bin" arduino-cli
+file "$BASE/bin/arduino-cli"
+"$BASE/bin/arduino-cli" version
+```
+
+ARM aarch64 실행 파일과 버전 1.5.1을 확인하세요. `Exec format error`이면 다운로드한 파일과 호스트 아키텍처를 확인합니다.
+
+### OpenCR 코어 1.5.3 설치
+
+```bash
+cd "$BASE/downloads"
+CORE_URL="https://github.com/ROBOTIS-GIT/OpenCR/releases/download"
+curl -fL -o opencr.tar.bz2 "$CORE_URL/1.5.3/opencr.tar.bz2"
+CORE_SHA=418656e5e6d99d45d187ffdb28dece0f450c6707da3f6db56769f3ecafdc413c
+printf '%s  opencr.tar.bz2\n' "$CORE_SHA" | sha256sum -c -
+```
+
+`OK`를 확인한 뒤 다음을 실행합니다. 이 파일은 확장자와 달리 실제로는 gzip 형식이므로 `tar -xf`로 자동 감지합니다.
+
+```bash
+mkdir -p "$BASE/user/hardware/ROBOTIS/OpenCR"
+tar -xf opencr.tar.bz2 \
+  -C "$BASE/user/hardware/ROBOTIS/OpenCR" --strip-components=1
+```
+
+설치 후 `core list`에는 `ROBOTIS:OpenCR 1.0.0`으로 표시됩니다. 릴리스 태그는 1.5.3이지만 파일 안 `platform.txt`의 버전 값이 1.0.0이기 때문이며 정상입니다.
+
+### CLI 설정과 라이브러리 설치
+
+```bash
+cat > "$BASE/arduino-cli.yaml" <<EOF
+directories:
+  data: $BASE/data
+  downloads: $BASE/downloads
+  user: $BASE/user
+EOF
+"$BASE/bin/arduino-cli" --config-file "$BASE/arduino-cli.yaml" \
+  core update-index
+"$BASE/bin/arduino-cli" --config-file "$BASE/arduino-cli.yaml" \
+  board listall
+```
+
+보드 목록에 `OpenCR Board`와 `ROBOTIS:OpenCR:OpenCR`이 있어야 합니다. 이번 수동 설치의 vendor 폴더가 `ROBOTIS`이므로 보드 매니저 설치에서 쓰는 `OpenCR:OpenCR:OpenCR`과 다릅니다.
+
+```bash
+mkdir -p "$BASE/user/libraries"
+git clone https://github.com/ROBOTIS-GIT/Dynamixel2Arduino.git \
+  "$BASE/user/libraries/Dynamixel2Arduino"
+git -C "$BASE/user/libraries/Dynamixel2Arduino" checkout \
+  cfbbaf79581ecfcdec952a87916572885453f4ab
+"$BASE/bin/arduino-cli" --config-file "$BASE/arduino-cli.yaml" lib list   # Dynamixel2Arduino 0.8.1
+```
+
+### Ubuntu 컴파일러 연결
+
+원본 `platform.txt`는 유지하고 로컬 설정으로 컴파일러 경로를 지정합니다.
+
+```bash
+cat > "$BASE/user/hardware/ROBOTIS/OpenCR/platform.local.txt" <<'EOF'
+compiler.path=/usr/bin/
+EOF
+arm-none-eabi-g++ --version
+```
+
+검증한 컴파일러는 Ubuntu 26.04.1(aarch64)의 `arm-none-eabi-g++ 14.2.1`(apt 패키지 `15:14.2.rel1-1`)입니다. 이 조합에서 `opencr_tracker`가 추가 호환 옵션 없이 빌드됐습니다. 다른 버전에서 오류가 발생하면 버전과 첫 오류를 확인하고, 임의의 옵션으로 오류를 숨기지 마세요.
+
+### 저장소 소스 준비와 빌드
+
+빌드할 펌웨어는 `firmware/opencr_tracker`이며 대상은 **XM430-W350 2개(팬 ID 11, 틸트 ID 12), 1 Mbps, Protocol 2.0**입니다. 시작할 때 모델 번호를 확인해 다르면 FAULT로 멈춥니다. 본인 장비의 ID·baud가 다르면 소스의 `IDS`·`DXL_BAUD`를 맞추고, 모델 검사는 제거하지 마세요.
+
+```bash
+# 3절에서 clone했다면 그 폴더를 사용 (없으면 clone)
+cd ~
+test -d Lv2_Monglian_Assignment || git clone https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment.git
+cd ~/Lv2_Monglian_Assignment/lv2_module5
+git switch main && git pull     # 다른 브랜치를 빌드할 때: git fetch && git switch <브랜치>
+git log -1 --oneline            # 빌드한 커밋을 기록
+git status --short firmware/    # 출력이 없으면 저장소와 같은 소스
+SKETCH="$PWD/firmware/opencr_tracker"
+sha256sum "$SKETCH/opencr_tracker.ino"
+```
+
+PC에서 수정한 파일을 Pi에서 빌드해 보려면 같은 위치로 복사합니다. 복사 후 Pi의 `git status`에 `M`으로 표시되며, 스케치 폴더 이름과 `.ino` 이름은 같아야 합니다(`opencr_tracker/opencr_tracker.ino`).
+
+```bash
+# (PC)
+scp opencr_tracker.ino <user>@<pi-host>:~/Lv2_Monglian_Assignment/lv2_module5/firmware/opencr_tracker/
+```
+
+```bash
+set -o pipefail
+"$BASE/bin/arduino-cli" --config-file "$BASE/arduino-cli.yaml" \
+  compile --fqbn ROBOTIS:OpenCR:OpenCR --jobs 1 \
+  --output-dir "$BASE/output/opencr_tracker" \
+  "$SKETCH" 2>&1 | tee "$BASE/build_opencr_tracker.log"
+```
+
+빌드가 성공했을 때만 아래 결과를 확인합니다. 실패했다면 이전에 생성된 파일을 새 빌드 결과로 사용하지 마세요.
+
+```bash
+OUT="$BASE/output/opencr_tracker"
+test -s "$OUT/opencr_tracker.ino.bin"
+file "$OUT/opencr_tracker.ino.elf"
+arm-none-eabi-size "$OUT/opencr_tracker.ino.elf"
+sha256sum "$OUT/opencr_tracker.ino.bin"
+```
+
+`.elf`는 OpenCR 타깃의 섹션·주소·심볼 정보를 포함하고, `.bin`은 업로드할 원시 펌웨어입니다. 빌드 성공은 파일 생성 완료를 의미하며 장치 업로드 성공과는 별개입니다.
+
+같은 커밋이라도 컴파일러 버전이 다르면 `.bin`의 크기·해시가 달라질 수 있습니다. 빌드 기록에는 커밋(`git log -1`), 소스 sha256, `.bin` sha256을 함께 남깁니다.
+
+### 라즈베리파이용 업로더 빌드
+
+보드 패키지에 들어 있는 업로더(`opencr_ld`)는 x86용이라 Pi에서 실행되지 않으므로(`arduino-cli upload`도 동작하지 않음) 소스에서 한 번 빌드합니다. 펌웨어는 `arm-none-eabi-g++`로 OpenCR용 파일을 만듭니다. 아래 업로더는 일반 `gcc`로 라즈베리파이에서 실행할 파일을 만듭니다.
+
+```bash
+mkdir "$BASE/uploader-src"
+cd "$BASE/uploader-src"
+git init
+git remote add origin https://github.com/ROBOTIS-GIT/OpenCR.git
+git sparse-checkout init --cone
+git sparse-checkout set arduino/opencr_develop/opencr_ld
+git fetch --depth 1 --filter=blob:none origin \
+  68ec75d8a400949580ecf263e0105ea9743b878e
+git checkout --detach FETCH_HEAD
+make -C arduino/opencr_develop/opencr_ld
+file arduino/opencr_develop/opencr_ld/opencr_ld
+```
+
+ARM64 라즈베리파이라면 업로더도 ARM aarch64 실행 파일인지 확인합니다 (예: `ELF 64-bit LSB pie executable, ARM aarch64`).
+
+설치가 끝나면 환경 확인 스크립트로 도구 버전을 한 번에 확인할 수 있습니다(결과는 `results/logs/env_<시각>.txt`).
+
+```bash
+cd ~/Lv2_Monglian_Assignment/lv2_module5
+scripts/check_env.sh
+```
+
+### OpenCR 포트 확인과 업로드
+
+OpenCR을 라즈베리파이에 USB로 연결하고 연결 전후의 목록을 비교해 포트를 확인하세요. 다른 시리얼 프로그램이 열려 있으면 종료합니다.
+
+```bash
+lsusb
+ls -l /dev/ttyACM*
+```
+
+아래 `/dev/ttyACM0`은 예시입니다. 실제로 확인한 OpenCR 포트로 지정하세요.
+
+```bash
+PORT=/dev/ttyACM0
+udevadm info --query=property --name="$PORT"
+test -r "$PORT" && test -w "$PORT" && echo 'Port access OK'
+fuser -v "$PORT"    # 출력이 없어야 다른 프로그램이 포트를 쓰지 않는 상태 (브리지·시리얼 모니터 종료)
+```
+
+이 업로드는 OpenCR의 기존 응용 펌웨어를 교체합니다. 장비 설정과 모터 고정·이동 범위·전원 차단 방법을 확인한 상태에서 수행하세요.
+
+```bash
+UPLOADER="$BASE/uploader-src/arduino/opencr_develop/opencr_ld/opencr_ld"
+set -o pipefail
+"$UPLOADER" "$PORT" 115200 \
+  "$OUT/opencr_tracker.ino.bin" 1 \
+  2>&1 | tee "$BASE/upload_opencr_tracker.log"
+```
+
+위에서 빌드한 `$OUT/opencr_tracker.ino.bin`을 업로드합니다.
+
+출력에 `CRC OK`와 `[OK] Download`가 **모두** 있는지 확인합니다. 이 업로더는 내부 오류가 있어도 종료 코드가 성공으로 보일 수 있으므로 종료 코드만으로 성공을 판단하지 않습니다.
+
+#### 스크립트로 한 번에 빌드·업로드
+
+도구를 설치한 뒤에는 위 빌드·업로드를 명령 하나로 할 수 있습니다. 빌드 출력은 화면에만 나오고, 업로드 기록(커밋·소스 변경 여부·sha256·업로더 출력)은 `results/logs/upload_<스케치>_<시각>.log`에 남습니다. 성공 판정 기준(`CRC OK`와 `[OK] Download`)은 위와 같습니다.
+
+```bash
+cd ~/Lv2_Monglian_Assignment/lv2_module5
+scripts/upload_fw.sh                      # firmware/opencr_tracker
+PORT=/dev/ttyACM1 scripts/upload_fw.sh    # 포트가 다를 때
+```
+
+### 업로드 이후 동작 확인
+
+포트 번호가 달라질 수 있으므로 다시 확인합니다. 저장소의 시험 스크립트로 펌웨어 동작을 확인합니다(ROS 없이 시리얼만 사용).
+
+```bash
+ls -l /dev/ttyACM*
+PORT=/dev/ttyACM0
+cd ~/Lv2_Monglian_Assignment/lv2_module5
+python3 scripts/test/fw_test.py --port "$PORT"
+```
+
+- 처음에 `상태: OFF  각도: …`가 나오면 펌웨어가 동작하고 모터 ID·baud·전원·모델 확인을 통과한 것입니다. 상태 줄이 없거나 `FAULT`이면 안내 문구에 따라 확인합니다. 여기까지는 모터가 움직이지 않으므로, 움직이지 않고 끝내려면 이때 `Ctrl+C`를 누릅니다.
+- Enter를 누르면 보드 타임아웃 시험을 합니다. 토크가 켜지고 팬이 약 1.5° 움직였다가 약 300 ms 뒤 멈추면 `PASS`입니다(기대: 약 300 ms, HOLD).
+- 기록은 `~/lv2_module5_logs/fw_test_<날짜시간>.log`에 남습니다.
+- 보드 측 통신 타임아웃: 속도 명령이 300 ms 없으면 속도 0, 토크는 유지(`CMD_TIMEOUT_MS`, `TORQUE_OFF_AFTER_MS = 0`). 모터 Bus Watchdog 200 ms.
+- 주의: OpenCR 전원이 켜진 상태에서 모터 케이블을 빼거나 꽂지 마세요(보드·모터에 무리가 가고 FAULT의 원인이 됩니다). 연결을 바꿀 때는 전원을 끄고 바꾼 뒤 다시 켭니다.
 
 ## 5. 실행
 

@@ -11,6 +11,10 @@ import math
 from dataclasses import dataclass
 
 IDLE, TRACKING, LOST, SEARCHING = 'IDLE', 'TRACKING', 'LOST', 'SEARCHING'
+# 보드(OpenCR)가 명령을 따를 수 없는 상태 -> LOST 사유. 브리지의 /pan_tilt/board_state (없으면 검사 안 함: 모의 입력 시험)
+BOARD_BLOCK = {'FAULT': 'board_fault', 'FAULT_MANUAL': 'board_fault_manual', 'NO_STATUS': 'board_silent',
+               'HOMING': 'board_homing'}
+STAMP_RESTART_NS = 1_000_000_000   # 이보다 크게 뒤로 간 영상 시각은 재전송이 아니라 시각 재시작(bag 재재생·카메라 재시작)
 
 
 @dataclass
@@ -21,6 +25,7 @@ class AxisConfig:
     deadband: float         # 정규화 오차. 이보다 작으면 0
     enabled: bool = True
     half_fov_deg: float = 0.0   # 화면 반폭(반높이) 시야각 [deg]. >0이면 정규화 오차를 카메라 각도로 바꿔 Kp를 곱한다
+    limit_deg: float = 0.0      # 모터 각도가 ±limit_deg 밖이면 바깥 방향 명령을 0으로 (0 = 검사 안 함)
 
 
 @dataclass
@@ -58,8 +63,18 @@ def p_command(error, axis: AxisConfig):
     return max(-axis.speed_limit, min(axis.speed_limit, axis.direction * axis.kp * err))
 
 
+def limit_outward(cmd, joint_deg, axis: AxisConfig):
+    """모터 각도가 한계(±limit_deg) 밖인데 명령이 더 바깥이면 0. (명령, 한계에 걸렸는지)를 돌려준다.
+    펌웨어도 한계에서 바깥 속도를 줄이지만, 제어 노드가 알아야 상태에 표시하고 명령을 계속 밀지 않는다."""
+    if axis.limit_deg <= 0 or joint_deg is None or abs(joint_deg) < axis.limit_deg or cmd * joint_deg <= 0:
+        return cmd, False
+    return 0.0, True
+
+
 def angle_command(desired_deg, current_deg, s: SearchConfig, limit_deg):
-    """탐색용 각도 P: clamp(Kp x (목표각 - 현재각)) [deg/s]"""
+    """탐색용 각도 P: clamp(Kp x (목표각 - 현재각)) [deg/s]
+    목표각은 ±limit_deg로 자르되, 이미 그 밖에 있으면 현재 각도까지만 자른다(제한 쪽으로 되돌아가며 목표에서 멀어지지 않게)."""
+    limit_deg = max(limit_deg, abs(current_deg))
     desired_deg = max(-limit_deg, min(limit_deg, desired_deg))
     err = desired_deg - current_deg
     if abs(err) < s.tolerance_deg:
@@ -83,23 +98,30 @@ class TrackingLogic:
         self.last_stamp_ns = None
         self.seq = 0
         self.stale_count = 0
+        self.stamp_restarts = 0       # 영상 시각이 크게 뒤로 가 기준을 다시 잡은 횟수
         self.miss_since = None        # 연속 미검출이 시작된 시각 (첫 미검출 프레임 수신 시각)
         self.search_start = None
         self.search_failed = False    # 실패 후에는 새 TRACKING 전까지 다시 탐색하지 않음
         self.stats = {'reacquired_in_view': 0, 'reacquired_search': 0, 'search_failed': 0}
 
     def set_enabled(self, on: bool):
+        """같은 값이 다시 와도(이미 켜져 있는데 켜기) 상태를 초기화하지 않는다. 바뀔 때만 IDLE 또는 LOST(대기)로."""
+        if on == self.enabled:
+            return False
         self.enabled = on
         self.streak = 0
         self.search_start, self.search_failed, self.miss_since = None, False, None
         self.state, self.reason = (LOST, 'waiting') if on else (IDLE, 'disabled')
+        return True
 
     def on_target(self, ex, ey, area, stamp_ns, now):
         """/target 한 건. 시각이 증가하지 않는 입력(같은 영상의 재전송)은 버린다."""
         if (self.require_increasing_stamp and stamp_ns > 0 and
                 self.last_stamp_ns is not None and stamp_ns <= self.last_stamp_ns):
-            self.stale_count += 1
-            return False
+            if self.last_stamp_ns - stamp_ns <= STAMP_RESTART_NS:
+                self.stale_count += 1
+                return False
+            self.stamp_restarts += 1      # 시각 재시작: 그대로 두면 이후 입력을 모두 버려 input_timeout이 계속된다
         self.last_stamp_ns = stamp_ns
         valid = all(math.isfinite(v) for v in (ex, ey, area))
         detected = valid and area > 0.0
@@ -117,20 +139,26 @@ class TrackingLogic:
 
     def _search_out(self, now, joint_deg, desired_deg, reason):
         if joint_deg is None or desired_deg is None:
-            self.search_start = None
-            return Output(LOST, 'search_unavailable')
+            return Output(LOST, 'search_unavailable')   # 탐색 시작 시각은 유지: 시간 상한을 다시 세지 않는다
         pan_cmd = angle_command(desired_deg[0], joint_deg[0], self.search, self.search.pan_max_deg)
         tilt_cmd = (angle_command(desired_deg[1], joint_deg[1], self.search, self.search.tilt_max_deg)
                     if self.tilt.enabled else 0.0)
+        pan_cmd = limit_outward(pan_cmd, joint_deg[0], self.pan)[0]
+        tilt_cmd = limit_outward(tilt_cmd, joint_deg[1], self.tilt)[0]
         return Output(SEARCHING, reason, pan_cmd, tilt_cmd, now - self.search_start)
 
-    def step(self, now, joint_deg=None, desired_deg=None):
+    def step(self, now, joint_deg=None, desired_deg=None, board_state=None):
         """제어 주기마다 호출.
 
         joint_deg  : 현재 모터 각도 (pan, tilt) [deg] 또는 None
         desired_deg: 기억한 목표를 정중앙에 두는 모터 각도 (pan, tilt) [deg] 또는 None
+        board_state: 보드 상태 (BOARD_BLOCK이면 LOST·명령 0으로 기록: 실패 원인이 제어 통신·보드임을 남긴다)
         """
-        out = self._decide(now, joint_deg, desired_deg)
+        if self.enabled and board_state in BOARD_BLOCK:
+            out = Output(LOST, BOARD_BLOCK[board_state])
+            self.search_start = None
+        else:
+            out = self._decide(now, joint_deg, desired_deg)
         self.state, self.reason = out.state, out.reason
         return out
 
@@ -158,7 +186,8 @@ class TrackingLogic:
                     return Output(LOST, 'search_failed')
                 return self._search_out(now, joint_deg, desired_deg, 'predicted')
             can_search = (self.search.enabled and not self.search_failed and desired_deg is not None
-                          and joint_deg is not None and now - self.miss_since >= self.search.delay_s)
+                          and joint_deg is not None and self.miss_since is not None
+                          and now - self.miss_since >= self.search.delay_s)
             if can_search:
                 self.search_start = now
                 return self._search_out(now, joint_deg, desired_deg, 'predicted')
@@ -180,7 +209,11 @@ class TrackingLogic:
             reason = 'ok'
         self.search_start, self.search_failed = None, False
         ex, ey, _, _ = self.last
-        return Output(TRACKING, reason, p_command(ex, self.pan), p_command(ey, self.tilt))
+        pan_cmd, pan_hit = limit_outward(p_command(ex, self.pan), joint_deg[0] if joint_deg else None, self.pan)
+        tilt_cmd, tilt_hit = limit_outward(p_command(ey, self.tilt), joint_deg[1] if joint_deg else None, self.tilt)
+        if reason == 'ok' and (pan_hit or tilt_hit):   # 한계에 붙어 목표 쪽으로 더 못 감 (반대로 돌아가지는 않음)
+            reason = '_'.join(a for a, hit in (('pan', pan_hit), ('tilt', tilt_hit)) if hit) + '_limit'
+        return Output(TRACKING, reason, pan_cmd, tilt_cmd)
 
     def target_age(self, now):
         return math.nan if self.last_rx is None else now - self.last_rx
