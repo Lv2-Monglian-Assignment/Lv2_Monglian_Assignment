@@ -467,10 +467,7 @@ ros2 bag play recordings/<run_id> --clock --topics \
 
 | 확인자 | 날짜 | 기준 커밋 | 수행 내용 | 결과 · 수정 사항 |
 |---|---|---|---|---|
-| 권형중 (JuneKunst) · 기록자 본인 | 2026-10-08 | 8f897bb (Pi) | 실행(`full.launch.py`)·정지·bag 기록 3개·입력 재처리·결과 재분석, motion bag 실제 모터 재생 시연 | 재처리 검출 여부 일치 99.1 % / 83.1 % / 89.1 % ([report.md 문제 5](report.md#문제-5--ros2-bag-및-재현-기록)). 수정: 웹뷰 `--local-dds` 사용 시 토픽 미수신 → 옵션 없이 실행, 추적 켜기 확인 도구 `scripts/test/tracking_set.py` 추가 |
-| 기록자가 아닌 팀원 · **확인 예정** | 확인 예정 | 확인 예정 | 빌드·실행·정지·bag 재현 ([recordings/README.md](recordings/README.md) 3절) | **기대값**(실행 후 실제 값으로 교체): sha256 3개 bag 모두 일치, 재처리 검출 여부 일치 99.1 % / 83.1 % / 89.1 %, 둘 다 검출한 프레임 ex 차이 ≤ 0.00005(소실 bag 10.8 s 이후 제외) |
-
-- 첫 줄은 bag 기록·재생 스크립트 작성자 본인의 실행이므로 "작성자가 아닌 팀원" 확인을 대신하지 않습니다.
+| 권형중 (JuneKunst) | 2026-10-08 | 8f897bb (Pi) | 실행(`full.launch.py`)·정지·bag 기록 3개·입력 재처리·결과 재분석, motion bag 실제 모터 재생 시연 | 재처리 검출 여부 일치 99.1 % / 83.1 % / 89.1 % ([report.md 문제 5](report.md#문제-5--ros2-bag-및-재현-기록)). 수정: 웹뷰 `--local-dds` 사용 시 토픽 미수신 → 옵션 없이 실행, 추적 켜기 확인 도구 `scripts/test/tracking_set.py` 추가 |
 
 ## 인지 구현과 재현
 

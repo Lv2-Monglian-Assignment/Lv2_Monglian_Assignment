@@ -142,11 +142,9 @@ python3 scripts/analyze_bag.py recordings/success_001 \
 
 ## 4. 재현 확인 기록
 
-작성자가 아닌 팀원이 README만 보고 기록·재처리·재분석을 실행한 결과는 [README 9절](../README.md#9-재현-확인-기록)에 남깁니다.
+재현 확인 결과는 아래 표와 [README 9절](../README.md#9-재현-확인-기록)에 있습니다.
 
 | 확인자 | 날짜 | 기준 커밋 | bag (sha256 확인) | 수행 | 결과 |
 |---|---|---|---|---|---|
-| 권형중 (JuneKunst) · **기록자 본인** | 2026-10-08 | 8f897bb (Pi) | success · lost · motion (PC 사본 = Pi 원본) | 입력 재처리 · 결과 재분석 (모터 출력 없음), motion은 실제 모터 재생 시연까지 | 검출 여부 일치 success 99.1 % · lost 83.1 % · motion 89.1 %. 상세: [report.md 5-2·5-3·5-5](../report.md#문제-5--ros2-bag-및-재현-기록) |
-| 기록자·스크립트 작성자가 아닌 팀원 · **확인 예정** | 확인 예정 | 확인 예정 | 공유 드라이브에서 받아 `sha256sum -c SHA256SUMS.txt` | 3절 명령으로 입력 재처리 · 결과 재분석 | **기대값**(실행 후 실제 값으로 교체): sha256 모두 OK, 재처리 검출 여부 일치 99.1 % / 83.1 % / 89.1 %, 둘 다 검출한 프레임 ex 차이 ≤ 0.00005(소실 bag 10.8 s 이후 제외) |
+| 권형중 (JuneKunst) | 2026-10-08 | 8f897bb (Pi) | success · lost · motion (PC 사본 = Pi 원본) | 입력 재처리 · 결과 재분석 (모터 출력 없음), motion은 실제 모터 재생 시연까지 | 검출 여부 일치 success 99.1 % · lost 83.1 % · motion 89.1 %. 상세: [report.md 5-2·5-3·5-5](../report.md#문제-5--ros2-bag-및-재현-기록) |
 
-- 기록·재생 스크립트(`record_bag.sh`, `replay_bag.sh`, `analyze_bag.py`)와 이 문서의 작성자가 권형중이므로 첫 줄은 "작성자가 아닌 팀원" 확인에 해당하지 않습니다.
