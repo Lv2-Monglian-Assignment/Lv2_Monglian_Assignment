@@ -1,0 +1,9 @@
+scale=0.5
+run_id=ds_live_0.5_20261008_165240
+t_start=1791445974.442457907
+t_end=1791446013.777389189
+temp_start_c=56.0
+temp_end_c=57.9
+detector_pid=18676
+domain=77
+commit=f910df2

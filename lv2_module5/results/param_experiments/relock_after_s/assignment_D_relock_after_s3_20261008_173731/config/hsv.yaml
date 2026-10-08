@@ -1,0 +1,43 @@
+# 검출 설정: 색 범위·최소 면적·크기 검증·후보 선택·번호 유지. #todo = 실측·합의 필요
+target_detector:
+  ros__parameters:
+    # ---- 색 (모듈 5: 파란색 1색). OpenCV HSV: H 0~179, S·V 0~255 ----
+    # 원기둥 실측(2026-10-05 작업실, 0.3~1.6 m): H 103~108 (픽셀 p1~p99 104~108), S 128~255, V 49~169 (그늘 31)
+    hsv_lower: [102, 120, 40]                  # H: 원기둥 범위 ±2. S 120: 원기둥 최저(경계 제외)보다 약간 낮게. V 40: 그늘진 면 포함
+    hsv_upper: [110, 255, 255]                 # H 110 초과(보라 쪽), 102 미만(청록 쪽) 배경 제외
+    morph_kernel: 5                            # [px] open -> close
+    min_area_px: 100.0                         # [px^2] 잡음 수준. 물체인지는 size_check가 실제 크기로 판단
+                                               # 2026-10-05 Pi 장면: 점 잡음 14~55 px^2 -> 100이면 걸러짐 #todo 시험 전에 확정, 변경 이유 report 기록
+                                               # (이전 600: 실측 원기둥 0.20 m 14,549 / 0.45 m 3,024 / 0.83 m 920 / 1.36 m 296 -> 약 1.0 m보다 먼 물체 제외)
+                                               # 100 px^2 ~ 옆면(약 15 cm^2) 약 2.4 m, 윗면(7 cm^2) 약 1.6 m 거리 (fx 615 가정)
+    selection: priority                        # largest | lock | priority(1 가장 큼 -> 2 가까움 -> 3 화면 중앙)  #todo 팀 합의
+    lock_gate_px: 80.0                         # [px] lock: 이전 중심 주변 후보 우선
+    lock_timeout_s: 0.5                        # [s] lock 기억 유지 시간
+    detect_scale: 1.0                          # 검출용 축소 배율. 0.5 = 320x240에서 검출 후 좌표만 원본으로 복원
+                                               # #todo Pi에서 1.0 / 0.5 processing FPS·검출률 비교 후 결정. min_area_px는 원본 기준이라 그대로 둔다
+
+    # ---- 크기 검증: 깊이로 환산한 실제 보이는 면적 [cm^2] = 면적_px x (Z/fx) x (Z/fy) x 1e4 ----
+    size_check: true                           # 깊이를 모르는 후보는 검증 없이 남긴다. 거리만으로는 버리지 않는다
+    obj_area_min_cm2: 2.0                      # 이슈 #34 시험 조건 2.0~30 cm^2 (이전 5.5). 이론 최소 7.07 (지름 3 cm 원, 2.25*pi)
+                                               # 샘플 실측(2026-10-05 14장, K=605.85): 원기둥 옆면 13.1~17.1 cm^2 (0.20~1.85 m), 파란 슬리퍼 79.5~155.8 -> 제외
+                                               # Pi 실물(2026-10-06, det_20261006_092056): 블록 정면 15.6 (0.61 m), 2개 중 가까운 것 17.8 (0.34 m),
+                                               # 원기둥 윗면 7.1 (0.55 m, 이론 7.07과 일치) -> 이전 하한 5.5의 여유 확인(현재 2.0은 #34 가림 검출 조건). #todo 직육면체 세 면(깊이 유효한 장면) 실측
+    obj_area_max_cm2: 30.0                     # 이론 최대 27 (3x3x6 직육면체 세 면 동시) x 약 1.1 여유
+
+    # ---- priority 선택의 '비슷함' 기준 ----
+    similar_area_ratio: 0.2                    # |a1-a2|/max <= 20 % 면 크기 비슷 -> 거리로 비교
+    similar_depth_m: 0.03                      # |z1-z2| <= max(3 cm, 5 % x z) 면 거리 비슷 -> 화면 중앙으로 비교
+    similar_depth_ratio: 0.05
+
+    # ---- 여러 물체 번호 유지 (object_tracker.py, 발제 필수 아님) ----
+    use_object_tracker: true                   # false: 매 프레임 selection 규칙으로만 고름
+    relock_after_s: 3.0                        # [s] 이슈 #34 시험 조건 (3.0 -> 0.5, 변경 이유는 report 문제 1 실행 조건에 기록)
+    track_gate_m: 0.04                         # [m] 보이는 물체 매칭 반경 #todo
+    track_reid_gate_m: 0.06                    # [m] 안 보이던 물체 재발견 반경 #todo
+    track_size_ratio_max: 1.6                  # 재발견 시 면적 비 상한
+    track_velocity_window_s: 0.1               # [s] 속도 추정 구간 (0.1 또는 0.25) #todo
+    track_predict_horizon_s: 0.5               # [s] 속도 외삽 상한
+    track_assumed_range_m: 0.6                 # [m] 깊이 없을 때 방향 차이 환산 거리
+    track_sync_error_s: 0.02                   # [s] 영상-모터 각도 시각 오차 가정 #todo
+    track_fast_rotation_deg_s: 0.0             # [deg/s] 이보다 빠른 회전 중 새 번호·크기 갱신 중지. 0 = 끔
+                                               # 끈 이유: 추적 중 회전이 수십 deg/s(화면 끝 오차 명령 약 55, 상한 120)라 30이면 자주 켜짐. 회전 중 번호 유지 실측 후 결정 #todo

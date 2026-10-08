@@ -1,0 +1,81 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-08-16-51-43-273928-pa23-18566
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: 🚀 Launching as Normal ROS Node
+[INFO] [realsense2_camera_node-1]: process started with pid [18575]
+[INFO] [target_detector-2]: process started with pid [18576]
+[realsense2_camera_node-1] [0m[INFO] [1791445904.048525754] [camera.camera]: RealSense ROS v4.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.048757400] [camera.camera]: Built with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.048897566] [camera.camera]: Running with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1]  08/10 16:51:44,051 WARNING [281473189865760] (context.cpp:41) No valid configuration file found at : /home/pa23/.realsense-config.json loading defaults
+[realsense2_camera_node-1] [0m[INFO] [1791445904.208903393] [camera.camera]: Device with serial number 261822072247 was found.
+[realsense2_camera_node-1] [0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.209133039] [camera.camera]: Device with physical ID /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.209247112] [camera.camera]: Device with name RealSense D435 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.209520277] [camera.camera]: Device with port number 2-1 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.209637128] [camera.camera]: Device USB type: 3.2[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.209701701] [camera.camera]: Starting device RealSense D435 (Product ID: 0x0B07)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.210009347] [camera.camera]: getParameters...[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.210615361] [camera.camera]: JSON file is not provided[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.210727712] [camera.camera]: Device Name: RealSense D435[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.210773248] [camera.camera]: Device Serial No: 261822072247[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.210908081] [camera.camera]: Device physical port: /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.210974080] [camera.camera]: Device FW version: 5.15.1.55[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.211013469] [camera.camera]: Device Product ID: 0x0B07[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.211047598] [camera.camera]: Sync Mode: Off[0m
+[realsense2_camera_node-1] [33m[WARN] [1791445904.355859562] [camera.camera]: re-enable the stream for the change to take effect.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.356398132] [camera.camera]: Set ROS param depth_module.infra_profile to default: 848x480x30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.377848150] [camera.camera]: Stopping Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.378410442] [camera.camera]: Stopping Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.399062300] [camera.camera]: Starting Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.407901249] [camera.camera]: Open profile: stream_type: Depth(0), Format: Z16, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.431006884] [camera.camera]: Starting Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.437486833] [camera.camera]: Open profile: stream_type: Color(0), Format: RGB8, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445904.477324782] [camera.camera]: RealSense Node Is Up![0m
+[realsense2_camera_node-1] [33m[WARN] [1791445904.529142564] [camera.camera]: frame's time domain is HARDWARE_CLOCK. Timestamps may reset periodically.[0m
+[target_detector-2] [INFO] [1791445906.850592361] [target_detector]: run_id=ds_live_1.0_20261008_165141 hsv=(102, 120, 40)~(110, 255, 255) min_area=100.0 selection=priority use_depth=True detect_scale=1.0 size_check=True object_tracker=True
+[realsense2_camera_node-1]  08/10 16:51:50,676 ERROR [281472762112288] (librealsense-exception.h:53) get_xu(...). xioctl(UVCIOC_CTRL_QUERY) failed on control 1 Last Error: Connection timed out
+[realsense2_camera_node-1] [33m[WARN] [1791445910.689925939] [camera.camera]: XXX Hardware Notification:Depth stream start failure,1.79145e+12,Error,Hardware Error[0m
+[realsense2_camera_node-1] [33m[WARN] [1791445910.690120308] [camera.camera]: Hardware Notification:Depth stream start failure,1.79145e+12,Error,Hardware Error[0m
+[target_detector-2] [INFO] [1791445911.770564054] [target_detector]: processing FPS 29.5, mean proc 7.4 ms
+[realsense2_camera_node-1]  08/10 16:51:55,408 ERROR [281472762112288] (global_timestamp_reader.cpp:438) Error during time_diff_keeper polling: get_xu(...). xioctl(UVCIOC_CTRL_QUERY) failed on control 1 Last Error: Connection timed out
+[target_detector-2] [INFO] [1791445918.140606244] [target_detector]: processing FPS 30.2, mean proc 12.5 ms
+[target_detector-2] [INFO] [1791445923.144024824] [target_detector]: processing FPS 30.0, mean proc 12.9 ms
+[target_detector-2] [INFO] [1791445928.148454453] [target_detector]: processing FPS 30.0, mean proc 13.3 ms
+[target_detector-2] [INFO] [1791445933.151564999] [target_detector]: processing FPS 30.0, mean proc 12.3 ms
+[target_detector-2] [INFO] [1791445938.155136300] [target_detector]: processing FPS 30.0, mean proc 13.1 ms
+[target_detector-2] [INFO] [1791445943.159493985] [target_detector]: processing FPS 30.0, mean proc 12.6 ms
+[target_detector-2] [INFO] [1791445948.164292221] [target_detector]: processing FPS 30.0, mean proc 12.9 ms
+[target_detector-2] [INFO] [1791445953.166262702] [target_detector]: processing FPS 30.0, mean proc 13.3 ms
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [target_detector-2]: sending signal 'SIGINT' to process[target_detector-2]
+[INFO] [realsense2_camera_node-1]: sending signal 'SIGINT' to process[realsense2_camera_node-1]
+[realsense2_camera_node-1] [0m[INFO] [1791445954.830056884] [rclcpp]: signal_handler(signum=2)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445954.837718102] [camera.camera]: Stop Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445954.837826638] [camera.camera]: Close Sensor. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791445954.844149088] [camera.camera]: Close Sensor - Done. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791445954.844272995] [camera.camera]: Stop Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791445954.844307087] [camera.camera]: Close Sensor. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791445954.852021009] [rclcpp]: signal_handler(signum=2)[0m
+[target_detector-2] Traceback (most recent call last):
+[target_detector-2]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/target_detector/lib/target_detector/target_detector", line 33, in <module>
+[target_detector-2]     sys.exit(load_entry_point('target-detector', 'console_scripts', 'target_detector')())
+[target_detector-2]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[target_detector-2]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/build/target_detector/target_detector/target_detector.py", line 432, in main
+[target_detector-2]     node.destroy_node()
+[target_detector-2]     ~~~~~~~~~~~~~~~~~^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2708, in destroy_node
+[target_detector-2]     self.destroy_service(self._services[0])
+[target_detector-2]     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2642, in destroy_service
+[target_detector-2]     service.destroy()
+[target_detector-2]     ~~~~~~~~~~~~~~~^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/service.py", line 129, in destroy
+[target_detector-2]     self._destroy()
+[target_detector-2]     ~~~~~~~~~~~~~^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/service.py", line 132, in _destroy
+[target_detector-2]     self.handle.destroy_when_not_in_use()
+[target_detector-2]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[target_detector-2] KeyboardInterrupt
+[ERROR] [target_detector-2]: process has died [pid 18576, exit code -2, cmd '/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/target_detector/lib/target_detector/target_detector --ros-args -r __node:=target_detector --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/results/param_experiments/detect_scale/live_20261008_165141/config_1.0/camera.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/results/param_experiments/detect_scale/live_20261008_165141/config_1.0/control.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/results/param_experiments/detect_scale/live_20261008_165141/config_1.0/device.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/results/param_experiments/detect_scale/live_20261008_165141/config_1.0/hsv.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/results/param_experiments/detect_scale/live_20261008_165141/config_1.0/safety.yaml --params-file /tmp/target_detector_launch_3vh364s8.yaml'].
+[realsense2_camera_node-1] [0m[INFO] [1791445955.748427078] [camera.camera]: Close Sensor - Done. [0m
+[INFO] [realsense2_camera_node-1]: process has finished cleanly [pid 18575]

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-08 16:49:39",
+  "host": "pa23",
+  "opencv": "4.10.0",
+  "config": "config/hsv.yaml",
+  "reps": 20,
+  "scale_1.0": {
+    "present_found": 30,
+    "absent_found": 0,
+    "ms_mean": 5.567,
+    "ms_present_mean": 5.589
+  },
+  "scale_0.5": {
+    "present_found": 30,
+    "absent_found": 0,
+    "ms_mean": 2.763,
+    "ms_present_mean": 2.877
+  },
+  "both_detected": 30,
+  "abs_dex_mean": 0.0011764414912341112,
+  "abs_dex_max": 0.0018958294101602546,
+  "abs_dey_mean": 0.0027622908173627917,
+  "abs_dey_max": 0.00370082459929838,
+  "found_mismatch": [],
+  "ms_reduction_pct": 50.4
+}

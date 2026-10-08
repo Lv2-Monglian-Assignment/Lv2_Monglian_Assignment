@@ -1,0 +1,6 @@
+run_id=exp4_rot_20261008_174201
+t_start=1791448981.755544294
+t_end=1791449013.202606359
+seconds=30
+commit=f910df2
+domain=77
