@@ -40,4 +40,4 @@ target_detector:
     track_assumed_range_m: 0.6                 # [m] 깊이 없을 때 방향 차이 환산 거리
     track_sync_error_s: 0.02                   # [s] 영상-모터 각도 시각 오차 가정 #todo
     track_fast_rotation_deg_s: 0.0             # [deg/s] 이보다 빠른 회전 중 새 번호·크기 갱신 중지. 0 = 끔
-                                               # 끈 이유: 팬 상한이 30 deg/s라 30으로 두면 속도 포화 때마다 켜짐. 회전 중 번호 유지 실측 후 결정 #todo
+                                               # 끈 이유: 추적 중 회전이 수십 deg/s(화면 끝 오차 명령 약 55, 상한 120)라 30이면 자주 켜짐. 회전 중 번호 유지 실측 후 결정 #todo
