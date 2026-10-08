@@ -23,7 +23,7 @@
 | | ROS_DOMAIN_ID | 28 (Raspberry Pi·PC 모두 `~/.bashrc` 맨 위에 `export ROS_DOMAIN_ID=28`) |
 | | Python | 3.14.4 |
 | | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |
-| | rosbag2 | 0.33.3 (저장 형식: TODO mcap / sqlite3) |
+| | rosbag2 | 0.33.3 (저장 형식: mcap, 2026-10-08 기록 bag의 `ros2 bag info` Storage id) |
 | | arduino-cli · OpenCR 코어 | arduino-cli 1.5.1 · OpenCR 코어 1.5.3 (릴리스 파일 수동 설치, `core list`에는 1.0.0으로 표시) · FQBN `ROBOTIS:OpenCR:OpenCR` |
 | | OpenCR 코어 파일 | `https://github.com/ROBOTIS-GIT/OpenCR/releases/download/1.5.3/opencr.tar.bz2` (sha256 `418656e5…`) |
 | | 컴파일러 | `arm-none-eabi-g++ 14.2.1` (Ubuntu apt `gcc-arm-none-eabi`) |
@@ -46,7 +46,7 @@
 | | 회전 범위 · 속도 상한 | 기구 범위 팬 ±180° (틸트 모터 케이블 때문에 연속 회전 금지) · 틸트 ±40°, 기준 자세(IDLE) 팬 0°·틸트 180° (모터 원시값 = tick 0·2048) · 속도 상한 120°/s (Kp 계단 응답 시험과 같은 값) |
 | 목표물 | 대상 | 파란색 단일 색 직육면체·원기둥 (밑면 3 × 3 cm, 높이 6 cm) · TODO 사진 `results/images/target.jpg` |
 
-- 카메라 Color 토픽 이름: TODO (카메라 노드를 실행한 상태에서 `ros2 topic list | grep color`로 확인) · 정렬 Depth 토픽은 `/camera/camera/aligned_depth_to_color/image_raw` · 30 Hz
+- 카메라 Color 토픽 이름: `/camera/camera/color/image_raw` (640×480 rgb8, 2026-10-08 Pi에서 기록한 bag으로 확인) · 정렬 Depth 토픽은 `/camera/camera/aligned_depth_to_color/image_raw` · 30 Hz
 - 모터 ID·baud·프로토콜은 실제 장비에서 확인한 값입니다. 확인 방법과 날짜: TODO
 - PC는 Raspberry Pi SSH 접속과 Isaac Sim 실행에 사용합니다. OpenCR 빌드·업로드·시리얼 확인은 Raspberry Pi에서 수행합니다.
 
@@ -467,7 +467,10 @@ ros2 bag play recordings/<run_id> --clock --topics \
 
 | 확인자 | 날짜 | 기준 커밋 | 수행 내용 | 결과 · 수정 사항 |
 |---|---|---|---|---|
-| TODO (작성자가 아닌 팀원) | | | 빌드·실행·정지·bag 재현 | |
+| 권형중 (JuneKunst) · 기록자 본인 | 2026-10-08 | 8f897bb (Pi) | 실행(`full.launch.py`)·정지·bag 기록 3개·입력 재처리·결과 재분석, motion bag 실제 모터 재생 시연 | 재처리 검출 여부 일치 99.1 % / 83.1 % / 89.1 % ([report.md 문제 5](report.md#문제-5--ros2-bag-및-재현-기록)). 수정: 웹뷰 `--local-dds` 사용 시 토픽 미수신 → 옵션 없이 실행, 추적 켜기 확인 도구 `scripts/test/tracking_set.py` 추가 |
+| TODO (작성자가 아닌 팀원) | | | 빌드·실행·정지·bag 재현 ([recordings/README.md](recordings/README.md) 3절) | |
+
+- 첫 줄은 bag 기록·재생 스크립트 작성자 본인의 실행이므로 "작성자가 아닌 팀원" 확인을 대신하지 않습니다.
 
 ## 인지 구현과 재현
 
