@@ -46,6 +46,166 @@
 
 #### 한계
 - 모듈 5는 HSV·Contour 검출을 쓰므로 Raspberry Pi 4의 처리 시간을 줄이는 선택 기능으로 축소 검출(detect_scale)을 두었다(검출용 사본만 줄이고 좌표를 원본 크기로 되돌림). 이후 YOLO 검출로 바꾸면 레터박스가 영상을 입력 크기(imgsz)로 줄이므로, 레터박스 앞에서 미리 줄여도 신경망 입력과 계산량은 같고(축소 단계만 늘어남), 입력 크기보다 작게 줄이면 다시 확대되어 검출이 나빠진다. 따라서 YOLO 도입 시 YOLO 경로에서는 detect_scale을 쓰지 않고 imgsz로 속도를 조절하도록 수정해야 한다. HSV 검출을 예비 경로로 남기는 경우에만 그 경로에서 detect_scale을 유지한다.
+ 
+## 문제 2 — 인지·제어 노드 연결
+
+### 2-1. 노드·연결 구조와 인터페이스 ([#58](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/58))
+
+#### 구현 내용
+- 성취도: 평가표 4 (노드 연결도, 인터페이스 정의, 모의 입력 시험 결과)
+- 인지(`target_detector`)가 영상마다 `/target`을 발행하고, 제어(`tracker_controller`)가 이를 받아 속도 명령을 브리지(`opencr_bridge`)를 거쳐 OpenCR로 보낸다.
+- 발제 기본 인터페이스와 구현 값:
+
+| 항목 | 발제 규약 | 구현 |
+|---|---|---|
+| 목표 토픽 | `/target` · `geometry_msgs/msg/PointStamped` | 같음. `target_detector` 발행 → `tracker_controller` 구독 |
+| point.x / point.y | 정규화 중심 오차 ex / ey | ex = (cx − W/2)/(W/2), ey = (cy − H/2)/(H/2). 오른쪽·아래 +, −1 ~ +1 |
+| point.z | 면적비, 0 = 미검출 | contour_area/(W × H). 미검출이면 x = y = z = 0 (x·y는 제어에 쓰지 않음) |
+| header.stamp | 원본 영상 시각 유지 | Color 영상의 stamp를 그대로 복사. 같은·과거 stamp는 발행하지 않고, 제어도 stamp가 늘지 않는 입력은 버림 |
+| 발행 | 영상 처리마다, 정상 영상의 미검출은 z = 0 | 처리한 영상마다 (카메라 30 Hz, 실측 28.7~30 Hz) |
+| QoS | best-effort, depth 1 | 발행·구독 모두 best-effort · keep-last · depth 1 |
+| 상태 | `/tracking_status` 등 | `/tracking_status` (String `상태:사유`, 50 Hz) |
+| 모터 명령 | 위치/속도 방식, 단위·부호·주기·정지 | 속도형. `/pan_tilt/command` (Vector3Stamped) x = 팬, y = 틸트 [°/s], 50 Hz. 팬 + = 왼쪽, 틸트 + = 아래. 정지 = 0 발행 |
+| 타임아웃 | 마지막 신선한 입력 후 0.5 s | 0.5 s (`config/safety.yaml`, 변경 없음) |
+
+#### 노드·연결 구조도
+실선은 추적 동작에 쓰이는 연결, 점선은 보기 전용 구독이다(web_view, best-effort로 구독만 하고 발행하지 않아 로봇 동작에 영향 없음).
+
+```mermaid
+flowchart LR
+  subgraph PI["Raspberry Pi 4 · Ubuntu 26.04 · ROS 2 Lyrical · DOMAIN 28"]
+    cam["realsense2_camera<br>D435 Color·정렬 Depth<br>640×480 @ 30 Hz"]
+    det["target_detector<br>(인지)"]
+    ctl["tracker_controller<br>(제어)"]
+    br["opencr_bridge<br>(시리얼 브리지)"]
+    ops["운영 입력<br>assignment/*.py · ros2 topic pub"]
+    web["web_view.py<br>(보기 전용)"]
+    bag[("rosbag2 · CSV 기록")]
+  end
+  fw["OpenCR 1.0<br>opencr_tracker<br>100 Hz 속도 모드"]
+  mot["XM430-W350 ×2<br>팬 ID 11 · 틸트 ID 12"]
+  pc["PC 브라우저<br>pi-host:8080"]
+
+  cam -- "color/image_raw<br>aligned_depth_to_color/image_raw<br>color/camera_info" --> det
+  det -- "/target PointStamped<br>ex·ey·면적비 (0 = 미검출)" --> ctl
+  det -- "/target/position_cam" --> ctl
+  det -- "/target_depth" --> bag
+  ops -- "/tracking_enable Bool" --> ctl
+  ops -- "/target/save_snapshot" --> det
+  ctl -- "/pan_tilt/command Vector3Stamped<br>°/s · 50 Hz" --> br
+  ctl -- "/tracking_status String" --> bag
+  br -- "/pan_tilt/joint_states<br>pan·tilt · 50 Hz" --> ctl
+  br -- "/pan_tilt/joint_states" --> det
+  br -- "/pan_tilt/board_state String<br>OFF·HOLD·TRACK·HOMING·FAULT·…" --> ctl
+  br -- "USB 115200<br>V · I · X · O · H · B · R" --> fw
+  fw -- "S 상태 줄 50 Hz (FAULT 중에도)<br>E 오류 · B · R OK" --> br
+  fw -- "DXL Protocol 2.0 · 1 Mbps<br>Bus Watchdog 200 ms" --> mot
+
+  cam -. "color/image_raw (화면을 볼 때만)" .-> web
+  det -. "/target · /target_depth" .-> web
+  ctl -. "/tracking_status · /pan_tilt/command" .-> web
+  br -. "/pan_tilt/joint_states" .-> web
+  web -. "MJPEG (HTTP 8080)" .-> pc
+```
+
+#### 노드별 책임
+| 노드 | 담당 | 책임 | 실패 시 동작 |
+|---|---|---|---|
+| realsense2_camera | 통합 | Color·정렬 Depth·CameraInfo 발행 | 멈추면 인지 입력이 없음 |
+| target_detector | 인지 | HSV·Contour·크기 검증·선택, `/target` 발행(영상마다, 원본 stamp 유지) | 미검출이면 z = 0 발행, 카메라가 멈추면 발행하지 않음 |
+| tracker_controller | 제어 | IDLE/TRACKING/LOST(·SEARCHING) 상태, 각도 Kp P 제어, 속도 상한·데드밴드, 각도 한계(팬 175°·틸트 38°, 밖에서는 바깥 방향 명령 0), CSV 기록 | z = 0 첫 프레임부터 명령 0, 입력이 0.5 s 끊기면 `LOST:input_timeout`, 보드 상태가 FAULT·끊김·HOMING이면 `LOST:board_*` — 모두 명령 0 |
+| opencr_bridge | 통합(코드)·제어(시험) | 명령 → 시리얼 `V` 50 Hz, 상태 줄 → `/pan_tilt/joint_states`·`/pan_tilt/board_state`, 시작할 때 기준 자세 이동(`I`), 시리얼 송수신 기록 | 명령이 0.2 s 끊기면 `V 0 0`, 상태 줄이 0.5 s 없으면 `NO_STATUS`. 보드 FAULT면 2 s 뒤 `R`로 자동 복구 최대 3회, 그래도 FAULT면 `FAULT_MANUAL`(수동 복구 요청). 정상 60 s가 지나면 횟수 초기화. 종료 시 `X` |
+| OpenCR `opencr_tracker` | 제어 | 100 Hz 속도 실행, 소프트 한계(팬 ±180°·틸트 ±40°), 속도 상한 120°/s | `V`가 300 ms 끊기면 속도 0(토크 유지). 모터 통신이 연속 3회 실패하면 토크 OFF 후 FAULT(상태 줄은 계속 보냄), `R`로 복구. 모터 Bus Watchdog 200 ms |
+| web_view.py | 통합 | 웹 관제 (카메라 화면·토픽·상태·로그 보기) | 보기 전용: 발행·서비스 호출 없음, 멈춰도 추적에 영향 없음 |
+
+#### 인터페이스 표
+ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준 — 2026-10-08 #44·#52·#54 병합 후)
+
+| 토픽 | 형식 | 발행 → 구독 | QoS · 주기 | 내용 · 단위 · 부호 |
+|---|---|---|---|---|
+| `/target` | geometry_msgs/PointStamped | target_detector → tracker_controller | best-effort depth 1 · 영상마다(약 30 Hz) | x = ex, y = ey (오른쪽·아래 +, −1 ~ +1), z = 면적비 (0 = 미검출). stamp = 원본 영상 |
+| `/target/position_cam` | geometry_msgs/PointStamped | target_detector → tracker_controller | best-effort depth 1 · 영상마다 | 목표의 카메라 광학 좌표 [m] (X 오른쪽, Y 아래, Z 앞), 무효면 NaN. SEARCHING(심화)용 |
+| `/target_depth` | geometry_msgs/PointStamped | target_detector → 기록 | best-effort depth 1 · 영상마다 | x = 깊이 유효 1/0, y = 유효 픽셀 비율, z = 거리 [m] |
+| `/tracking_enable` | std_msgs/Bool | 운영(assignment `common.py`, CLI) → tracker_controller | reliable 10 · 요청 시 | true = 추적 시작 (기본 꺼짐, launch `auto_enable`) |
+| `/tracking_status` | std_msgs/String | tracker_controller → 기록 | reliable 10 · 50 Hz | `상태:사유` (예: `TRACKING:ok`, `LOST:no_detection`, `LOST:input_timeout`, `LOST:confirming_1/3`). 각도 한계·보드 상태: `TRACKING:pan_limit`·`tilt_limit`, `LOST:board_fault`·`board_fault_manual`·`board_silent`·`board_homing` |
+| `/pan_tilt/command` | geometry_msgs/Vector3Stamped | tracker_controller → opencr_bridge | reliable 10 · 50 Hz | x = 팬, y = 틸트 속도 [°/s] (팬 + = 왼쪽, 틸트 + = 아래). IDLE·LOST에서도 0 발행 |
+| `/pan_tilt/joint_states` | sensor_msgs/JointState | opencr_bridge → tracker_controller, target_detector | reliable 10 · 상태 줄마다(50 Hz) | 이름 `pan`·`tilt` (dry_run은 `pan_sim`·`tilt_sim`), 각도 [rad]·속도 [rad/s], 측정값. stamp는 보드 측정 시각으로 보정 |
+| `/pan_tilt/board_state` | std_msgs/String | opencr_bridge → tracker_controller | reliable 10 · 50 Hz | `OFF`·`HOLD`·`TRACK`·`HOMING`·`FAULT`·`FAULT_MANUAL`(자동 복구 3회 실패)·`NO_STATUS`(상태 줄 0.5 s 없음)·`SIM`(dry_run) |
+| `/camera/camera/color/image_raw` | sensor_msgs/Image | realsense2_camera → target_detector | best-effort depth 1 · 30 Hz | 640×480 Color |
+| `/camera/camera/aligned_depth_to_color/image_raw` | sensor_msgs/Image | realsense2_camera → target_detector | best-effort depth 5 · 30 Hz | Color에 정렬한 Depth |
+| `/camera/camera/color/camera_info` | sensor_msgs/CameraInfo | realsense2_camera → target_detector | best-effort depth 1 | 내부 파라미터 (fx·fy·cx·cy) |
+| `/target/save_snapshot` | std_msgs/String | assignment1.py → target_detector | reliable 10 · 요청 시 | 검출 오버레이 이미지 저장 요청 |
+| `/tracker/predicted_target` | geometry_msgs/PointStamped | tracker_controller → (기록) | best-effort depth 1 | 예측 목표 위치 (현재 구독 노드 없음) |
+| `/tracker/target_base` | geometry_msgs/PointStamped | tracker_controller → (기록) | reliable 10 | `pan_tilt_base` 기준 목표 위치 |
+| `/target_replay` (`/depth`, `/position_cam`) | geometry_msgs/PointStamped | target_detector(`replay.launch.py`) → 분석 | `/target`과 같음 | bag 재처리 결과. 원본 `/target`과 섞지 않도록 분리 (문제 5) |
+
+- `web_view.py`(웹 관제, 보기 전용): `/target`·`/target_depth`·`/tracking_status`·`/pan_tilt/command`·`/pan_tilt/joint_states`를 best-effort로 구독하고, 카메라 영상은 브라우저가 화면을 볼 때만 구독한다. 발행·서비스 호출이 없어 추적에 영향을 주지 않으며, HTTP 8080으로 MJPEG 화면을 보낸다.
+
+시리얼 프로토콜 (Pi ↔ OpenCR, `/dev/ttyACM0` 115200 bps, ASCII 한 줄 = 한 메시지, 이슈 #7)
+
+| 방향 | 메시지 | 의미 |
+|---|---|---|
+| Pi → OpenCR | `V <pan_dps> <tilt_dps>` | 속도 명령 [°/s]. 브리지가 50 Hz로 계속 보냄 (0이 아닌 값을 받으면 토크를 켬) |
+| | `I` | 기준 자세(팬 0°, 틸트 0°)로 이동 후 정지. 브리지가 시작할 때와 `R OK` 뒤에 보냄 (`home_on_start`) |
+| | `X` | 즉시 정지 (속도 0, 토크 유지) |
+| | `O` | 토크 OFF |
+| | `H` · `B <pan_tick> <tilt_tick>` | 기준 자세 설정 (브리지가 시작할 때 `config/device.yaml`의 `home_ticks`를 `B`로 보냄) → 회신 `B`. `B`는 지금까지 센 팬 바퀴 수를 유지한다 (기준 tick 차이만큼만 옮김) |
+| | `R` | FAULT 복구 (모터 확인·속도 모드·기준 각도를 다시 잡고 OFF로) → 회신 `R OK` 또는 `E 4`. 브리지가 자동으로 보냄 |
+| OpenCR → Pi | `S <ms> <pan_deg> <tilt_deg> <pan_dps> <tilt_dps> <state>` | 상태 50 Hz (측정 각도·속도, state = OFF·HOLD·TRACK·HOMING·FAULT). FAULT 중에도 마지막 각도로 계속 보냄 |
+| | `E <code> <text>` | 오류·경고 (1 타임아웃, 2 명령 오류, 3 토크 켜기 거부, 4 FAULT, 5 기준 자세 시간 초과) |
+
+정지가 걸리는 시간 (층별)
+
+| 끊긴 곳 | 감지 위치 | 시간 | 동작 |
+|---|---|---|---|
+| 인지 입력 (`/target` 침묵) | tracker_controller | 0.5 s | `LOST:input_timeout`, 명령 0 |
+| 제어 명령 (`/pan_tilt/command` 침묵) | opencr_bridge | 0.2 s | `V 0 0` 전송 |
+| 시리얼 (`V` 없음) | OpenCR 펌웨어 | 300 ms | 속도 0, 토크 유지 (`E 1 command timeout; stop`) |
+| 모터 통신 (OpenCR 멈춤) | XM430 Bus Watchdog | 200 ms | 모터가 스스로 정지 |
+| 모터 통신 실패 (OpenCR ↔ 모터) | OpenCR 펌웨어 | 연속 3회 (제어 주기 3번) | 토크 OFF 후 FAULT, 상태 줄(`… FAULT`)은 계속 보냄 → 제어 노드 `LOST:board_fault`, 명령 0 |
+| 보드 FAULT 지속 | opencr_bridge | 2 s 뒤, 최대 3회 | `R`로 자동 복구 → 복구되면 기준 자세로 이동 후 추적 재개. 3회 모두 실패하면 `FAULT_MANUAL`(수동 복구: 케이블·전원 확인 후 추적 재시작 또는 OpenCR 리셋), 제어 노드 `LOST:board_fault_manual`. 정상 60 s가 지나면 횟수 초기화 |
+| 보드 상태 줄 | opencr_bridge · tracker_controller | 0.5 s · 1 s | `NO_STATUS` · `LOST:board_silent`, 명령 0 |
+
+#### 다섯 입력 확인 결과 (모터 출력 끔)
+- 실행: `python3 assignment/assignment2.py`. 제어 노드만 실행하고 브리지는 띄우지 않으므로 OpenCR·모터에 명령이 가지 않는다. 시험 프로그램이 `/target`(best-effort)을 직접 발행하고 `/pan_tilt/command`·`/tracking_status`를 기록한다.
+- 조건: 2026-10-07 12:37, Raspberry Pi(monglian), run_id `assignment2_mock_20261007_123707`, Kp 팬 2.0·틸트 2.5 [1/s], direction 팬 −1·틸트 +1, 속도 상한 120°/s, 입력 타임아웃 0.5 s. 입력은 30 Hz로 3 s 발행 (발행 중단은 2 s 발행 후 중단). #52·#54 병합(2026-10-08) 전 코드로 한 시험이다.
+
+| 입력 | 발제 기대 결과 | 상태 | 팬 명령 [°/s] | 틸트 명령 [°/s] | 판정 |
+|---|---|---|---|---|---|
+| x = 0, z > 0 | 중심에서 불필요한 회전 없음 | `TRACKING:ok` | 0 | 0 | PASS |
+| x = +0.4, z > 0 | 오른쪽 오차를 줄이는 명령 | `TRACKING:ok` | −23.87 (오른쪽으로 회전) | 0 | PASS |
+| x = −0.4, z > 0 | 반대 방향 명령 | `TRACKING:ok` | +23.87 | 0 | PASS |
+| z = 0 | 이전 목표를 쫓지 않고 정지 | `LOST:no_detection` | 0 | 0 | PASS |
+| 발행 중단 | 타임아웃 감지 후 정지 | `LOST:input_timeout` (0.522 s 뒤) | 0 | 0 | PASS |
+| (추가) 같은 stamp 재전송 | 신선한 입력이 아니므로 정지 | `LOST:input_timeout` | 0 | 0 | PASS |
+| (추가) y = +0.4, z > 0 | 아래 오차를 줄이는 틸트 명령 | `TRACKING:ok` | 0 | +22.5 (아래로 회전) | PASS |
+
+- 명령 크기 확인: x = +0.4 → 각도 오차 atan(0.4 × tan(55.7°/2)) = 11.94° → 2.0 × 11.94 = 23.87°/s, 팬 direction −1이라 −23.87. y = +0.4 → atan(0.4 × tan(43.2°/2)) = 9.00° → 2.5 × 9.00 = 22.5°/s.
+- 0.522 s는 마지막 `/target` 발행부터 `LOST:input_timeout`과 명령 0이 관측될 때까지의 시간이다(상태·명령은 50 Hz로 기록하므로 관측 간격 포함).
+- 결과물: `results/assignment2/assignment2_mock_20261007_123707/` (`cases.csv` 판정표, 입력별 `<case>.csv` 시계열, `controller.log`, `summary.md`)
+
+#### 해석
+- **부호가 반대일 때**: 오른쪽 목표(ex > 0)에서 카메라가 왼쪽으로 돌면 목표가 화면 오른쪽으로 더 밀려 ex가 커지고, P 제어는 더 큰 명령을 낸다(양의 되먹임). 카메라는 속도 상한(120°/s)까지 빨라지며 목표가 시야 밖으로 나가 z = 0이 되면 정지하고(`LOST:no_detection`), 그 전에 소프트 한계(팬 ±180°·틸트 ±40°)에 걸릴 수도 있다. Kp를 키우면 더 빨리 벗어날 뿐이므로 검출 → 오차 부호 → 명령 → 응답 순서로 확인한다. 이 장비는 추적을 끈 상태에서 `scripts/test/direction_test.py`로 작은 명령(15°/s × 2 s)의 실제 회전 방향을 보고 direction을 정했다(팬 + = 왼쪽 → −1, 틸트 + = 아래 → +1, 2026-10-07 제출 장비 틸트 재조립 후 다시 확인, 2026-10-08 다른 장비에서도 같은 결과 — 아래 방향 확인 기록).
+- **미검출(z = 0)과 토픽 침묵의 차이**: z = 0은 "인지는 정상이고 이 영상에 목표가 없다"는 정보라 영상마다 도착하므로 첫 프레임부터 명령 0(`LOST:no_detection`). 토픽 침묵은 "인지 쪽이 멈췄거나 연결이 끊겼다"는 뜻이고 제어 노드는 메시지가 오지 않는다는 것만 알 수 있으므로, 마지막 신선한 입력 후 0.5 s를 기다려 `LOST:input_timeout`으로 멈춘다(시험 0.522 s). 사유가 다르게 기록되므로 실패 원인(검출 대 통신)을 로그로 구분할 수 있다. 카메라가 멈췄는데 이전 영상에 새 시각을 붙여 보내면 침묵이 정상 입력처럼 보여 마지막 목표를 계속 쫓게 되므로, 인지는 원본 stamp를 유지하고 제어는 stamp가 늘지 않는 입력을 버린다(같은 stamp 재전송 시험 PASS).
+- **노드별 책임과 층별 정지**: 각 층이 바로 위 층의 끊김을 스스로 감지해 멈춘다. 인지 침묵은 제어(0.5 s), 제어 침묵은 브리지(0.2 s), 브리지·Pi 침묵은 OpenCR(300 ms), OpenCR 멈춤은 모터 Bus Watchdog(200 ms)이 처리한다. 그래서 어느 위 층이 멈춰도 마지막 명령으로 계속 움직이지 않는다.
+
+방향 확인 기록 (`scripts/test/direction_test.py`, 추적을 끈 상태, 15°/s × 2 s, 2026-10-08 14:27, 다른 장비 — Pi 계정 `pa23`)
+
+| 축 | 명령 | 측정 각도 변화 | 카메라가 돈 방향 (눈으로 확인) | 판정 |
+|---|---|---|---|---|
+| 팬 | `V +15 0` 2 s | +30.2° (tick 증가) | 왼쪽 | 팬 + = 왼쪽 → `pan_direction = -1`, `control.yaml`과 일치 |
+| 틸트 | `V 0 +15` 2 s | +29.4° (tick 증가) | 아래 | 틸트 + = 아래 → `tilt_direction = +1`, `control.yaml`과 일치 |
+
+![방향 확인 시험: 팬 +30° → 제자리, 틸트 +30° → 제자리 (실제 속도)](results/media/direction_test_20261008_142638.gif)
+
+- 결과 PASS. 되돌림 명령(−15°/s × 2 s)으로 팬 −30.2°, 틸트 −30.5° 돌아와 제자리로 복귀.
+- 기록: [results/logs/direction_test_20261008_142755.log](results/logs/direction_test_20261008_142755.log) (시험 화면 출력), 원본 영상: [results/media/direction_test_20261008_142638.mp4](results/media/direction_test_20261008_142638.mp4) (23.7 s, 1080×1080). 위 GIF는 이 영상을 실제 속도로 줄인 것(270 px, 5 fps)
+
+#### 한계
+- 다섯 입력 시험은 #52·#54 병합 전(2026-10-07) 코드로 제어 노드만 실행한 결과다. 병합으로 각도 한계(`TRACKING:pan_limit`·`tilt_limit`)와 보드 상태 사유(`LOST:board_*`)가 생겼으므로, 병합 후 코드로 같은 시험을 다시 하고 보드 상태별 정지(FAULT·끊김·자동 복구 실패)도 확인한다. 브리지 없이 하는 모의 시험에서는 보드 상태를 검사하지 않는다.
+- 모의 입력은 명령의 부호·크기와 상태만 확인한다. 실제 모터가 오차를 줄이는 방향으로 도는지는 문제 3의 실물 추적에서 확인한다.
+- `/tracker/predicted_target`·`/tracker/target_base`는 발행만 하고 구독하는 노드가 없다(기록용). 쓰지 않으면 정리한다.
+- 심화의 `/search` 액션(요청·진행·성공/실패·취소)은 구현하지 않았다. 시야 밖 탐색은 제어 노드의 SEARCHING 상태(기본 꺼짐, 도전 B)로만 시험했다.
 
 ## 문제 3 — 객체 중심 기반 추적 제어
 
