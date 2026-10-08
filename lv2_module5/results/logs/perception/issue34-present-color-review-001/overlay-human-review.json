@@ -1,0 +1,158 @@
+{
+  "config_sha256": "d69f5526e24856b83fb26e757e3f6c8f9b13e5be371f37dacab5e6f18f4f1ea1",
+  "source_dataset_sha256": "4bf302655b5668b7f83328e8a51213e2c769769029e66695f8610ce03d70955c",
+  "labels_confirmed": true,
+  "review_kind": "correct_selected_target_issue34_color_only",
+  "frames": [
+    {
+      "file": "frame-001.png",
+      "sha256": "336dd2226a3c53fa0368f6f71cdaaed1be953411452857ae8f373d9bcf4d0a87",
+      "correct_target": true
+    },
+    {
+      "file": "frame-002.png",
+      "sha256": "0078c896b12c6d2fc9089efd233eacb38c90be40011940ced79a6a97a53e5bab",
+      "correct_target": true
+    },
+    {
+      "file": "frame-003.png",
+      "sha256": "f02c6ab937e12df73a8a4d9e26c869b05e0ad13ececb20d4738ef716980f68ae",
+      "correct_target": true
+    },
+    {
+      "file": "frame-004.png",
+      "sha256": "ce06893ca72ebf6aa2c1792c58a2a7e7248218dda4be9d7dfb8ed1b472f3bcba",
+      "correct_target": true
+    },
+    {
+      "file": "frame-005.png",
+      "sha256": "1770f848bfd50c9720ebf6b4a8bd6c14889986971b7e78c354b9b2644172ab62",
+      "correct_target": true
+    },
+    {
+      "file": "frame-006.png",
+      "sha256": "71163bb2504db658082992030d4d9dc856c00eeca98788f079530296aad401b9",
+      "correct_target": true
+    },
+    {
+      "file": "frame-007.png",
+      "sha256": "5e42f47694cbbfdeb783ed009aa08670acab0768b0876169f15342dbf7e71411",
+      "correct_target": true
+    },
+    {
+      "file": "frame-008.png",
+      "sha256": "9d0c0f78444ed6874def8357fd2cfea89ba68a72e06e1af74716334d9d134ec9",
+      "correct_target": true
+    },
+    {
+      "file": "frame-009.png",
+      "sha256": "8c5f416ef5e2e18f99623d4c28b013514e911a6adb55108742b3b2fabb2b8c89",
+      "correct_target": true
+    },
+    {
+      "file": "frame-010.png",
+      "sha256": "cd29bd7d66edd1a186be35692969e61cbc4cdd1f315168d792c60a85587a6fa2",
+      "correct_target": true
+    },
+    {
+      "file": "frame-011.png",
+      "sha256": "3a015c5ce8466d0736752ca55acb1d43a199d64d85f2f33fe5e1860e5c1a05b4",
+      "correct_target": true
+    },
+    {
+      "file": "frame-012.png",
+      "sha256": "6b993b929d3c93bc3e992ac947aa135d2fa8080c34e5a3a19a0bb11415d79ebe",
+      "correct_target": true
+    },
+    {
+      "file": "frame-013.png",
+      "sha256": "f8d51dc3ef8c1d4283f8a5dcfbf39b21f66bf6d6e5e167957e465c8e6941600a",
+      "correct_target": true
+    },
+    {
+      "file": "frame-014.png",
+      "sha256": "dcd2c73a91ddeefe3afd7e161dfde903e2c15475699134be62b9e64711cac2ea",
+      "correct_target": true
+    },
+    {
+      "file": "frame-015.png",
+      "sha256": "dc926fe7cf4d7ffe37acd995e511ae6dcf4fbeb5fae1a68dde366b0b01fc734b",
+      "correct_target": true
+    },
+    {
+      "file": "frame-016.png",
+      "sha256": "53421b6cdc468a39a2a20b2a0cea1a671147edd8a76a9f6c18a91014be170711",
+      "correct_target": true
+    },
+    {
+      "file": "frame-017.png",
+      "sha256": "ca5fd90c6755b54caefa711df505d2ae497b89e4315c76eb5cffcd98908368ff",
+      "correct_target": true
+    },
+    {
+      "file": "frame-018.png",
+      "sha256": "4c404d57e362d975344c8b85798d05e688791bdd9984b5a3e79ae4d2611c3f40",
+      "correct_target": true
+    },
+    {
+      "file": "frame-019.png",
+      "sha256": "c36429f9d10d22d41136df93cdb61a2d982249557e1d87f17842eafa635c3b16",
+      "correct_target": true
+    },
+    {
+      "file": "frame-020.png",
+      "sha256": "465e495e028e0207636a57fd079c78d6c280eb61c85600282d0c8567bd498ac9",
+      "correct_target": true
+    },
+    {
+      "file": "frame-021.png",
+      "sha256": "01491154ba8209d87fd2a4df6426539ac59680ba88dedae7ea42308d47b55ce8",
+      "correct_target": true
+    },
+    {
+      "file": "frame-022.png",
+      "sha256": "38dea50d7376c7b5bbd61790c46faf3f59779d4fd5d398661696dbc26c162c7e",
+      "correct_target": true
+    },
+    {
+      "file": "frame-023.png",
+      "sha256": "c6e0aa54f2d886b8e8a175918cadc9d55c230c8e2935144afb4eb74176dc2048",
+      "correct_target": true
+    },
+    {
+      "file": "frame-024.png",
+      "sha256": "f140444fd8f7cd78182f5f105a4cbbaafbea2e6347f24987247b7ff80d65b588",
+      "correct_target": true
+    },
+    {
+      "file": "frame-025.png",
+      "sha256": "b7c69ba3c4a0df77ada8ec91b23141301797a5836225a4cec877ba0356309cf0",
+      "correct_target": true
+    },
+    {
+      "file": "frame-026.png",
+      "sha256": "e61ed1b242f44f895cce82f3397e8e19959a3aec4957a1e5de8942f10daa0ad9",
+      "correct_target": true
+    },
+    {
+      "file": "frame-027.png",
+      "sha256": "1503f1afe332dbe500920d75834f63241b2199ceba175cda3b8aac320d618945",
+      "correct_target": true
+    },
+    {
+      "file": "frame-028.png",
+      "sha256": "5df5a8577f0b5203f25865f69a595f351d95763edd8ba952e4b7668af8f2f8e9",
+      "correct_target": true
+    },
+    {
+      "file": "frame-029.png",
+      "sha256": "e324f8f55d889ff4416a0a3232fb671d04d0a4a7cea718ade7b25a5b79f48ae2",
+      "correct_target": true
+    },
+    {
+      "file": "frame-030.png",
+      "sha256": "65ecfeca405d994bff6b86d0cba19945c5d73cbdd6192613306b9a4e07eb611d",
+      "correct_target": true
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Issue34 color-only human-confirmed selected target; not full size/identity evaluation",
+  "TP": 30,
+  "FN": 0,
+  "FP": null,
+  "TN": null,
+  "correct_target_detection_rate": 1.0,
+  "present_frames": 30,
+  "absent_frames": 0,
+  "full_40_frame_evaluation_complete": false,
+  "size_check_verified": false,
+  "identity_reselection_verified": false,
+  "pi_fps_verified": false,
+  "config_sha256": "d69f5526e24856b83fb26e757e3f6c8f9b13e5be371f37dacab5e6f18f4f1ea1",
+  "source_dataset_sha256": "4bf302655b5668b7f83328e8a51213e2c769769029e66695f8610ce03d70955c",
+  "prediction_sha256": "b7ecd100ad81625948fc03984e29c54b7555955e37db6220a5b79f52e7381548",
+  "human_overlay_review_sha256": "3f2ba98ed857d32bbc4fcf5a8433a6168182747c8622b6d69dd28a9083c42a0e",
+  "verified_original_images": 30
+}
