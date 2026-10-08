@@ -1,0 +1,224 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-08-12-34-06-461485-pa23-24982
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [target_detector-1]: process started with pid [24991]
+[INFO] [ros2-2]: process started with pid [24992]
+[ros2-2] stdin is not a terminal device. Keyboard handling disabled.[INFO] [1791430448.669786631] [rosbag2_player]: Set rate to 1
+[ros2-2] [2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430201.574733257] Duration 0.00/15.22 [R]
+[ros2-2] [INFO] [1791430448.710128410] [rosbag2_player]: Adding keyboard callbacks.
+[ros2-2] [INFO] [1791430448.710260817] [rosbag2_player]: Press SPACE for Pause/Resume
+[ros2-2] [INFO] [1791430448.710301613] [rosbag2_player]: Press CURSOR_RIGHT for Play Next Message
+[ros2-2] [INFO] [1791430448.710326001] [rosbag2_player]: Press CURSOR_UP for Increase Rate 10%
+[ros2-2] [INFO] [1791430448.710349631] [rosbag2_player]: Press CURSOR_DOWN for Decrease Rate 10%
+[ros2-2] [4AProgress bar enabled at 3 Hz.
+[ros2-2] Progress bar [?]: [R]unning, [P]aused, [B]urst, [D]elayed, [S]topped
+[ros2-2] [2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430201.574733257] Duration 0.00/15.22 [S]
+[ros2-2] [INFO] [1791430448.712153395] [rosbag2_player]: Playback until timestamp: -1
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430201.574733257] Duration 0.00/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430201.619301081] Duration 0.04/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430201.952985764] Duration 0.38/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430202.291170835] Duration 0.72/15.22 [R]
+[target_detector-1] [INFO] [1791430450.409252797] [target_detector]: run_id=replay_assignment5_lost_20261008_122845_20261008_123405 hsv=(102, 120, 40)~(110, 255, 255) min_area=100.0 selection=priority use_depth=True detect_scale=1.0 size_check=True object_tracker=True
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430202.641266346] Duration 1.07/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430202.970430136] Duration 1.40/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430203.308529854] Duration 1.73/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430203.658683300] Duration 2.08/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430203.991227388] Duration 2.42/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430204.332103968] Duration 2.76/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430204.678085804] Duration 3.10/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430205.015404463] Duration 3.44/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430205.355789661] Duration 3.78/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430205.693715096] Duration 4.12/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430206.045848608] Duration 4.47/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430206.386216164] Duration 4.81/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430206.722885847] Duration 5.15/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430207.062827110] Duration 5.49/15.22 [R]
+[target_detector-1] [INFO] [1791430455.357429566] [target_detector]: processing FPS 20.6, mean proc 9.1 ms
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430207.431915045] Duration 5.86/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430207.771446943] Duration 6.20/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430208.121221542] Duration 6.55/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430208.466254234] Duration 6.89/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430208.803852320] Duration 7.23/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430209.167912245] Duration 7.59/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430209.495987415] Duration 7.92/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430209.840914249] Duration 8.27/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430210.184814930] Duration 8.61/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430210.524724007] Duration 8.95/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430210.870737553] Duration 9.30/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430211.221875429] Duration 9.65/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430211.554896593] Duration 9.98/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430211.902762890] Duration 10.33/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430212.241730928] Duration 10.67/15.22 [R]
+[target_detector-1] [INFO] [1791430460.382955621] [target_detector]: processing FPS 23.1, mean proc 7.1 ms
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430212.577449799] Duration 11.00/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430212.916598082] Duration 11.34/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430213.251389980] Duration 11.68/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430213.600717306] Duration 12.03/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430213.935806036] Duration 12.36/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430214.275732517] Duration 12.70/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430214.623605728] Duration 13.05/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430214.955860138] Duration 13.38/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430215.297287226] Duration 13.72/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430215.634255409] Duration 14.06/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430215.968049526] Duration 14.39/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430216.308946848] Duration 14.73/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430216.640931606] Duration 15.07/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430216.640931606] Duration 15.07/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430216.640931606] Duration 15.07/15.22 [R]
+[ros2-2] [4A[2K
+[ros2-2] [2K
+[ros2-2] [2K====== Playback Progress ======
+[ros2-2] [2K[1791430216.640931606] Duration 15.07/15.22 [R]
+[INFO] [ros2-2]: process has finished cleanly [pid 24992]
+[ros2-2] [4A[4B
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [target_detector-1]: process has finished cleanly [pid 24991]

@@ -1,0 +1,21 @@
+[INFO] [1791430201.456821689] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1791430201.456920707] [rosbag2_recorder]: Event publisher thread: Started
+[INFO] [1791430201.529635024] [rosbag2_recorder]: Starting recording to '/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/recordings/assignment5_lost_20261008_122845'
+[WARN] [1791430201.529826245] [rosbag2_recorder]: No input serialization format specified, using default rmw serialization format: 'cdr'.
+[INFO] [1791430201.551832305] [rosbag2_recorder]: Subscribed to topic '/tracking_status'
+[INFO] [1791430201.562894020] [rosbag2_recorder]: Subscribed to topic '/target_depth'
+[INFO] [1791430201.568165000] [rosbag2_recorder]: Subscribed to topic '/target'
+[INFO] [1791430201.573774903] [rosbag2_recorder]: Subscribed to topic '/pan_tilt/command'
+[INFO] [1791430201.580704537] [rosbag2_recorder]: Subscribed to topic '/target/position_cam'
+[INFO] [1791430201.593956384] [rosbag2_recorder]: Subscribed to topic '/camera/camera/color/image_raw'
+[INFO] [1791430201.609016459] [rosbag2_recorder]: Subscribed to topic '/pan_tilt/joint_states'
+[INFO] [1791430201.619493956] [rosbag2_recorder]: Subscribed to topic '/camera/camera/color/camera_info'
+[INFO] [1791430201.624639733] [rosbag2_recorder]: Subscribed to topic '/camera/camera/aligned_depth_to_color/image_raw'
+[INFO] [1791430201.629249977] [rosbag2_recorder]: Listening for topics...
+[INFO] [1791430201.629448346] [rosbag2_recorder]: Recording...
+[INFO] [1791430201.630631522] [rosbag2_recorder]: Topics discovery started.
+[INFO] [1791430201.632864358] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
+[INFO] [1791430201.632985653] [rosbag2_recorder]: Topics discovery stopped.
+[INFO] [1791430216.797972193] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[INFO] [1791430223.341841524] [rosbag2_recorder]: Recording stopped
+[INFO] [1791430223.368337293] [rosbag2_recorder]: Event publisher thread: Exited

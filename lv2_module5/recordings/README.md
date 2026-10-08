@@ -6,12 +6,38 @@ bag 원본(`recordings/<run_id>/`)은 용량 때문에 Git에서 제외합니다
 
 | run_id | 장면 | 길이 [s] | 크기 | 저장 형식 | 기준 커밋 | 메타데이터 | 접근 위치 | 기록자 · 일자 |
 |---|---|---|---|---|---|---|---|---|
-| TODO | 대표 성공 (정지 목표 추적) | | | | | `<run_id>_info.txt` | TODO (공유 드라이브 링크) | |
-| TODO | 소실·복귀 (가림 → 재등장) | | | | | `<run_id>_info.txt` | TODO | |
+| assignment5_success_20261008_121732 | 대표 성공 (책상 위 정지 목표, 손대지 않음) | 20.7 | 590.3 MiB | mcap | 8f897bb (+ 커밋 안 된 결과 파일) | [info](assignment5_success_20261008_121732_info.txt) | TODO (공유 드라이브 링크) · 현재 PC `recordings/` | JuneKunst · 2026-10-08 |
+| assignment5_lost_20261008_122845 | 소실·복귀 (손바닥으로 가림 → 치움) | 15.2 | 445.7 MiB | mcap | 8f897bb (+ 커밋 안 된 결과 파일) | [info](assignment5_lost_20261008_122845_info.txt) | TODO (공유 드라이브 링크) · 현재 PC `recordings/` | JuneKunst · 2026-10-08 |
 
-- 길이 10~30초. 토픽·메시지 수·기간·해상도·sha256은 `<run_id>_info.txt`에 있습니다(`record_bag.sh`가 자동으로 작성).
-- 기록 토픽: 컬러 영상·CameraInfo·정렬 Depth, `/target`, `/target_depth`, `/target/position_cam`, `/tracking_status`, `/tracking_enable`, `/pan_tilt/command`, `/pan_tilt/joint_states`
-- 같은 `run_id`로 연결되는 기록(Pi `~/lv2_module5_logs/`): `<run_id>.csv`(제어), `<run_id>_detect.csv`(인지), `<run_id>_serial.log`(OpenCR 시리얼)
+- 기록 방법: `python3 assignment/assignment5.py record --name success|lost --seconds 20|15` (Pi, 통합 메뉴 5 → s/l과 같음). 노드를 직접 띄우고 추적을 켠 뒤 기록하며, 기록 당시 config·노드 기록은 `results/assignment5/<run_id>/`에 복사됩니다.
+- 길이 10~30초. 토픽·메시지 수·기간·sha256은 `<run_id>_info.txt`에 있습니다(`assignment5.py record`가 자동으로 작성).
+- 기록 토픽과 메시지 형식 (메시지 수: 성공 / 소실):
+
+  | 토픽 | 형식 | 성공 | 소실 |
+  |---|---|---|---|
+  | `/camera/camera/color/image_raw` | sensor_msgs/msg/Image (640×480 rgb8) | 432 | 345 |
+  | `/camera/camera/color/camera_info` | sensor_msgs/msg/CameraInfo | 465 | 375 |
+  | `/camera/camera/aligned_depth_to_color/image_raw` | sensor_msgs/msg/Image (16UC1) | 358 | 242 |
+  | `/target` | geometry_msgs/msg/PointStamped | 290 | 256 |
+  | `/target_depth` | geometry_msgs/msg/PointStamped | 289 | 256 |
+  | `/target/position_cam` | geometry_msgs/msg/PointStamped | 289 | 255 |
+  | `/tracking_status` | std_msgs/msg/String | 679 | 668 |
+  | `/pan_tilt/command` | geometry_msgs/msg/Vector3Stamped | 676 | 667 |
+  | `/pan_tilt/joint_states` | sensor_msgs/msg/JointState | 880 | 759 |
+
+  `assignment5.py record`는 `/tracking_enable`을 기록하지 않습니다(`record_bag.sh`만 기록). 추적은 기록 시작 전에 켭니다.
+- sha256 (파일 전체 해시는 info 파일에 있음):
+
+  | 파일 | 크기 [B] | sha256 |
+  |---|---|---|
+  | `assignment5_success_20261008_121732/0_assignment5_success_20261008_121732_2026_10_08-12_20_33.mcap` | 618942046 | `f0a553be6c9ba25dd0f73832c2f6c80f8cd8234099d74892bb23279ce69a1976` |
+  | `assignment5_success_20261008_121732/metadata.yaml` | 7489 | `3378a0f9f86357166251590119dbcde7169b03b8675f23586499c5f3a491343d` |
+  | `assignment5_lost_20261008_122845/0_assignment5_lost_20261008_122845_2026_10_08-12_30_01.mcap` | 467371169 | `faf0fb4d0b403b8508f19660599584f29553374b0cdf3c09f552c27e8d6be738` |
+  | `assignment5_lost_20261008_122845/metadata.yaml` | 7483 | `849cd77b3d094927fa8c58c47cbe5f2bb0ef24569484dd0998dae86954ac2dd4` |
+
+  내려받은 뒤 확인: `cd recordings/<run_id> && sha256sum *`
+- 같은 `run_id`로 연결되는 기록: `results/assignment5/<run_id>/` (`<run_id>.csv` 제어, `<run_id>_detect.csv` 인지, `<run_id>_serial.log` OpenCR 시리얼, `config/` 기록 당시 설정)
+- 재현 결과(원본과의 일치·차이)는 [report.md 문제 5](../report.md#문제-5--ros2-bag-및-재현-기록)에 있습니다.
 
 ## 2. 기록 (Raspberry Pi)
 
@@ -44,6 +70,18 @@ scripts/replay_bag.sh success_001
 python3 scripts/analyze_bag.py recordings/success_001 \
   --csv ~/lv2_module5_logs/success_001.csv \
   --replay recordings/success_001_replay --save
+```
+
+2026-10-08 bag 두 개는 아래 명령으로 재현했습니다(Pi, 모터 노드 없음 확인 후). 내려받은 bag을 `recordings/`에 두면 같은 명령으로 다시 재현할 수 있습니다.
+
+```bash
+cd ~/git/Lv2_Monglian_Assignment/lv2_module5
+source /opt/ros/lyrical/setup.bash && source ros2_ws/install/setup.bash
+export ROS_DOMAIN_ID=28 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+for b in recordings/assignment5_success_20261008_121732 recordings/assignment5_lost_20261008_122845; do
+  python3 assignment/assignment5.py replay $b       # 입력 재처리 → results/assignment5/<run_id>_replay/summary.md
+  python3 assignment/assignment5.py reanalyze $b    # 결과 재분석 → results/assignment5/<run_id>/reanalysis.md, results/metrics.csv
+done
 ```
 
 - 토픽 분리: 재처리 출력은 `/target_replay`, `/target_replay/depth`, `/target_replay/position_cam`입니다(`replay.launch.py`가 출력 토픽 3개를 모두 바꿈).
