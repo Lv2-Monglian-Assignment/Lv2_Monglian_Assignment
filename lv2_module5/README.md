@@ -19,7 +19,7 @@
 | 소프트웨어 (Raspberry Pi) | 역할 | 카메라·인지·제어 노드, OpenCR 빌드·업로드·시리얼 (모두 Pi에서 실행) |
 | | OS · 아키텍처 | Ubuntu Server 26.04.1 LTS · aarch64 |
 | | ROS2 | Lyrical (공식 apt 패키지, resolute 빌드) |
-| | RMW 구현체 | rmw_fastrtps_cpp (기본값, `ros2 doctor --report`로 확인) |
+| | RMW 구현체 | rmw_cyclonedds_cpp (팀 결정, `~/.bashrc`의 `RMW_IMPLEMENTATION`. 2026-10-08 bag 기록·재현에 사용) |
 | | ROS_DOMAIN_ID | 28 (Raspberry Pi·PC 모두 `~/.bashrc` 맨 위에 `export ROS_DOMAIN_ID=28`) |
 | | Python | 3.14.4 |
 | | OpenCV | 4.10.0 (python3-opencv 4.10.0+dfsg-7ubuntu5) |

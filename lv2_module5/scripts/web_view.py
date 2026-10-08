@@ -11,10 +11,11 @@
 네트워크 부담을 줄이게:
   - 영상은 Pi 안에서 JPEG으로 줄여 HTTP로만 내보낸다 (기본 5 Hz · 폭 640 · 품질 60 ≈ 150 KB/s, 브라우저 1개 기준).
   - 브라우저 탭이 가려지면 스트림·폴링을 멈춘다. 동시 스트림은 --max-clients개까지.
-  - --local-dds: 이 노드의 DDS 탐색을 Pi 안(localhost)으로만 한정해 Wi-Fi에 DDS 패킷을 더하지 않는다.
+  - --local-dds: 이 노드의 DDS 탐색을 Pi 안(localhost)으로만 한정한다. 다른 노드는 기본값(SUBNET)이라 탐색 범위가 달라져
+    토픽을 받지 못한 경우가 있었다(2026-10-08 Pi: bag 재생 노드와 연결 0). 쓰지 않는 것을 기본으로 한다.
 
-  python3 scripts/web_view.py [--port 8080] [--hz 5] [--width 640] [--quality 60] [--contour] [--local-dds]
-  PC 브라우저: http://papimon.local:8080/        (스트림만: /stream.mjpg, 한 장: /snapshot.jpg)
+  python3 scripts/web_view.py [--port 8080] [--hz 5] [--width 640] [--quality 60] [--contour]
+  PC 브라우저: http://<pi 호스트>.local:8080/        (스트림만: /stream.mjpg, 한 장: /snapshot.jpg)
   (실행 전: source /opt/ros/lyrical/setup.bash && source ros2_ws/install/setup.bash
            && export ROS_DOMAIN_ID=28 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp)
 """
@@ -433,7 +434,7 @@ def main():
     ap.add_argument('--max-clients', type=int, default=2, help='동시 스트림 수 상한')
     ap.add_argument('--contour', action='store_true', help='컨투어를 다시 계산해 그림 (Pi CPU 더 씀)')
     ap.add_argument('--local-dds', action='store_true',
-                    help='이 노드의 DDS 탐색을 localhost로 한정 (Pi에서 모든 노드가 돌 때만)')
+                    help='이 노드의 DDS 탐색을 localhost로 한정. 다른 노드와 탐색 범위가 달라 토픽을 못 받을 수 있어 권장하지 않음')
     args = ap.parse_args()
     if args.local_dds:
         os.environ['ROS_AUTOMATIC_DISCOVERY_RANGE'] = 'LOCALHOST'
