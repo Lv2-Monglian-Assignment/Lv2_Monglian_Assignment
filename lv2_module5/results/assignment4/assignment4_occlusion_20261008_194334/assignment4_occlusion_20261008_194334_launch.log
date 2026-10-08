@@ -1,0 +1,175 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-08-19-43-36-024911-pa23-37967
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: 🚀 Launching as Normal ROS Node
+[INFO] [realsense2_camera_node-1]: process started with pid [37980]
+[INFO] [target_detector-2]: process started with pid [37981]
+[INFO] [controller_node-3]: process started with pid [37982]
+[INFO] [opencr_bridge-4]: process started with pid [37983]
+[realsense2_camera_node-1] [0m[INFO] [1791456217.012260991] [camera.camera]: RealSense ROS v4.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.012570729] [camera.camera]: Built with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.012693524] [camera.camera]: Running with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1]  08/10 19:43:37,016 WARNING [281472258533664] (context.cpp:41) No valid configuration file found at : /home/pa23/.realsense-config.json loading defaults
+[realsense2_camera_node-1] [0m[INFO] [1791456217.220334242] [camera.camera]: Device with serial number 261822072247 was found.
+[realsense2_camera_node-1] [0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.223169737] [camera.camera]: Device with physical ID /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.223548419] [camera.camera]: Device with name RealSense D435 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.224163376] [camera.camera]: Device with port number 2-1 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.224485596] [camera.camera]: Device USB type: 3.2[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.224762575] [camera.camera]: Starting device RealSense D435 (Product ID: 0x0B07)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.225309682] [camera.camera]: getParameters...[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.227851975] [camera.camera]: JSON file is not provided[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.228204732] [camera.camera]: Device Name: RealSense D435[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.228431397] [camera.camera]: Device Serial No: 261822072247[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.230007958] [camera.camera]: Device physical port: /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.230261344] [camera.camera]: Device FW version: 5.15.1.55[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.230367177] [camera.camera]: Device Product ID: 0x0B07[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.230427436] [camera.camera]: Sync Mode: Off[0m
+[realsense2_camera_node-1] [33m[WARN] [1791456217.400143876] [camera.camera]: re-enable the stream for the change to take effect.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.402541745] [camera.camera]: Set ROS param depth_module.infra_profile to default: 848x480x30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.440637280] [camera.camera]: Stopping Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.442978742] [camera.camera]: Stopping Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.480715762] [camera.camera]: Starting Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.494059076] [camera.camera]: Open profile: stream_type: Depth(0), Format: Z16, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.541372072] [camera.camera]: Starting Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.553419398] [camera.camera]: Open profile: stream_type: Color(0), Format: RGB8, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456217.692688684] [camera.camera]: RealSense Node Is Up![0m
+[opencr_bridge-4] [INFO] [1791456219.398978291] [opencr_bridge]: run_id=assignment4_occlusion_20261008_194334 dry_run=False port=/dev/ttyACM0
+[opencr_bridge-4] [INFO] [1791456219.405072147] [opencr_bridge]: OpenCR state None -> HOLD
+[opencr_bridge-4] [INFO] [1791456219.423558105] [opencr_bridge]: OpenCR B 1654 2007
+[opencr_bridge-4] [INFO] [1791456219.426294915] [opencr_bridge]: OpenCR state HOLD -> HOMING
+[controller_node-3] [INFO] [1791456219.463175683] [tracker_controller]: run_id=assignment4_occlusion_20261008_194334 search=False pan(kp=2.0/s, dir=-1, limit=120.0) tilt(kp=2.5/s, dir=1, limit=120.0)
+[controller_node-3] [INFO] [1791456219.467696942] [tracker_controller]: state None -> IDLE (disabled)
+[realsense2_camera_node-1] [33m[WARN] [1791456219.486002752] [camera.camera]: XXX Hardware Notification:Left MIPI error,1.79146e+12,Error,Hardware Error[0m
+[realsense2_camera_node-1] [33m[WARN] [1791456219.487030133] [camera.camera]: Hardware Notification:Left MIPI error,1.79146e+12,Error,Hardware Error[0m
+[target_detector-2] [INFO] [1791456221.192005565] [target_detector]: run_id=assignment4_occlusion_20261008_194334 hsv=(102, 120, 40)~(110, 255, 255) min_area=100.0 selection=priority use_depth=True detect_scale=1.0 size_check=True object_tracker=True
+[opencr_bridge-4] [INFO] [1791456221.529603702] [opencr_bridge]: OpenCR state HOMING -> HOLD
+[opencr_bridge-4] [INFO] [1791456221.531401391] [opencr_bridge]: 시작 시 기준 자세 이동 도착: 2.2 s
+[target_detector-2] [INFO] [1791456226.060053083] [target_detector]: processing FPS 28.7, mean proc 9.1 ms
+[target_detector-2] [INFO] [1791456231.104084025] [target_detector]: processing FPS 29.8, mean proc 8.9 ms
+[target_detector-2] [INFO] [1791456236.115560794] [target_detector]: processing FPS 29.7, mean proc 8.8 ms
+[realsense2_camera_node-1] [33m[WARN] [1791456238.555432486] [camera.camera]: XXX Hardware Notification:Incomplete video frame detected!
+[realsense2_camera_node-1] Size 279304 out of 614655 bytes (45%),1.79146e+12,Warn,Frame Corrupted[0m
+[target_detector-2] [INFO] [1791456241.144767323] [target_detector]: processing FPS 29.4, mean proc 8.8 ms
+[target_detector-2] [INFO] [1791456246.169564167] [target_detector]: processing FPS 29.1, mean proc 10.0 ms
+[target_detector-2] [INFO] [1791456251.176010978] [target_detector]: processing FPS 29.6, mean proc 11.7 ms
+[target_detector-2] [INFO] [1791456256.209389972] [target_detector]: processing FPS 28.8, mean proc 11.3 ms
+[controller_node-3] [INFO] [1791456257.424876623] [tracker_controller]: tracking enabled=True
+[controller_node-3] [INFO] [1791456257.441782464] [tracker_controller]: state IDLE -> LOST (confirming_1/3)
+[controller_node-3] [INFO] [1791456257.498880397] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[opencr_bridge-4] [INFO] [1791456257.527355512] [opencr_bridge]: OpenCR state HOLD -> TRACK
+[controller_node-3] [INFO] [1791456261.220197636] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[target_detector-2] [INFO] [1791456261.229336430] [target_detector]: processing FPS 27.5, mean proc 13.2 ms
+[controller_node-3] [INFO] [1791456262.199524510] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[controller_node-3] [INFO] [1791456263.964955532] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[realsense2_camera_node-1] [33m[WARN] [1791456264.211054727] [camera.camera]: XXX Hardware Notification:Incomplete video frame detected!
+[realsense2_camera_node-1] Size 606984 out of 614655 bytes (98%),1.79146e+12,Warn,Frame Corrupted[0m
+[controller_node-3] [INFO] [1791456265.680794004] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791456266.247924121] [target_detector]: processing FPS 28.1, mean proc 11.2 ms
+[target_detector-2] [INFO] [1791456271.266012113] [target_detector]: processing FPS 27.9, mean proc 12.6 ms
+[controller_node-3] [INFO] [1791456273.339016967] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-3] [INFO] [1791456274.657328559] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791456276.271905984] [target_detector]: processing FPS 28.2, mean proc 11.9 ms
+[target_detector-2] [INFO] [1791456281.284954611] [target_detector]: processing FPS 27.5, mean proc 12.5 ms
+[controller_node-3] [INFO] [1791456282.018147032] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-3] [INFO] [1791456284.098741433] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791456286.323708060] [target_detector]: processing FPS 27.8, mean proc 11.2 ms
+[target_detector-2] [INFO] [1791456291.334833740] [target_detector]: processing FPS 27.6, mean proc 12.7 ms
+[controller_node-3] [INFO] [1791456291.398748393] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-3] [INFO] [1791456293.085611143] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791456296.338126281] [target_detector]: processing FPS 28.6, mean proc 12.3 ms
+[controller_node-3] [INFO] [1791456300.500761497] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[target_detector-2] [INFO] [1791456301.360695106] [target_detector]: processing FPS 27.7, mean proc 11.4 ms
+[controller_node-3] [INFO] [1791456302.377911850] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[controller_node-3] [INFO] [1791456305.585035550] [tracker_controller]: tracking enabled=False
+[controller_node-3] [INFO] [1791456305.599780576] [tracker_controller]: state TRACKING -> IDLE (disabled)
+[target_detector-2] [INFO] [1791456306.384318274] [target_detector]: processing FPS 27.9, mean proc 11.3 ms
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[realsense2_camera_node-1] [0m[INFO] [1791456307.650116969] [rclcpp]: signal_handler(signum=2)[0m
+[controller_node-3] Exception ignored while calling deallocator <function Future.__del__ at 0xffff989f3060>:
+[controller_node-3] Traceback (most recent call last):
+[controller_node-3]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/task.py", line 62, in __del__
+[controller_node-3]     def __del__(self) -> None:
+[controller_node-3] KeyboardInterrupt: 
+[realsense2_camera_node-1] [0m[INFO] [1791456307.656081068] [camera.camera]: Stop Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456307.660578753] [camera.camera]: Close Sensor. [0m
+[controller_node-3] [INFO] [1791456307.655765459] [tracker_controller]: stats {'reacquired_in_view': 7, 'reacquired_search': 0, 'search_failed': 0} stale_inputs=0
+[controller_node-3] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:427
+[INFO] [opencr_bridge-4]: sending signal 'SIGINT' to process[opencr_bridge-4]
+[INFO] [controller_node-3]: sending signal 'SIGINT' to process[controller_node-3]
+[INFO] [target_detector-2]: sending signal 'SIGINT' to process[target_detector-2]
+[INFO] [realsense2_camera_node-1]: sending signal 'SIGINT' to process[realsense2_camera_node-1]
+[realsense2_camera_node-1] [0m[INFO] [1791456307.671586458] [camera.camera]: Close Sensor - Done. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791456307.671689012] [camera.camera]: Stop Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791456307.671716734] [camera.camera]: Close Sensor. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791456307.690720743] [rclcpp]: signal_handler(signum=2)[0m
+[target_detector-2] Traceback (most recent call last):
+[target_detector-2]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/target_detector/lib/target_detector/target_detector", line 33, in <module>
+[target_detector-2]     sys.exit(load_entry_point('target-detector', 'console_scripts', 'target_detector')())
+[target_detector-2]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[target_detector-2]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/build/target_detector/target_detector/target_detector.py", line 432, in main
+[target_detector-2]     node.destroy_node()
+[target_detector-2]     ~~~~~~~~~~~~~~~~~^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2708, in destroy_node
+[target_detector-2]     self.destroy_service(self._services[0])
+[target_detector-2]     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2642, in destroy_service
+[target_detector-2]     service.destroy()
+[target_detector-2]     ~~~~~~~~~~~~~~~^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/service.py", line 129, in destroy
+[target_detector-2]     self._destroy()
+[target_detector-2]     ~~~~~~~~~~~~~^^
+[target_detector-2]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/service.py", line 132, in _destroy
+[target_detector-2]     self.handle.destroy_when_not_in_use()
+[target_detector-2]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[target_detector-2] KeyboardInterrupt
+[opencr_bridge-4] Traceback (most recent call last):
+[opencr_bridge-4]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/tracker_bridge/lib/tracker_bridge/opencr_bridge", line 33, in <module>
+[opencr_bridge-4]     sys.exit(load_entry_point('tracker-bridge', 'console_scripts', 'opencr_bridge')())
+[opencr_bridge-4]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-4]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/build/tracker_bridge/tracker_bridge/opencr_bridge.py", line 230, in main
+[opencr_bridge-4]     node.destroy_node()
+[opencr_bridge-4]     ~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-4]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2702, in destroy_node
+[opencr_bridge-4]     self.destroy_publisher(self._publishers[0])
+[opencr_bridge-4]     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+[opencr_bridge-4]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2609, in destroy_publisher
+[opencr_bridge-4]     publisher.destroy()
+[opencr_bridge-4]     ~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-4]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 101, in destroy
+[opencr_bridge-4]     self._destroy()
+[opencr_bridge-4]     ~~~~~~~~~~~~~^^
+[opencr_bridge-4]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 189, in _destroy
+[opencr_bridge-4]     super()._destroy()
+[opencr_bridge-4]     ~~~~~~~~~~~~~~~~^^
+[opencr_bridge-4]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 104, in _destroy
+[opencr_bridge-4]     self.handle.destroy_when_not_in_use()
+[opencr_bridge-4]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[opencr_bridge-4] KeyboardInterrupt
+[controller_node-3] Traceback (most recent call last):
+[controller_node-3]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/tracker_controller/lib/tracker_controller/controller_node", line 33, in <module>
+[controller_node-3]     sys.exit(load_entry_point('tracker-controller', 'console_scripts', 'controller_node')())
+[controller_node-3]              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-3]   File "/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/build/tracker_controller/tracker_controller/controller_node.py", line 318, in main
+[controller_node-3]     node.destroy_node()
+[controller_node-3]     ~~~~~~~~~~~~~~~~~^^
+[controller_node-3]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2702, in destroy_node
+[controller_node-3]     self.destroy_publisher(self._publishers[0])
+[controller_node-3]     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+[controller_node-3]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/node.py", line 2609, in destroy_publisher
+[controller_node-3]     publisher.destroy()
+[controller_node-3]     ~~~~~~~~~~~~~~~~~^^
+[controller_node-3]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 101, in destroy
+[controller_node-3]     self._destroy()
+[controller_node-3]     ~~~~~~~~~~~~~^^
+[controller_node-3]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 189, in _destroy
+[controller_node-3]     super()._destroy()
+[controller_node-3]     ~~~~~~~~~~~~~~~~^^
+[controller_node-3]   File "/opt/ros/lyrical/lib/python3.14/site-packages/rclpy/publisher.py", line 104, in _destroy
+[controller_node-3]     self.handle.destroy_when_not_in_use()
+[controller_node-3]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[controller_node-3] KeyboardInterrupt
+[ERROR] [target_detector-2]: process has died [pid 37981, exit code -2, cmd '/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/target_detector/lib/target_detector/target_detector --ros-args -r __node:=target_detector --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/camera.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/control.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/device.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/hsv.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/safety.yaml --params-file /tmp/target_detector_launch_31actfqo.yaml'].
+[realsense2_camera_node-1] [0m[INFO] [1791456308.314338668] [camera.camera]: Close Sensor - Done. [0m
+[ERROR] [controller_node-3]: process has died [pid 37982, exit code -2, cmd '/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/tracker_controller/lib/tracker_controller/controller_node --ros-args -r __node:=tracker_controller --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/camera.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/control.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/device.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/hsv.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/safety.yaml --params-file /tmp/tracker_controller_launch_3ywmrgqb.yaml'].
+[ERROR] [opencr_bridge-4]: process has died [pid 37983, exit code -2, cmd '/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/ros2_ws/install/tracker_bridge/lib/tracker_bridge/opencr_bridge --ros-args -r __node:=opencr_bridge --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/camera.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/control.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/device.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/hsv.yaml --params-file /home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/config/safety.yaml --params-file /tmp/opencr_bridge_launch_ai7ua0ko.yaml'].
+[INFO] [realsense2_camera_node-1]: process has finished cleanly [pid 37980]

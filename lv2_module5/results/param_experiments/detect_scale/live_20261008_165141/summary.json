@@ -1,0 +1,38 @@
+{
+  "0.5": {
+    "run_id": "ds_live_0.5_20261008_165240",
+    "window_s": 39.33,
+    "frames": 1179,
+    "processing_fps": 29.97,
+    "proc_ms_mean": 4.97,
+    "proc_ms_median": 4.9,
+    "proc_ms_p95": 5.69,
+    "detect_ratio": 1.0,
+    "ex_mean": 0.5708,
+    "ex_std": 0.0005,
+    "cpu_pct_mean": 78.1,
+    "cpu_samples": 39,
+    "temp_start_c": 56.0,
+    "temp_end_c": 57.9,
+    "commit": "f910df2",
+    "proc_ms_reduction_pct": 61.3,
+    "detect_ratio_diff_pp": 0.0
+  },
+  "1.0": {
+    "run_id": "ds_live_1.0_20261008_165141",
+    "window_s": 39.47,
+    "frames": 1184,
+    "processing_fps": 30.0,
+    "proc_ms_mean": 12.85,
+    "proc_ms_median": 12.79,
+    "proc_ms_p95": 14.46,
+    "detect_ratio": 1.0,
+    "ex_mean": 0.5721,
+    "ex_std": 0.0001,
+    "cpu_pct_mean": 114.3,
+    "cpu_samples": 39,
+    "temp_start_c": 50.6,
+    "temp_end_c": 56.5,
+    "commit": "f910df2"
+  }
+}

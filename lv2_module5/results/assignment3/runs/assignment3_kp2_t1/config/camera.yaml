@@ -1,0 +1,42 @@
+# 카메라(RealSense D435 640x480 @ 30 Hz)·깊이·카메라 장착 기하·인지 출력 토픽. #todo = 실측·합의 필요
+/**:
+  ros__parameters:
+    # target_detector(번호 유지 회전 보정)와 tracker_controller(목표 기억)가 같은 값을 써야 해서 공통으로 둔다
+    hfov_deg: 55.7                             # 640x480 CameraInfo 실측 fx=605.85: 2*atan(320/605.85)
+    vfov_deg: 43.2                             # fy=605.68: 2*atan(240/605.68)
+    cam_forward_m: 0.0                         # #todo 틸트 축 -> 광학 중심 (앞) [m]
+    cam_up_m: 0.0                              # #todo 틸트 축 -> 광학 중심 (위) [m]
+
+target_detector:
+  ros__parameters:
+    # ---- 토픽 ----
+    color_topic: /camera/camera/color/image_raw
+    depth_topic: /camera/camera/aligned_depth_to_color/image_raw
+    info_topic: /camera/camera/color/camera_info
+    depth_out_topic: /target_depth             # x=depth_valid, y=유효 비율, z=z_m
+    snapshot_topic: /target/save_snapshot      # #todo
+    publish_position: true
+
+    # ---- 깊이 (기록·심화용, 제어 입력 아님) ----
+    use_depth: true
+    depth_sync_tol_s: 0.02                     # [s] 컬러·깊이 stamp 차이 허용
+                                               # 깊이 짝 놓침: 미리보기를 켜 Pi CPU가 포화되면 검출 프레임의 9 %, 끄면 0.4 % (2026-10-06 실측).
+                                               # 컬러를 기다리는 동기화는 효과가 없어(놓친 깊이는 다음 컬러보다 늦게 옴) 넣지 않음
+    depth_min_m: 0.2                           # [m] 유효 작업 거리 (mouse_test.py)
+    depth_max_m: 3.0                           # [m] /target/position_cam 유효 범위(기록·SEARCHING용). 후보는 거리로 거르지 않으므로
+                                               # min_area 100 px^2가 남기는 거리(옆면 약 2.4 m)까지 위치가 나오게 3.0 (이전 1.0)
+    depth_min_valid_ratio: 0.3                 # 목표 영역 중 유효 깊이 비율 하한
+    depth_erode_px: 3                          # [px] 경계 깎기 (배경 깊이 섞임 방지)
+
+    # ---- 저장·표시 ----
+    save_dir: ~/lv2_module5_results/images
+    save_every_n: 0                            # N 프레임마다 원본·마스크·검출 저장, 0=끔
+    show_window: false                         # 모니터가 있는 PC에서만 true (마우스로 픽셀 값 확인)
+    log_dir: ~/lv2_module5_logs
+    run_id: ''
+
+tracker_controller:
+  ros__parameters:
+    pose_time_source: stamp                    # stamp: 영상 stamp 시각의 모터 각도 사용(같은 Pi라 시계 동일)
+    camera_latency_s: 0.05                     # pose_time_source=receive 일 때만 사용 [s]
+    default_range_m: 0.6                       # 깊이 무효일 때 쓰는 거리 [m] #todo

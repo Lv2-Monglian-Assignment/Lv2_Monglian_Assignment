@@ -1,0 +1,6 @@
+trial,id_before,cx_before,result,lost_from_hide_s,no_target_s,reacquired_from_hide_s,show_from_hide_s,id_after,cx_after,same_id,max_abs_cmd_while_lost
+1,4,304.5,가림 미확인 (추적 물체가 사라지지 않음),,,,,,,,
+2,4,318.2,가림 미확인 (추적 물체가 사라지지 않음),,,,,,,,
+3,4,318.2,재검출,1.66,0.47,2.13,2.08,3,121.8,0,0.0
+4,3,324.1,재검출,0.93,0.5,1.43,2.04,4,517.2,0,0.0
+5,4,328.3,재검출,0.81,0.47,1.28,2.1,6,132.9,0,0.0

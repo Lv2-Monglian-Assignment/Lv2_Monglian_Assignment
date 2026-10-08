@@ -1,0 +1,58 @@
+# 추적 제어: Kp·direction·속도 상한·데드밴드·제어 주기·탐색(심화)·목표 기억. #todo = 합의 또는 실측 필요
+/**:
+  ros__parameters:
+    # ---- 노드 사이 인터페이스 (target_detector·tracker_controller·opencr_bridge 공통) ----
+    target_topic: /target                      # 발제 기본 인터페이스. bag 재처리 때 target_detector만 /target_replay
+    position_topic: /target/position_cam       # #todo 인지 담당과 합의
+    command_topic: /pan_tilt/command           # #todo
+    joint_state_topic: /pan_tilt/joint_states  # #todo
+    # ---- 모터 속도 부호: target_detector(번호 유지 회전 보정)도 같은 값을 써야 해서 공통으로 둔다 ----
+    pan_direction: -1                          # 실측(2026-10-05, 샘플 펌웨어): 속도 + = 카메라 뒤에서 볼 때 왼쪽 -> 오른쪽 목표엔 −
+    tilt_direction: 1                          # 실측(2026-10-05, 샘플 펌웨어): 속도 + = tick 증가 = 카메라 아래쪽
+                                               # 2026-10-06 방향 시험(scripts/test/direction_test.py, 15 deg/s x 2 s)으로 확인: 팬 + = 왼쪽, 틸트 + = 아래
+
+tracker_controller:
+  ros__parameters:
+    control_rate_hz: 50.0                      # [Hz] 명령 발행 주기
+    enable_topic: /tracking_enable             # #todo
+    status_topic: /tracking_status             # #todo
+    predicted_topic: /tracker/predicted_target # #todo 인지 담당과 합의(후보 선택에 사용)
+    target_base_topic: /tracker/target_base    # #todo
+    base_frame: pan_tilt_base                  # #todo
+    auto_enable: false
+
+    # ---- TRACKING: 영상 중심 오차를 카메라 각도로 바꾼 P 제어 ----
+    # 명령 [deg/s] = clamp(direction x Kp x atan(e x tan(시야각/2)) [deg]), 시야각은 camera.yaml의 hfov_deg·vfov_deg
+    # Kp는 report 3-1 계단 응답의 각도 루프 Kp [1/s] 그대로 (근거: docs/kp_conversion.md)
+    pan_kp: 2.0                                # [1/s] 팀 결정 (0.1만 올려도 계단 응답 오버슈트 급증) #todo Kp 비교 2종
+    pan_speed_limit_deg_s: 120.0               # [deg/s] 팀 속도 상한(Kp 계단 시험 조건), 펌웨어 상한과 같음. 화면 끝 오차 명령 55.7
+    pan_deadband: 0.03                         # [정규화] #todo
+    tilt_enabled: true
+    tilt_kp: 2.5                               # [1/s] 팀 결정 (오버슈트 없이 2.0보다 상승 25 % 빠름)
+    tilt_speed_limit_deg_s: 120.0              # [deg/s] 화면 끝 오차 명령 54.0
+    tilt_deadband: 0.05                        # [정규화] #todo
+    pan_limit_deg: 175.0                       # [deg] 이 밖에서는 바깥 방향 명령 0 (펌웨어 LIMIT_DEG 팬 180 - 여유 5)
+    tilt_limit_deg: 38.0                       # [deg] (펌웨어 LIMIT_DEG 틸트 40 - 여유 2)
+    board_state_topic: /pan_tilt/board_state   # 브리지의 보드 상태. FAULT·NO_STATUS·HOMING이면 LOST(board_*)와 명령 0
+
+    # ---- SEARCHING (심화): 기억한 목표 예측 위치로 이동 ----
+    search_enabled: false                      # 기본 소실 시험(정지 확인)은 false, 심화 시험에서 true
+    search_delay_s: 0.3                        # [s] 미검출 후 정지 유지 시간
+    search_timeout_s: 3.0                      # [s] 탐색 상한. 넘으면 정지
+    search_kp: 2.0                             # [1/s] 각도 오차 -> 속도
+    search_speed_limit_deg_s: 20.0             # [deg/s]
+    search_tolerance_deg: 1.0                  # [deg]
+    search_pan_max_deg: 80.0                   # [deg] 펌웨어 LIMIT_DEG(팬 180) 이내 #todo
+    search_tilt_max_deg: 25.0                  # [deg] 펌웨어 LIMIT_DEG(틸트 40) 이내 #todo
+                                               # 각도 0 = 펌웨어 IDLE 자세(팬 원시 0°, 틸트 원시 180°). 이 자세가 정면·수평이어야 기하가 맞다 #todo
+
+    # ---- 목표 기억 ----
+    memory_window_s: 0.1                       # [s] 속도 추정 구간. 0.1 또는 0.25 (이전 0.5: 반응이 느림) #todo
+    memory_max_speed_m_s: 0.5                  # [m/s] 추정 속도 상한 #todo
+    memory_horizon_s: 1.0                      # [s] 외삽 최대 시간
+    memory_max_age_s: 4.0                      # [s] 이보다 오래된 기억은 사용 안 함. search_delay_s + search_timeout_s(3.3)보다 길게:
+                                               # 짧으면 탐색이 시간 상한 전에 search_unavailable로 끝남(2026-10-06 도전 B 시험)
+
+    # ---- 기록 ----
+    log_dir: ~/lv2_module5_logs
+    run_id: ''                                 # 비우면 run_YYYYmmdd_HHMMSS

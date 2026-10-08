@@ -1,0 +1,96 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-08-17-42-02-881569-pa23-33632
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: 🚀 Launching as Normal ROS Node
+[INFO] [realsense2_camera_node-1]: process started with pid [33641]
+[INFO] [target_detector-2]: process started with pid [33642]
+[INFO] [controller_node-3]: process started with pid [33643]
+[INFO] [opencr_bridge-4]: process started with pid [33644]
+[realsense2_camera_node-1] [0m[INFO] [1791448923.862669512] [camera.camera]: RealSense ROS v4.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448923.863030880] [camera.camera]: Built with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448923.863162232] [camera.camera]: Running with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1]  08/10 17:42:03,866 WARNING [281472954984736] (context.cpp:41) No valid configuration file found at : /home/pa23/.realsense-config.json loading defaults
+[realsense2_camera_node-1] [0m[INFO] [1791448924.066208887] [camera.camera]: Device with serial number 261822072247 was found.
+[realsense2_camera_node-1] [0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.066594441] [camera.camera]: Device with physical ID /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.066744625] [camera.camera]: Device with name RealSense D435 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.067143142] [camera.camera]: Device with port number 2-1 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.067348456] [camera.camera]: Device USB type: 3.2[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.067410159] [camera.camera]: Starting device RealSense D435 (Product ID: 0x0B07)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.067706250] [camera.camera]: getParameters...[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068374673] [camera.camera]: JSON file is not provided[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068481302] [camera.camera]: Device Name: RealSense D435[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068522098] [camera.camera]: Device Serial No: 261822072247[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068557117] [camera.camera]: Device physical port: /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068596431] [camera.camera]: Device FW version: 5.15.1.55[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068628135] [camera.camera]: Device Product ID: 0x0B07[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.068658246] [camera.camera]: Sync Mode: Off[0m
+[realsense2_camera_node-1] [33m[WARN] [1791448924.234496021] [camera.camera]: re-enable the stream for the change to take effect.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.235289943] [camera.camera]: Set ROS param depth_module.infra_profile to default: 848x480x30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.272557323] [camera.camera]: Stopping Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.274727831] [camera.camera]: Stopping Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.306103980] [camera.camera]: Starting Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.318971790] [camera.camera]: Open profile: stream_type: Depth(0), Format: Z16, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.357111036] [camera.camera]: Starting Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.367946726] [camera.camera]: Open profile: stream_type: Color(0), Format: RGB8, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791448924.500500028] [camera.camera]: RealSense Node Is Up![0m
+[opencr_bridge-4] [INFO] [1791448926.278256549] [opencr_bridge]: run_id=exp4_rot_20261008_174201 dry_run=False port=/dev/ttyACM0
+[opencr_bridge-4] [INFO] [1791448926.282210456] [opencr_bridge]: OpenCR state None -> HOLD
+[realsense2_camera_node-1] [33m[WARN] [1791448926.314364379] [camera.camera]: XXX Hardware Notification:Depth stream start failure,1.79145e+12,Error,Hardware Error[0m
+[realsense2_camera_node-1] [33m[WARN] [1791448926.314643748] [camera.camera]: Hardware Notification:Depth stream start failure,1.79145e+12,Error,Hardware Error[0m
+[opencr_bridge-4] [INFO] [1791448926.315596354] [opencr_bridge]: OpenCR B 1654 2007
+[opencr_bridge-4] [INFO] [1791448926.317888658] [opencr_bridge]: OpenCR state HOLD -> HOMING
+[controller_node-3] [INFO] [1791448926.334933726] [tracker_controller]: run_id=exp4_rot_20261008_174201 search=False pan(kp=2.0/s, dir=-1, limit=120.0) tilt(kp=2.5/s, dir=1, limit=120.0)
+[controller_node-3] [INFO] [1791448926.341848120] [tracker_controller]: state None -> IDLE (disabled)
+[target_detector-2] [INFO] [1791448927.976094223] [target_detector]: run_id=exp4_rot_20261008_174201 hsv=(102, 120, 40)~(110, 255, 255) min_area=100.0 selection=priority use_depth=True detect_scale=1.0 size_check=True object_tracker=True
+[opencr_bridge-4] [INFO] [1791448927.979511763] [opencr_bridge]: OpenCR state HOMING -> HOLD
+[opencr_bridge-4] [INFO] [1791448927.981108348] [opencr_bridge]: 시작 시 기준 자세 이동 도착: 1.8 s
+[target_detector-2] [INFO] [1791448928.152421764] [target_detector]: snapshot saved: r30_t5_show
+[target_detector-2] [INFO] [1791448932.855847679] [target_detector]: processing FPS 25.3, mean proc 13.9 ms
+[target_detector-2] [INFO] [1791448937.874405759] [target_detector]: processing FPS 29.5, mean proc 13.3 ms
+[target_detector-2] [INFO] [1791448942.899857104] [target_detector]: processing FPS 29.3, mean proc 13.5 ms
+[target_detector-2] [INFO] [1791448947.922371943] [target_detector]: processing FPS 27.9, mean proc 13.0 ms
+[target_detector-2] [INFO] [1791448952.953667760] [target_detector]: processing FPS 21.9, mean proc 13.4 ms
+[realsense2_camera_node-1] [33m[WARN] [1791448955.644097114] [camera.camera]: XXX Hardware Notification:Incomplete video frame detected!
+[realsense2_camera_node-1] Size 213768 out of 614655 bytes (34%),1.79145e+12,Warn,Frame Corrupted[0m
+[target_detector-2] [INFO] [1791448957.977779851] [target_detector]: processing FPS 28.7, mean proc 12.9 ms
+[target_detector-2] [INFO] [1791448962.994231848] [target_detector]: processing FPS 28.1, mean proc 13.2 ms
+[target_detector-2] [INFO] [1791448968.025953256] [target_detector]: processing FPS 27.7, mean proc 13.1 ms
+[target_detector-2] [INFO] [1791448973.045854330] [target_detector]: processing FPS 28.9, mean proc 14.5 ms
+[controller_node-3] [INFO] [1791448977.616457945] [tracker_controller]: tracking enabled=True
+[controller_node-3] [INFO] [1791448977.626271269] [tracker_controller]: state IDLE -> LOST (confirming_0/3)
+[controller_node-3] [INFO] [1791448977.734609925] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[opencr_bridge-4] [INFO] [1791448977.804026099] [opencr_bridge]: OpenCR state HOLD -> TRACK
+[target_detector-2] [INFO] [1791448978.050445883] [target_detector]: processing FPS 25.4, mean proc 16.2 ms
+[target_detector-2] [INFO] [1791448983.153992841] [target_detector]: processing FPS 23.7, mean proc 17.1 ms
+[target_detector-2] [INFO] [1791448988.195044519] [target_detector]: processing FPS 18.9, mean proc 20.8 ms
+[target_detector-2] [INFO] [1791448989.295156711] [target_detector]: snapshot saved: exp4_s01
+[target_detector-2] [INFO] [1791448990.539030245] [target_detector]: snapshot saved: exp4_setup
+[target_detector-2] [INFO] [1791448993.228723380] [target_detector]: processing FPS 20.3, mean proc 19.8 ms
+[controller_node-3] [INFO] [1791448996.553571822] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-3] [INFO] [1791448997.012447421] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791448997.802089890] [target_detector]: snapshot saved: exp4_s02
+[target_detector-2] [INFO] [1791448998.290942033] [target_detector]: processing FPS 23.3, mean proc 18.5 ms
+[target_detector-2] [INFO] [1791449003.344952502] [target_detector]: processing FPS 25.5, mean proc 17.2 ms
+[target_detector-2] [INFO] [1791449005.401090508] [target_detector]: snapshot saved: exp4_s03
+[target_detector-2] [INFO] [1791449008.385081721] [target_detector]: processing FPS 25.4, mean proc 17.6 ms
+[target_detector-2] [INFO] [1791449012.997465677] [target_detector]: snapshot saved: exp4_s04
+[target_detector-2] [INFO] [1791449013.400865685] [target_detector]: processing FPS 25.5, mean proc 16.9 ms
+[controller_node-3] [INFO] [1791449016.644361751] [tracker_controller]: state TRACKING -> LOST (no_detection)
+[controller_node-3] [INFO] [1791449017.233682384] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791449018.455726706] [target_detector]: processing FPS 20.6, mean proc 22.0 ms
+[controller_node-3] [INFO] [1791449020.109647643] [tracker_controller]: tracking enabled=False
+[controller_node-3] [INFO] [1791449020.140131758] [tracker_controller]: state TRACKING -> IDLE (disabled)
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[realsense2_camera_node-1] [0m[INFO] [1791449022.265663364] [rclcpp]: signal_handler(signum=2)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791449022.275797483] [camera.camera]: Stop Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791449022.275985260] [camera.camera]: Close Sensor. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791449022.290650432] [camera.camera]: Close Sensor - Done. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791449022.292539626] [camera.camera]: Stop Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791449022.294027286] [camera.camera]: Close Sensor. [0m
+[controller_node-3] [INFO] [1791449022.278855450] [tracker_controller]: stats {'reacquired_in_view': 3, 'reacquired_search': 0, 'search_failed': 0} stale_inputs=0
+[controller_node-3] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:427
+[realsense2_camera_node-1] [0m[INFO] [1791449022.397316226] [camera.camera]: Close Sensor - Done. [0m
+[INFO] [target_detector-2]: process has finished cleanly [pid 33642]
+[INFO] [controller_node-3]: process has finished cleanly [pid 33643]
+[INFO] [opencr_bridge-4]: process has finished cleanly [pid 33644]
+[INFO] [realsense2_camera_node-1]: process has finished cleanly [pid 33641]

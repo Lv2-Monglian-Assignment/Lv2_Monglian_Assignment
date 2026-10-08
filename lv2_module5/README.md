@@ -7,7 +7,7 @@
 카메라 영상 → HSV·Contour 검출(+깊이 크기 검증) → 중심 오차 → 추적 제어 → OpenCR → DYNAMIXEL → 카메라 방향 변화 → 새 영상의 오차 확인
 ```
 
-> 이 README만 보고 작성자가 아닌 팀원이 실행·재현할 수 있어야 합니다. `TODO`는 실제 값으로 채운 뒤 삭제합니다.
+> 이 README만 보고 작성자가 아닌 팀원이 설치·실행·시험 재현을 할 수 있도록 작성했습니다(장비 조립 제외). 문제별 시험 명령은 [8절](#8-문제별-시험-재현), 결과 해석은 [report.md](report.md)에 있습니다.
 > 표의 **(결정)** 은 팀이 정했지만 아직 장비에 적용·확인하지 않은 값, **(실측)** 은 장비에서 확인한 값입니다.
 
 ---
@@ -43,11 +43,11 @@
 | | Actuator | ROBOTIS DYNAMIXEL XM430-W350-T × 2 · 팬 ID 11 · 틸트 ID 12 · 1,000,000 bps · Protocol 2.0 · 펌웨어 50 (실측 2026-10-03 Serial3 스캔) |
 | | Power | 12V 외부 전원 공급 장치 |
 | | 기구 | 팬·틸트 2축 (필수 추적은 팬 1축, 틸트는 선택) · ROBOTIS FR12-H101K · 팬 마운트 · 카메라 마운트(틸트 모터) |
-| | 회전 범위 · 속도 상한 | 기구 범위 팬 ±180° (틸트 모터 케이블 때문에 연속 회전 금지) · 틸트 ±40°, 기준 자세(IDLE) 팬 0°·틸트 180° (모터 원시값 = tick 0·2048) · 속도 상한 120°/s (Kp 계단 응답 시험과 같은 값) |
-| 목표물 | 대상 | 파란색 단일 색 직육면체·원기둥 (밑면 3 × 3 cm, 높이 6 cm) · TODO 사진 `results/images/target.jpg` |
+| | 회전 범위 · 속도 상한 | 펌웨어 소프트 한계 팬 ±180° (틸트 모터 케이블 때문에 연속 회전 금지) · 틸트 ±40°, 제어 노드 한계 팬 ±175° · 틸트 ±38° (밖에서는 바깥 방향 명령 0) · 기준 자세(각도 0°) = 카메라 정면·수평, 장비별 tick을 `config/device.yaml` `home_ticks`에 저장 (제출 장비 [1654, 2007], `scripts/test/pose_tool.py`로 설정) · 속도 상한 120°/s (Kp 계단 응답 시험과 같은 값) |
+| 목표물 | 대상 | 파란색 단일 색 직육면체·원기둥 (밑면 3 × 3 cm, 높이 6 cm) · 사진: [정상 장면 원본](results/images/perception/normal/color_original.png) |
 
 - 카메라 Color 토픽 이름: `/camera/camera/color/image_raw` (640×480 rgb8, 2026-10-08 Pi에서 기록한 bag으로 확인) · 정렬 Depth 토픽은 `/camera/camera/aligned_depth_to_color/image_raw` · 30 Hz
-- 모터 ID·baud·프로토콜은 실제 장비에서 확인한 값입니다. 확인 방법과 날짜: TODO
+- 모터 ID·baud·프로토콜·펌웨어 버전은 2026-10-03 OpenCR에서 DYNAMIXEL 스캔(Serial3)으로 확인했습니다. 펌웨어 `opencr_tracker`는 시작할 때마다 두 모터의 모델 번호를 다시 확인합니다(다르면 FAULT).
 - PC는 Raspberry Pi SSH 접속과 Isaac Sim 실행에 사용합니다. OpenCR 빌드·업로드·시리얼 확인은 Raspberry Pi에서 수행합니다.
 
 ## 2. 폴더 구조
@@ -55,26 +55,31 @@
 ```
 lv2_module5/
 ├── README.md            # 실행·재현 가이드 (이 문서)
-├── report.md            # 문제 1~5 구현·검증·해석·한계
-├── team.md              # 4인 역할·Issue·PR·리뷰, 보호 설정, 통합 확인
+├── report.md            # 문제 1~5·도전 B 구현·결과·해석·한계, 요구사항 평가표 추적
+├── team.md              # 4인 역할·Issue·PR·리뷰, 보호 설정, 최종 통합 확인
 ├── presentation.md      # 5분 시연 순서와 핵심 결과
 ├── ros2_ws/src/
-│   ├── target_detector/     # [인지] HSV·Contour·크기 검증 → /target
-│   ├── tracker_controller/  # [제어] P 제어·제한·IDLE/TRACKING/LOST
-│   ├── tracker_bridge/      # [제어·통합] 모터 명령 ↔ OpenCR 시리얼 (#7 합의 중)
+│   ├── target_detector/     # [인지] HSV·Contour·크기 검증·번호 유지 → /target
+│   ├── tracker_controller/  # [제어] 각도 Kp P 제어·제한·IDLE/TRACKING/LOST(/SEARCHING)
+│   ├── tracker_bridge/      # [제어·통합] /pan_tilt/command ↔ OpenCR 시리얼, 보드 상태·FAULT 자동 복구
 │   └── tracker_bringup/     # [통합] perception·control·full·replay launch
-├── firmware/            # OpenCR 펌웨어 소스 (통신 타임아웃 정지 포함)
-├── config/              # hsv·camera·control·device·safety .yaml
-├── scripts/             # check_env.sh, upload_fw.sh, record_bag.sh, replay_bag.sh, mock_target_pub.py
+├── firmware/opencr_tracker/ # OpenCR 펌웨어 (속도 명령·한계·보드 타임아웃·FAULT)
+├── config/              # camera·hsv·control·device·safety .yaml (모든 노드가 이 폴더를 읽음)
+├── assignment/          # 문제 1~5·도전 A~E 시험 프로그램과 통합 메뉴 (assignment/README.md)
+├── scripts/             # 환경 확인·펌웨어 업로드·bag 기록/재생/분석·인지 평가·웹 관제
+│   └── test/            # 방향·정지 시험, 기준 자세 설정, 펌웨어 시험 등 실험 도구
+├── tests/               # 스크립트 시험 (pytest)
+├── docs/                # Kp 환산 근거, 인터페이스, 영역별 AI 도구 사용 기록, 인지 담당 실험 기록(perception/)
 ├── results/
-│   ├── images/          # 정상·대상 없음·가림 장면 원본/마스크/검출 이미지
-│   ├── logs/            # 원본 CSV·상태 로그·시리얼 로그
-│   ├── plots/           # Kp 비교 등 그래프
-│   └── metrics.csv      # 회차별 성능표
-└── recordings/README.md # bag·영상 위치, 메타데이터, 크기·해시, 재생 방법
+│   ├── assignment*/     # 시험 프로그램 결과 (문제·도전별, run_id 폴더)
+│   ├── images/          # 장면 원본·마스크·검출 이미지
+│   ├── logs/            # Kp 계단 응답 CSV, 인지 평가 기록, 장비 시험 기록, 업로드·환경 기록
+│   ├── plots/ · media/  # 그래프 · 시험 영상
+│   └── metrics.csv      # 회차별 성능표 (test, run_id 기준)
+└── recordings/README.md # bag 위치(공유 드라이브)·메타데이터·크기·해시·재생 방법
 ```
 
-> TODO: `ros2_ws/src`의 노드 코드·`config/*.yaml`·`scripts/`는 아직 빈 파일입니다. 실험용 Pi에서 검증한 인지·제어 코드를 이 구조로 옮기는 PR에서 채웁니다.
+- 노드 원본 기록(제어 CSV `<run_id>.csv`, 인지 `<run_id>_detect.csv`, 시리얼 `<run_id>_serial.log`)은 실행한 장비의 `~/lv2_module5_logs/`에 남고, 시험 프로그램이 `results/` 시험 폴더로 복사합니다.
 
 ## 3. 설치 및 빌드
 
@@ -105,17 +110,21 @@ echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> ~/.bashrc
 source ~/.bashrc
 
 # 저장소 clone (개인별 폴더 사용, 같은 폴더에서 동시에 브랜치 변경 금지)
+cd ~
 git clone https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment.git
-cd Lv2_Monglian_Assignment/lv2_module5/ros2_ws
+cd ~/Lv2_Monglian_Assignment/lv2_module5/ros2_ws
 
-# 빌드·테스트
+# 빌드·테스트 (패키지 4개 전부)
 colcon build --symlink-install
 source install/setup.bash
-python3 -m pytest -q src
+python3 -m pytest -q src        # 노드 단위 시험
+python3 -m pytest -q ../tests   # 스크립트 시험
 ```
 
 - 비대화형 셸(`ssh pi '명령'`, 스크립트)은 `~/.bashrc`를 읽지 않아 DOMAIN·RMW가 비어 토픽이 안 보입니다. 이때는 명령 앞에서 `export ROS_DOMAIN_ID=28 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`를 함께 설정합니다.
 - ROS 노드는 가상환경을 끄고(`deactivate`) 시스템 Python으로 실행합니다.
+- 이 문서의 명령은 저장소를 `~/Lv2_Monglian_Assignment`에 받았다고 가정합니다. 제출 장비(pa23)는 `~/git/Lv2_Monglian_Assignment`에 있으므로, 다른 위치에 받았다면 `cd` 경로만 바꿉니다.
+- 새 터미널마다 `cd ~/Lv2_Monglian_Assignment/lv2_module5 && source ros2_ws/install/setup.bash`를 먼저 실행합니다(5~8절 공통).
 
 ## 4. OpenCR 펌웨어 빌드·업로드
 
@@ -360,66 +369,74 @@ python3 scripts/test/fw_test.py --port "$PORT"
 - Enter를 누르면 보드 타임아웃 시험을 합니다. 토크가 켜지고 팬이 약 1.5° 움직였다가 약 300 ms 뒤 멈추면 `PASS`입니다(기대: 약 300 ms, HOLD).
 - 기록은 `~/lv2_module5_logs/fw_test_<날짜시간>.log`에 남습니다.
 - 보드 측 통신 타임아웃: 속도 명령이 300 ms 없으면 속도 0, 토크는 유지(`CMD_TIMEOUT_MS`, `TORQUE_OFF_AFTER_MS = 0`). 모터 Bus Watchdog 200 ms.
+- 모터 통신 이상: 모터 읽기·쓰기가 연속 3회(약 30 ms) 실패하면 토크를 끄고 `FAULT`가 됩니다. FAULT 중에도 상태 줄(`… FAULT`)은 계속 나옵니다. ROS로 실행 중이면 브리지가 2 s 뒤 `R`로 자동 복구를 최대 3회 시도하고, 복구되면 기준 자세로 이동한 뒤 추적을 이어 갑니다. 3회 모두 실패하면 `/pan_tilt/board_state`가 `FAULT_MANUAL`이 되며, 케이블·전원을 확인한 뒤 추적을 다시 시작하거나 OpenCR를 리셋합니다. 발표(2026-10-07) 이후 바뀐 내용은 [report.md 발표 이후 변경 사항](report.md#발표2026-10-07-이후-변경-사항)에 있습니다.
 - 주의: OpenCR 전원이 켜진 상태에서 모터 케이블을 빼거나 꽂지 마세요(보드·모터에 무리가 가고 FAULT의 원인이 됩니다). 연결을 바꿀 때는 전원을 끄고 바꾼 뒤 다시 켭니다.
 
 ## 5. 실행
 
-> 처음에는 모터 출력을 끈 상태로 데이터 전달을 확인하고, 실제 회전은 낮은 속도·제한 범위에서 수행합니다. FPS·지연 측정과 bag 기록 중에는 화면 미리보기를 끕니다(켜면 처리 FPS 30 → 약 14).
+모든 명령은 Pi에서 실행합니다(PC에서는 `ssh -X <user>@<pi-host>`로 접속). 3절 끝의 `cd`·`source`를 먼저 합니다.
+
+> 처음에는 모터 출력을 끈 상태(`dry_run:=true`)로 데이터 전달을 확인하고, 실제 회전은 카메라 주변을 비운 뒤 진행합니다. 미리보기 창(`show_window`)·웹 화면은 Pi CPU를 함께 써서 처리 FPS가 떨어질 수 있으므로 FPS 측정·bag 기록 중에는 끕니다.
+
+**처음 한 번 (장비가 바뀌었을 때)**
+
+| 단계 | 명령 | 구분 |
+|---|---|---|
+| 모터 방향 확인 | `python3 scripts/test/direction_test.py` (추적·브리지를 끈 상태, 15°/s × 2 s) → 결과가 `config/control.yaml`의 `pan_direction`·`tilt_direction`과 같은지 확인 | (필수) 부호가 반대면 추적 중 카메라가 목표에서 멀어진다 |
+| 기준 자세 저장 | `python3 scripts/test/pose_tool.py` → 카메라를 정면·수평에 맞추고 `h` 키 → `config/device.yaml` `home_ticks` 저장 | (필수) 장비마다 tick이 달라 각도 0°와 한계가 어긋난다 |
+
+**실행**
 
 ```bash
-# 터미널 1: RealSense 카메라 (Color·정렬 Depth 640x480 @ 30 Hz)
-ros2 launch realsense2_camera rs_launch.py \
-  rgb_camera.color_profile:=640x480x30 depth_module.depth_profile:=640x480x30 align_depth.enable:=true
+# 1) 모터 출력 없이 (카메라·검출은 실물, 브리지는 시리얼 대신 각도 시뮬레이션)
+ros2 launch tracker_bringup full.launch.py dry_run:=true
 
-# 터미널 2: 인지 노드  (TODO: 이식 PR 후 동작)
-ros2 launch tracker_bringup perception.launch.py
+# 2) 실제 모터 (시작하면 브리지가 기준 자세로 이동: HOMING → HOLD)
+ros2 launch tracker_bringup full.launch.py run_id:=<이름>
 
-# 터미널 3: 제어 노드
-ros2 launch tracker_bringup control.launch.py
-
-# 또는 전체 실행
-ros2 launch tracker_bringup full.launch.py
+# 추적 켜기 / 끄기 (다른 터미널, 기본은 꺼진 상태 IDLE)
+ros2 topic pub --once /tracking_enable std_msgs/msg/Bool "{data: true}"
+ros2 topic pub --once /tracking_enable std_msgs/msg/Bool "{data: false}"
 ```
 
-| 설정 파일 | 내용 (현재 실험 값) |
-|---|---|
-| `config/hsv.yaml` | HSV `[102,120,40]`~`[110,255,255]` (TODO 팀 확정) · 커널 5 px · 최소 면적 100 px² · 크기 검증 2.0~30 cm² (깊이로 환산, 가림 장면 포함) · 선택 규칙 priority(큼 → 가까움 → 화면 중앙) |
-| `config/camera.yaml` | Color·정렬 Depth 640x480 @ 30 Hz |
-| `config/control.yaml` | 각도 루프 Kp 팬 2.0·틸트 2.5 [1/s] (report 3-1) → 추적 Kp 팬 60.5·틸트 56.8 [°/s per 1.0 정규화 오차] (= 각도 Kp × 30.26°·22.70°) · direction 팬 −1·틸트 +1 · 데드밴드 0.03·0.05 · 제어 주기 50 Hz |
-| `config/safety.yaml` | 입력 타임아웃 0.5 s · 복귀 조건 연속 3프레임 · 보드 타임아웃 300 ms · 속도 상한 120°/s |
-| `config/device.yaml` | 팬 ID 11·틸트 ID 12 · 1 Mbps · Protocol 2.0 · 팬 ±180°·틸트 ±40° · 기준 tick 0·2048 · `/dev/ttyACM0` 115200 bps |
+- `full.launch.py` = `perception.launch.py`(카메라 `realsense2_camera` + `target_detector`) + `control.launch.py`(`tracker_controller` + `opencr_bridge`). 카메라는 launch가 640×480 @ 30 Hz, 정렬 Depth로 직접 띄우므로 `rs_launch.py`를 따로 실행하지 않습니다(이미 띄웠다면 `camera:=false`).
+- 따로 띄울 때: `ros2 launch tracker_bringup perception.launch.py` / `ros2 launch tracker_bringup control.launch.py [dry_run:=true]`
+- 선택 인자: `auto_enable:=true`(시작하자마자 추적), `run_id:=<이름>`(기록 파일 이름), `config_dir:=<폴더>`(다른 설정 폴더 사용)
+- 통합 메뉴: `python3 assignment/main.py` → 입력이 없으면 10 s 뒤 최종 추적, `t` 키는 바로 추적, 숫자 키로 시험 프로그램 실행([assignment/README.md](assignment/README.md))
+- 웹 관제(보기 전용, 선택): `python3 scripts/web_view.py` → PC 브라우저 `http://<pi-host>:8080/`
 
-- Kp 단위 주의: report 3-1의 Kp는 **각도 오차 [°] → 각속도 [°/s]** 기준입니다. 추적 노드는 **정규화 오차 ex**를 쓰므로 화면 중심 근처 기울기(ex 1.0 = 320/fx rad = 30.26°, ey 1.0 = 240/fy rad = 22.70°)로 환산합니다. 영상 지연이 있어 추적 Kp 2종 × 3회 시험으로 다시 확인합니다.
+| 설정 파일 | 내용 (현재 값) |
+|---|---|
+| `config/camera.yaml` | 토픽 이름, 시야각 55.7°·43.2°(CameraInfo fx·fy로 계산), 깊이 사용·유효 범위 0.2~3.0 m, 기록 폴더 |
+| `config/hsv.yaml` | HSV `[102,120,40]`~`[110,255,255]` · 커널 5 px · 최소 면적 100 px² · 크기 검증 2.0~30 cm² · 선택 priority(큼 → 가까움 → 화면 중앙) · 번호 유지 재선택 0.5 s · `detect_scale` 1.0 |
+| `config/control.yaml` | 각도 Kp 팬 2.0·틸트 2.5 [1/s] · direction 팬 −1·틸트 +1 · 속도 상한 120°/s · 데드밴드 0.03·0.05(정규화) · 각도 한계 175°·38° · 제어 50 Hz · SEARCHING 기본 꺼짐 |
+| `config/safety.yaml` | 입력 타임아웃 0.5 s · 복귀 연속 3프레임 · 같은 stamp 재전송 버림 · 브리지 명령 타임아웃 0.2 s |
+| `config/device.yaml` | `/dev/ttyACM0` 115200 bps · 기준 자세 `home_ticks` [1654, 2007] · 시작 시 기준 자세 이동 · 상태 줄 0.5 s 없으면 `NO_STATUS` · 종료 시 토크 유지 |
+| 펌웨어 상수 | 모터 ID 11·12, 1 Mbps, Protocol 2.0, 소프트 한계 팬 ±180°·틸트 ±40°, 속도 상한 120°/s, 보드 타임아웃 300 ms (`firmware/opencr_tracker/opencr_tracker.ino`) |
+
+- Kp 단위: 제어 노드는 영상 오차 e(−1~1)를 각도 오차 `atan(e × tan(시야각/2))` [°]로 바꾼 뒤 각도 Kp [1/s]를 곱해 속도 [°/s]를 냅니다. 그래서 report 3-1 계단 응답의 Kp를 그대로 씁니다(근거 [docs/kp_conversion.md](docs/kp_conversion.md)). 예: ex = +0.4 → 11.93° → 팬 −23.87°/s.
 
 ### 동작 확인
 
 ```bash
 ros2 topic hz /camera/camera/color/image_raw   # 카메라 영상 약 30 Hz
 ros2 topic echo /target            # 정규화 오차 ex/ey, z=면적비(0=미검출)
-ros2 topic echo /tracking_status   # IDLE / TRACKING / LOST (+사유)
+ros2 topic echo /tracking_status   # IDLE / TRACKING / LOST / SEARCHING (+사유)
+ros2 topic echo /pan_tilt/board_state   # OFF·HOLD·TRACK·HOMING·FAULT·FAULT_MANUAL·NO_STATUS (dry_run은 SIM)
 ros2 topic hz /target              # 처리 주기 (미리보기 끔: 28.7~30 Hz 실측)
 ```
-
-### 모의 입력 시험 (모터 출력 OFF)
-
-```bash
-# x=+0.4, z>0 → 오른쪽 오차를 줄이는 명령(팬 음수)이 나와야 함
-ros2 topic pub /target geometry_msgs/msg/PointStamped "{point: {x: 0.4, y: 0.0, z: 0.05}}" -r 30
-```
-
-- 실험용 구현에서 다섯 입력(0, +0.4, −0.4, z=0, 발행 중단)과 틸트(y=+0.4) 모두 기대대로 동작했습니다(2026-10-05, 입력 중단 후 0.515 s에 LOST:input_timeout).
 
 ## 6. 중지
 
 ```bash
-# 정상 중지: 각 터미널에서 Ctrl+C (제어 노드는 종료 시 속도 0을 보냄)
-# 추적만 멈춤(토크 유지, 카메라 처짐 없음)  (현재 구현 기준, #7 합의 후 갱신)
+# 추적만 멈춤 (IDLE, 명령 0, 토크 유지라 카메라가 처지지 않음)
 ros2 topic pub --once /tracking_enable std_msgs/msg/Bool "{data: false}"
+# 전체 종료: launch 터미널에서 Ctrl+C (브리지가 끝나면서 X = 즉시 정지·토크 유지를 보냄)
 ```
 
-- 제어 프로그램이 종료되거나 통신이 끊기면 OpenCR 측 타임아웃(300 ms)으로 모터가 정지합니다. 확인 기록: `results/logs/TODO`
+- 제어 노드가 멈추면 브리지가 0.2 s 뒤 `V 0 0`을, 브리지·Pi가 멈추면 OpenCR가 300 ms 뒤 속도 0(토크 유지)을 적용합니다. OpenCR가 멈추면 모터 Bus Watchdog(200 ms)이 정지합니다. 층별 시간은 [report.md 문제 2](report.md#문제-2--인지제어-노드-연결), 시험 결과는 [문제 4](report.md#문제-4--성능-측정과-목표-소실-복구)에 있습니다.
 - 비상 시: 12V 전원 차단 (토크가 꺼지므로 틸트·카메라를 손으로 받침)
-- 통신 중단 시험은 제어 노드를 Ctrl+C가 아니라 `kill -9`로 끊습니다(Ctrl+C는 정지 명령을 보내고 끝나 시험이 안 됨).
+- 통신 중단 시험은 노드를 Ctrl+C가 아니라 `kill -9`로 끊습니다(Ctrl+C로 끝내면 브리지가 정지 명령 `X`를 보내고 끝나 타임아웃 정지를 확인할 수 없음). `assignment4.py topic-stop`·`control-stop`이 이렇게 합니다.
 
 ## 7. bag 기록 및 재현
 
@@ -554,26 +571,90 @@ ros2 bag play recordings/<run_id> --clock --topics \
 - 검출의 번호 유지(같은 색 물체 여러 개 구분)는 촬영 순간의 모터 각도를 쓰므로 재처리에도 `/pan_tilt/joint_states`가 필요합니다.
 - 오프라인 재현은 실제 하드웨어 폐루프 시연과 별개입니다.
 
-## 8. 결과 위치
+## 8. 문제별 시험 재현
+
+모든 명령은 Pi에서 `lv2_module5` 폴더, 워크스페이스를 source한 셸에서 실행합니다(3절 끝). 통합 메뉴(`python3 assignment/main.py`)의 숫자 키로도 같은 프로그램을 실행할 수 있습니다([assignment/README.md](assignment/README.md)). 실제 모터를 쓰는 시험 전에는 다른 launch·시리얼 모니터를 끄고 카메라 주변을 비웁니다.
+
+| 문제 | 명령 (Pi) | 모터 | 사람이 할 일 | 결과 위치 · 보고서 |
+|---|---|---|---|---|
+| 1 세 장면 | `python3 assignment/assignment1.py` | 안 씀 | 안내에 따라 정상·대상 없음·일부 가림 장면을 만듦 | `results/assignment1/<시각>/`, `results/images/assignment1_*` · report 문제 1 |
+| 1 검출률 30·10 | 아래 "인지 평가 다시 하기" | 안 씀 | 목표 있음 30장·없음 10장 촬영과 정답 확인 | `results/logs/perception/` · report 문제 1 |
+| 2 다섯 입력 | `python3 assignment/assignment2.py` | 안 씀 (브리지 미실행) | 없음 | `results/assignment2/<run>/` · report 문제 2 |
+| 3 계단 응답 (각도 Kp) | 펌웨어 `opencr_position_p`를 올린 뒤 시리얼 모니터에서 `s <Kp> 120 <목표각>` → 정착 후 `x`. **이 펌웨어 소스는 아직 저장소 `firmware/`에 없습니다(추가 예정)** | 씀 | 회차마다 시작 자세 확인 | `results/logs/kp*`, `results/plots/kp_step_*.png` · report 3-1 |
+| 3 실제 추적 (선택한 Kp) | `python3 assignment/assignment3.py run --pan-kp 2.0 --trial <1~3>` → `python3 assignment/assignment3.py analyze` (Kp를 바꿔 비교하려면 `--pan-kp`만 바꿔 같은 순서로) | 씀 (`--dry-run` 가능) | 삐 소리에 맞춰 목표를 왼쪽 → 중앙 → 오른쪽 → 중앙(각 3 s) | `results/assignment3/`, `results/plots/assignment3_*` · report 3-2 |
+| 4 정상 추적 30 s | `python3 assignment/assignment4.py normal --seconds 35` | 씀 | 목표 1개를 시야 안에 둠 | `results/assignment4/` · report 문제 4 |
+| 4 가림 5회 | `python3 assignment/assignment4.py occlusion --trials 5` | 씀 | "가리세요" → 2 s → "치우세요". **화면에 파란 물체는 목표 1개만** | 〃 |
+| 4 인지 입력 중단 | `python3 assignment/assignment4.py topic-stop` | 씀 | 목표를 시야 안에 둠 (검출 노드를 `kill -9`) | 〃 |
+| 4 제어 통신 중단 | `python3 assignment/assignment4.py control-stop --node controller` / `--node bridge` | 씀 | 목표를 천천히 좌우로 움직임 (노드를 `kill -9`) | 〃 |
+| 5 bag 기록·재현 | `python3 assignment/assignment5.py record --name success\|lost` → `replay`·`reanalyze <bag>` (7절) | 기록 때만 씀 | 성공 장면 / 가렸다 치우는 장면 | `recordings/`, `results/assignment5/` · report 문제 5 |
+| 도전 B | `python3 assignment/assignment_B.py interface` / `search` | 안 씀 (dry_run + 가상 물체) | 없음 | `results/assignment_B/` · report 도전 B |
+
+- 설정을 바꾸는 시험(문제 3 Kp, 도전 C~E)은 결과 폴더에 `config/` 복사본을 만들어 그 값만 바꿉니다. 원본 `config/`는 바꾸지 않습니다.
+- 회차별 지표는 `results/metrics.csv`에 (test, run_id) 기준으로 모입니다.
+- 가림 시험(문제 4·도전 D)의 가림 판정은 "후보가 하나도 없는 순간"이라, 같은 색 물체가 함께 보이는 장면에서는 쓸 수 없습니다.
+
+### 인지 평가 다시 하기 (문제 1)
+
+인지 담당이 쓴 평가 명령을 현재 저장소 경로에 맞게 옮겼습니다. 원래 기록은 `docs/perception/`에 있습니다(이 문서 끝 참고).
+
+```bash
+# (Pi) 이미 판정한 40장(#46)을 현재 설정으로 다시 검출: 목표 있음 30장은 모두 검출, 없음 10장은 모두 미검출이면 같은 결과
+python3 scripts/detect_image.py \
+  results/logs/perception/issue34-present-color-review-001/present-*/original.png \
+  results/logs/perception/issue34-forty-frame-evaluation-002/absent-*/original.png \
+  --config config/hsv.yaml --out /tmp/forty-recheck
+```
+
+- 이 명령은 검출 여부·중심·면적비만 냅니다(`/tmp/forty-recheck/detections.json`). 올바른 목표를 골랐는지는 사람이 검출 이미지를 보고 판정합니다.
+- 새로 촬영해 평가하려면, 카메라를 띄운 상태에서 목표 있음 30장과 없음 10장을 따로 받은 뒤 평가합니다. 결과 폴더는 아직 없는 새 순번을 씁니다.
+
+```bash
+ros2 launch tracker_bringup perception.launch.py        # (Pi, 터미널 1) 카메라 + 검출
+python3 scripts/capture_ros_dataset.py --topic /camera/camera/color/image_raw \
+  --output results/images/perception/evaluation-002/present --scene present \
+  --label-basis "실제 목표 배치 및 원본 확인" --count 30 --interval 0.5 --timeout 60   # (Pi, 터미널 2)
+python3 scripts/capture_ros_dataset.py --topic /camera/camera/color/image_raw \
+  --output results/images/perception/evaluation-002/absent --scene absent \
+  --label-basis "실제 목표 제거 및 원본 확인" --count 10 --interval 0.5 --timeout 60
+python3 scripts/evaluate_perception_dataset.py \
+  --present results/images/perception/evaluation-002/present/dataset.json \
+  --absent results/images/perception/evaluation-002/absent/dataset.json \
+  --config config/hsv.yaml --out results/images/perception/evaluation-002-output
+```
+
+### 설정값 근거 실험 다시 하기 (report 문제 1 "설정값 근거 실험")
+
+| 실험 | 명령 (Pi) | 모터 | 결과 |
+|---|---|---|---|
+| 1 `detect_scale` 같은 프레임 | `python3 results/param_experiments/detect_scale/compare_frames.py --out results/param_experiments/detect_scale/frames_<시각>` | 안 씀 | `results/param_experiments/detect_scale/` |
+| 1 `detect_scale` 실시간 | `bash results/param_experiments/detect_scale/run_live.sh 1.0 <폴더>` → `... 0.5 <폴더>` → `python3 results/param_experiments/detect_scale/analyze_live.py <폴더>` | 안 씀 | 〃 |
+| 2 크기 범위 · 5 최소 면적 | 카메라를 띄운 상태(`perception.launch.py`, 수평이 필요하면 `control.launch.py`로 기준 자세 이동)에서 장면마다 `python3 results/param_experiments/size_range/probe_sizes.py --label <장면> --out <폴더> [--config <설정 폴더>]` | 기준 자세 이동 때만 | `results/param_experiments/size_range/`, `min_area/` |
+| 3 `relock_after_s` | `python3 assignment/assignment_D.py run --trials 5 [--param relock_after_s --value 3.0]` → `python3 results/param_experiments/relock_after_s/analyze_switch.py <결과 폴더>` | 씀 | `results/param_experiments/relock_after_s/` |
+| 4 회전 중 번호 유지 | `bash results/param_experiments/rotation_id/run_rotation.sh 30` | 씀 | `results/param_experiments/rotation_id/` |
+
+## 9. 결과 위치
 
 | 결과 | 위치 |
 |---|---|
-| 3종 장면 이미지 (정상·대상 없음·가림) | `results/images/` |
-| 검출률 평가 (튜닝에 쓰지 않은 대상 30·없음 10프레임, 프레임별 정답) | `results/` TODO |
+| 세 장면 이미지 (정상·대상 없음·가림) | 현재 설정: `results/assignment1/`, `results/images/assignment1_*`. 이전 설정: `results/images/perception/{normal,absent,occluded}/` |
+| 검출률 평가 (튜닝에 쓰지 않은 목표 있음 30·없음 10장, 프레임별 정답) | `results/logs/perception/issue34-forty-frame-evaluation-002/`, `issue34-present-color-review-001/` |
+| 설정값 근거 실험 (detect_scale·크기 범위·번호 유지·최소 면적) | `results/param_experiments/` |
+| 모의 입력 다섯 가지 | `results/assignment2/` |
 | Kp 계단 응답(각도 루프) 시험 | `results/logs/kp*`, `results/plots/kp_step_*.png`, [report.md](report.md) 3-1 |
-| 추적 Kp 2종 × 3회 CSV | `results/logs/` TODO |
-| 성능표 (FPS·검출률·RMSE·복구) | `results/metrics.csv` |
-| bag·시연 영상 | `recordings/README.md` |
+| 선택한 Kp(2.0)의 실제 추적 3회 | `results/assignment3/`, `results/plots/assignment3_*.png` |
+| 정상 추적·가림 5회·인지 입력 중단·제어 통신 중단 | `results/assignment4/`, `results/plots/assignment4_*.png` |
+| 보드 FAULT 자동 복구 장비 시험 | `results/logs/fault_recovery_20261008/` |
+| 방향 확인 시험 | `results/logs/direction_test_*.log`, `results/media/direction_test_*` |
+| 도전 B SEARCHING | `results/assignment_B/` |
+| 성능표 (회차별) | `results/metrics.csv` |
+| bag·재처리·재분석 | `recordings/README.md`, `results/assignment5/` |
 | 해석 및 한계 | [report.md](report.md) |
 
-## 9. 재현 확인 기록
+## 10. 재현 확인 기록
 
 | 확인자 | 날짜 | 기준 커밋 | 수행 내용 | 결과 · 수정 사항 |
 |---|---|---|---|---|
 | 권형중 (JuneKunst) | 2026-10-08 | 8f897bb (Pi) | 실행(`full.launch.py`)·정지·bag 기록 3개·입력 재처리·결과 재분석, motion bag 실제 모터 재생 시연 | 재처리 검출 여부 일치 99.1 % / 83.1 % / 89.1 % ([report.md 문제 5](report.md#문제-5--ros2-bag-및-재현-기록)). 수정: 웹뷰 `--local-dds` 사용 시 토픽 미수신 → 옵션 없이 실행, 추적 켜기 확인 도구 `scripts/test/tracking_set.py` 추가 |
+| 최성진 (Choi-sungjin) | 2026-10-08 | db6e165 (PC) | 공유 드라이브의 motion bag과 저장소의 실물 재생 bag을 받아 sha256 4개 확인 후 `scripts/test/compare_motorplay.py`로 재분석 | 명령 681쌍 값 동일, 각도 차이 RMS·최대값을 기존 표와 같은 자릿수까지 재현([#63](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/pull/63), report 5-4). 성공·소실 bag 재처리는 하지 않음 |
 
-## 인지 구현과 재현
-
-[인지 실행 안내](docs/perception/README.md)에 두 패키지 빌드, 선택적 카메라 launch, 촬영·검출·평가 명령과 산출물 경로를 정리했다. 설정 원본은 `config/hsv.yaml`이다. 실제 인지 실험에서는 Cyclone DDS·DOMAIN 30으로 Pi에서 검출하고 PC에서 `/target`을 받았다. 위 환경 표의 기본 Fast DDS와 구별하며 최종 제출 장비의 공통 RMW·DOMAIN 값은 통합 단계에서 확정한다.
-
-[인지 보고서](docs/perception/report.md)와 [수행 계획](../vision_todo/vision_todo.md)은 기존 검증 5/7(약 71%)과 미완료 평가를 구분한다. 새 패키지는 PC에서 빌드·합성 검사·카메라 없는 launch 기동/종료를 확인했다. 새 패키지로 Pi 카메라 실측을 재수행한 결과는 아직 없다. 제어·통합의 빈 launch·설정은 그대로 유지한다.
+> **인지 담당 실험 기록에 대해:** `docs/perception/` 폴더의 파일과 [vision_todo.md](../vision_todo/vision_todo.md)는 인지 담당(최성진)의 실험 기록입니다. 당시 설정·환경(PC 검출, DOMAIN 30 등)과 진행 상태를 그대로 남겨 두었습니다. 설치·실행·재현은 이 README, 결과와 해석은 [report.md](report.md)를 기준으로 합니다.
