@@ -7,7 +7,8 @@
                                                                            # 실행 중 제어 기록 CSV로 같은 지표를 계산해 대조
   python3 scripts/analyze_bag.py recordings/<run_id> --replay recordings/<run_id>_replay [--replay recordings/<run_id>_kpB ...]
                                                                            # 입력 재처리(/target_replay)를 저장된 /target과 같은 영상 stamp끼리 비교
-  --save : results/logs/replay/<run_id>_analysis.txt 저장 + results/metrics.csv에 행 추가
+  --save : results/logs/replay/<run_id>_analysis.txt 저장 + results/metrics.csv에 행 갱신
+           (assignment/common.update_metrics와 같은 형식: test=analyze_bag, (test, run_id) 기준으로 바꿔 씀)
 
 시각 기준: 모든 시간 계산은 bag에 기록된 수신 시각(같은 실행의 Pi 시계)만 쓴다. 현재 벽시계는 쓰지 않는다.
 재처리 비교의 짝은 영상 header.stamp(검출기가 입력 영상 header를 그대로 복사)로 맞춘다.
@@ -17,8 +18,9 @@ import csv
 import math
 import os
 import sys
+import time
 
-TRACKING, LOST, SEARCHING = 'TRACKING', 'LOST', 'SEARCHING'
+TRACKING, LOST, SEARCHING, IDLE = 'TRACKING', 'LOST', 'SEARCHING', 'IDLE'
 FIELDS = ['run_id', 'source', 'duration_s', 'target_hz', 'detect_rate', 'tracking_ratio', 'rmse_ex', 'rmse_ey',
           'lost_events', 'recover_mean_s', 'recover_max_s', 'unrecovered', 'cmd_when_stopped', 'max_abs_cmd_dps']
 
@@ -34,7 +36,8 @@ def metrics(targets, statuses, cmds):
     span = targets[-1][0] - targets[0][0] if len(targets) > 1 else 0
     m['target_hz'] = (len(targets) - 1) / span if span > 0 else math.nan
     m['detect_rate'] = sum(x[4] > 0 for x in targets) / len(targets) if targets else math.nan
-    m['tracking_ratio'] = sum(s == TRACKING for _, s in statuses) / len(statuses) if statuses else math.nan
+    active = [s for _, s in statuses if s != IDLE]      # 추적을 끈 구간(IDLE)은 비율·소실에서 뺀다
+    m['tracking_ratio'] = sum(s == TRACKING for s in active) / len(active) if active else math.nan
 
     state_at = _state_lookup(statuses)
     err = [(ex, ey) for t, _, ex, ey, z in targets if z > 0 and state_at(t) == TRACKING]
@@ -44,6 +47,9 @@ def metrics(targets, statuses, cmds):
     # 소실 = TRACKING -> 그 밖의 상태(LOST·SEARCHING), 복귀 = 다음 TRACKING까지 걸린 시간
     recover, lost_t, prev = [], None, None
     for t, s in statuses:
+        if s == IDLE:            # 추적을 끔: 진행 중이던 소실은 미복귀가 아니다
+            lost_t, prev = None, s
+            continue
         if prev == TRACKING and s != TRACKING and lost_t is None:
             lost_t = t
         if s == TRACKING and lost_t is not None:
@@ -120,10 +126,13 @@ def from_bag(path):
             [(t, m.vector.x, m.vector.y) for t, m in d['/pan_tilt/command']])
 
 
-def from_csv(path):
-    """controller_node 기록 CSV: 제어 주기(50 Hz)마다 1행. 목표는 target_seq가 바뀐 첫 행만 1프레임으로 센다"""
+def from_csv(path, span=None):
+    """controller_node 기록 CSV: 제어 주기(50 Hz)마다 1행. 목표는 target_seq가 바뀐 첫 행만 1프레임으로 센다
+    span=(t0, t1): bag과 같은 구간(같은 Pi 시계의 ros_time_s)만 쓴다. 기록 전후의 행을 섞으면 bag과 비교가 안 된다"""
     rows = list(csv.DictReader(open(os.path.expanduser(path))))
     num = lambda v: float(v) if v not in ('', None) else math.nan  # noqa: E731
+    if span:
+        rows = [r for r in rows if span[0] <= num(r['ros_time_s']) <= span[1]]
     targets, seen = [], set()
     for r in rows:
         if r['target_seq'] not in seen and r['stamp_s']:
@@ -156,7 +165,8 @@ def main():
         sys.exit('bag에 /target 메시지가 없음')
     results = {'bag': metrics(targets, statuses, cmds)}
     if a.csv:
-        results['csv'] = metrics(*from_csv(a.csv))
+        ts = [x[0] for x in targets] + [x[0] for x in statuses] + [x[0] for x in cmds]
+        results['csv'] = metrics(*from_csv(a.csv, (min(ts), max(ts))))
     lines.append('\n## 결과 재분석 (저장된 /target·/tracking_status·/pan_tilt/command)')
     lines.append('| 지표 | ' + ' | '.join(results) + (' | 차이 |' if 'csv' in results else ''))
     lines.append('|---|' + '---|' * (len(results) + ('csv' in results)))
@@ -185,13 +195,25 @@ def main():
         os.makedirs(os.path.dirname(out), exist_ok=True)
         open(out, 'w').write(text + '\n')
         mpath = os.path.join(lv2, 'results', 'metrics.csv')
-        new = not os.path.exists(mpath) or os.path.getsize(mpath) == 0
-        with open(mpath, 'a', newline='') as f:
-            w = csv.DictWriter(f, FIELDS)
-            if new:
-                w.writeheader()
-            w.writerows(rows)
-        print(f'\n저장: {out}\n추가: {mpath} ({len(rows)}행)')
+        update_metrics(mpath, [{'test': 'analyze_bag', 'run_id': f"{r['run_id']}/{r['source']}", 'condition': r['source'],
+                                'date': time.strftime('%Y-%m-%d'), **{k: v for k, v in r.items() if k not in ('run_id', 'source')}}
+                               for r in rows])
+        print(f'\n저장: {out}\n갱신: {mpath} ({len(rows)}행, test=analyze_bag)')
+
+
+def update_metrics(path, rows):
+    """results/metrics.csv를 (test, run_id) 기준으로 갱신한다. 다른 시험의 행·열은 그대로 둔다
+    (assignment/common.update_metrics와 같은 규칙. 예전처럼 다른 열 순서로 덧붙이면 표가 깨진다)."""
+    old = list(csv.DictReader(open(path, newline=''))) if os.path.exists(path) and os.path.getsize(path) > 0 else []
+    keys = {(r['test'], r['run_id']) for r in rows}
+    merged = [r for r in old if (r.get('test'), r.get('run_id')) not in keys] + rows
+    header = ['test', 'run_id', 'condition', 'date']
+    for r in merged:
+        header += [k for k in r if k not in header and k is not None]
+    with open(path, 'w', newline='') as f:
+        w = csv.DictWriter(f, fieldnames=header, extrasaction='ignore')
+        w.writeheader()
+        w.writerows(merged)
 
 
 if __name__ == '__main__':
