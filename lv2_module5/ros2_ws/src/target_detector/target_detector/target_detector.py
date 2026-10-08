@@ -47,6 +47,18 @@ except ImportError:                      # 제어 패키지가 없는 컴퓨터:
     geo = None
 
 NAN = float('nan')
+STAMP_RESTART_S = 1.0        # 이보다 크게 뒤로 간 영상 시각은 재전송이 아니라 시각 재시작으로 본다 [s]
+ROT_SPEED_MAX_AGE_S = 0.2    # 모터 회전 속도를 믿는 최대 나이 [s] (모터 상태 50 Hz의 10주기)
+
+
+def keep_previous(path):
+    """같은 이름의 기록이 있으면 지우지 않고 <이름>.prevN으로 옮긴다(같은 run_id를 다시 써도 이전 기록 보존)."""
+    if os.path.exists(path):
+        n = 1
+        while os.path.exists(f'{path}.prev{n}'):
+            n += 1
+        os.rename(path, f'{path}.prev{n}')
+    return path
 
 
 def stamp_ns(header):
@@ -93,7 +105,7 @@ class TargetDetector(Node):
 
         # ---- 여러 물체 번호 유지 (object_tracker.py) ----
         self.use_tracker = p('use_object_tracker', False)
-        self.tracker = ObjectTracker(TrackerConfig(
+        self.tracker_cfg = TrackerConfig(
             gate_m=float(p('track_gate_m', 0.04)),
             reid_gate_m=float(p('track_reid_gate_m', 0.06)),
             size_ratio_max=float(p('track_size_ratio_max', 1.6)),
@@ -101,8 +113,10 @@ class TargetDetector(Node):
             predict_horizon_s=float(p('track_predict_horizon_s', 0.5)),
             assumed_range_m=float(p('track_assumed_range_m', 0.6)),
             sync_error_s=float(p('track_sync_error_s', 0.02)),
-            fast_rotation_deg_s=float(p('track_fast_rotation_deg_s', 30.0))))
-        self.lock = TargetLock(relock_after_s=float(p('relock_after_s', 3.0)))
+            fast_rotation_deg_s=float(p('track_fast_rotation_deg_s', 30.0)))
+        self.relock_after_s = float(p('relock_after_s', 3.0))
+        self.tracker = ObjectTracker(self.tracker_cfg)
+        self.lock = TargetLock(relock_after_s=self.relock_after_s)
         # 모터 각도 -> 기하 각도 변환값. config/control.yaml의 공용 값(/**)을 제어 노드와 함께 쓴다
         self.pan_direction = int(p('pan_direction', 1))
         self.tilt_direction = int(p('tilt_direction', 1))
@@ -111,8 +125,10 @@ class TargetDetector(Node):
         joint_topic = p('joint_state_topic', '/pan_tilt/joint_states')
         self.joints = geo.JointHistory(keep_s=2.0) if geo else None
         self.rot_speed_deg_s = 0.0
+        self.rot_speed_t = None            # 회전 속도를 받은 모터 상태 시각 [s]. 오래되면 0으로 본다
         self.last_ids = {}
         self.sim_joint_warned = False
+        self.depth_size_warned = False
 
         # ---- 저장·표시 ----
         self.save_dir = os.path.expanduser(p('save_dir', '~/lv2_module5_results/images'))
@@ -123,7 +139,7 @@ class TargetDetector(Node):
         log_dir = os.path.expanduser(p('log_dir', '~/lv2_module5_logs'))
         os.makedirs(log_dir, exist_ok=True)
         os.makedirs(self.save_dir, exist_ok=True)
-        self.csv_file = open(os.path.join(log_dir, f'{self.run_id}_detect.csv'), 'w', newline='')
+        self.csv_file = open(keep_previous(os.path.join(log_dir, f'{self.run_id}_detect.csv')), 'w', newline='')
         self.csv = csv.writer(self.csv_file)
         self.csv.writerow(['run_id', 'stamp_s', 'frame_id', 'frame_seq', 'width', 'height', 'detected',
                            'cx_px', 'cy_px', 'ex', 'ey', 'area_ratio', 'n_candidates',
@@ -192,6 +208,25 @@ class TargetDetector(Node):
             self.joints.add(t, math.degrees(msg.position[0]), math.degrees(msg.position[1]))
         if len(msg.velocity) >= 2 and all(math.isfinite(v) for v in msg.velocity[:2]):
             self.rot_speed_deg_s = max(abs(math.degrees(v)) for v in msg.velocity[:2])
+            self.rot_speed_t = t
+
+    def rot_speed_at(self, t_img):
+        """영상 시각의 회전 속도. 모터 상태가 ROT_SPEED_MAX_AGE_S보다 오래되면(브리지 정지·bag에 없음) 0으로 본다."""
+        if self.rot_speed_t is None or abs(t_img - self.rot_speed_t) > ROT_SPEED_MAX_AGE_S:
+            return 0.0
+        return self.rot_speed_deg_s
+
+    def reset_tracking_state(self, ns):
+        """영상 시각이 다시 시작될 때(bag 재재생·카메라 재시작) 시각에 묶인 상태를 비운다(새 시각 근처의 깊이는 남긴다)."""
+        fresh = [d for d in self.depth_cache if abs(d[0] - ns) * 1e-9 <= STAMP_RESTART_S]
+        self.depth_cache.clear()
+        self.depth_cache.extend(fresh)
+        self.prev_center, self.prev_center_t = None, None
+        self.tracker = ObjectTracker(self.tracker_cfg)
+        self.lock = TargetLock(relock_after_s=self.relock_after_s)
+        if self.joints is not None:
+            self.joints = geo.JointHistory(keep_s=self.joints.keep_s)
+        self.rot_speed_deg_s, self.rot_speed_t = 0.0, None
 
     def to_base(self, p_opt, t):
         """카메라 광학 좌표의 점 -> 회전축 기준 좌표. 각도를 모르면 카메라 좌표를 그대로 쓴다."""
@@ -239,8 +274,21 @@ class TargetDetector(Node):
     def on_color(self, msg):
         ns = stamp_ns(msg.header)
         if self.last_stamp is not None and ns <= self.last_stamp:
-            return                                        # 같은/과거 영상: 발행하지 않음
+            back_s = (self.last_stamp - ns) * 1e-9
+            if back_s <= STAMP_RESTART_S:
+                return                                    # 같은/과거 영상(재전송): 발행하지 않음
+            # 크게 뒤로 가면 시각이 다시 시작된 것(bag 재재생·--loop·카메라 재시작). 그대로 두면 이후 영상을 모두 버린다
+            self.get_logger().warning(f'영상 시각이 {back_s:.1f} s 뒤로 갔습니다(시각 재시작): 번호 유지·깊이 대기 상태를 초기화합니다')
+            self.reset_tracking_state(ns)
         self.last_stamp = ns
+        try:
+            self.process(msg, ns)
+        except Exception as e:   # 한 프레임의 오류(인코딩·빈 영상 등)로 노드 전체가 멈추지 않게: 이 프레임만 건너뛴다(발행 없음)
+            if not rclpy.ok():
+                raise
+            self.get_logger().error(f'프레임 처리 실패, 건너뜀: {e!r}', throttle_duration_sec=5.0)
+
+    def process(self, msg, ns):
         t_start = time.perf_counter()
         self.frame_seq += 1
 
@@ -253,6 +301,13 @@ class TargetDetector(Node):
         dres, depth_dt_ms, depth_pack = None, math.nan, None
         if self.use_depth:
             depth_pack, depth_dt_ms = self.find_depth(ns)
+        if depth_pack is not None and depth_pack[0].shape[:2] != image.shape[:2]:
+            # 정렬되지 않은 깊이(다른 해상도·토픽)는 픽셀이 맞지 않아 후보 크기·/target_depth·위치 모두에 쓰지 않는다
+            if not self.depth_size_warned:
+                self.get_logger().warning(f'깊이 {depth_pack[0].shape[1]}x{depth_pack[0].shape[0]}가 컬러 '
+                                          f'{image.shape[1]}x{image.shape[0]}와 달라 깊이를 쓰지 않습니다(정렬 Depth 토픽 확인)')
+                self.depth_size_warned = True
+            depth_pack = None
         depth, scale = depth_pack if depth_pack is not None else (None, 0.001)
         h, w = image.shape[:2]
         cands, rejected, mask = find_and_measure(image, encoding, self.cfg, depth, scale, self.intrinsics)
@@ -263,7 +318,7 @@ class TargetDetector(Node):
         self.last_ids = {}
         if self.use_tracker and self.intrinsics is not None:
             t_img = ns * 1e-9                              # 같은 Pi라 영상 stamp와 모터 상태 시계가 같다
-            self.last_ids = self.tracker.update(t_img, self.observations(cands, t_img), self.rot_speed_deg_s)
+            self.last_ids = self.tracker.update(t_img, self.observations(cands, t_img), self.rot_speed_at(t_img))
             i = self.lock.choose(t_img, self.last_ids, self.tracker, pick)
         else:
             i = pick()
@@ -321,7 +376,7 @@ class TargetDetector(Node):
                            f(dres.x_m if dv else None), f(dres.y_m if dv else None),
                            f(proc_ms, 2), f(depth_dt_ms, 2), f(pub_time_s, 6),
                            self.last_ids.get(det.index, '') if det.detected else '', len(det.rejected),
-                           f(self.rot_speed_deg_s, 1)])
+                           f(self.rot_speed_at(stamp_ns(msg.header) * 1e-9), 1)])
         # 처리 FPS: 처리 완료 프레임 수 / 실제 경과 초 (발제 문제 4 정의). 5초마다 로그
         self.fps_count += 1
         self.proc_sum += proc_ms
