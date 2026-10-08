@@ -44,6 +44,9 @@
 - 세 장면 확인과 대상 후보 30장의 이전 검출 결과는 이 조건 확정 전 다른 설정(HSV [92,80,26]~[120,255,255], 최소 면적 400 px²)으로 계산했다. 이 절의 측정 결과로 옮기지 않는다.
 - 대상 후보 30장(파란 원기둥, 사람 판정 30장 모두 목표 있음)은 튜닝에 쓰지 않은 실제 카메라 원본이므로, 위 조건으로 다시 검출해 목표 있음 표본으로 쓸 수 있다. 목표 없음 10장은 위 조건으로 새로 촬영한다.
 
+#### 한계
+- 모듈 5는 HSV·Contour 검출을 쓰므로 Raspberry Pi 4의 처리 시간을 줄이는 선택 기능으로 축소 검출(detect_scale)을 두었다(검출용 사본만 줄이고 좌표를 원본 크기로 되돌림). 이후 YOLO 검출로 바꾸면 레터박스가 영상을 입력 크기(imgsz)로 줄이므로, 레터박스 앞에서 미리 줄여도 신경망 입력과 계산량은 같고(축소 단계만 늘어남), 입력 크기보다 작게 줄이면 다시 확대되어 검출이 나빠진다. 따라서 YOLO 도입 시 YOLO 경로에서는 detect_scale을 쓰지 않고 imgsz로 속도를 조절하도록 수정해야 한다. HSV 검출을 예비 경로로 남기는 경우에만 그 경로에서 detect_scale을 유지한다.
+
 ## 문제 3 — 객체 중심 기반 추적 제어
 
 ### 3-1. Kp 2종 × 3회 계단 응답 비교 ([#9](https://github.com/Lv2-Monglian-Assignment/Lv2_Monglian_Assignment/issues/9)) + 추가 3종
@@ -252,3 +255,11 @@ D435 컬러 영상에서 HSV 마스크와 형태학 연산·Contour로 가장 �
 [인지 보고서](docs/perception/report.md)에 실험 환경·목적·방법·실제 결과·한계를 기록했다. [코드 배치와 실행](docs/perception/README.md), [수행 계획](../vision_todo/vision_todo.md), [실제 결과 자료](results/logs/perception/)를 연결한다.
 
 확인 결과: 기존 인지 증거 5/7단계, 약 71%. 새 팀 패키지 2개 PC 빌드·합성 검사 15개·카메라 없는 launch 기동/정상 종료를 확인했다. 기존 Pi 모듈 실측과 새 패키지 검증을 구별한다. 독립 30·10프레임 정답 평가와 실제 협업 증빙은 미완료다.
+
+## AI 도구 사용
+
+AI 도구 사용 내용은 영역별로 아래 세 문서에 작성했다.
+
+- [인지](docs/perception/AI_CONTRIBUTIONS.md)
+- [제어](docs/control/AI_CONTRIBUTIONS.md)
+- [통합](docs/integration/AI_CONTRIBUTIONS.md)
