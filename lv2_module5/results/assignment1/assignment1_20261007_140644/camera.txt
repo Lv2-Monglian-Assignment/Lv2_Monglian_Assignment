@@ -1,0 +1,14 @@
+측정: 2026-10-07 14:06:53, 커밋 8f897bb-dirty
+Color: 640x480 rgb8, 수신 29.0 Hz (3 s), frame_id camera_color_optical_frame
+  stamp 1791349613.262 / 수신 시각 1791349613.347 (차이 +0.086 s, 시스템 시계 기준이면 작음)
+정렬 Depth: 640x480 16UC1 (mm), 수신 25.0 Hz
+CameraInfo: 640x480, fx 605.85 fy 605.68 cx 324.37 cy 245.14, 왜곡 plumb_bob [0.0, 0.0, 0.0, 0.0, 0.0]
+패키지:
+  python3-opencv 4.10.0+dfsg-7ubuntu5
+  ros-lyrical-librealsense2 2.58.4-1resolute.20260830.183011
+  ros-lyrical-realsense2-camera 4.58.4-1resolute.20260915.154937
+USB (lsusb -t, 5000M = USB 3):
+  /:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 5000M
+      |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M
+      |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M
+      |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M
