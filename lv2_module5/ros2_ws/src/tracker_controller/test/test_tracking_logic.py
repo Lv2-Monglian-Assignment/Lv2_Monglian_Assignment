@@ -126,3 +126,72 @@ def test_angle_kp_matches_angle_loop():
 def test_angle_kp_respects_speed_limit():
     tilt = AxisConfig(kp=2.5, direction=1, speed_limit=20.0, deadband=0.05, half_fov_deg=43.2 / 2)
     assert p_command(1.0, tilt) == 20.0 and p_command(-1.0, tilt) == -20.0
+
+
+def make_limited():
+    pan = AxisConfig(kp=20.0, direction=1, speed_limit=30.0, deadband=0.03, limit_deg=175.0)
+    tilt = AxisConfig(kp=15.0, direction=1, speed_limit=20.0, deadband=0.05, limit_deg=38.0)
+    lg = TrackingLogic(pan, tilt, SearchConfig())
+    lg.set_enabled(True)
+    return lg
+
+
+def test_limit_zeroes_only_outward_command():
+    lg = make_limited()
+    t = feed(lg, 0.4, 0.05, 1.0, n=3); lg.step(t, joint_deg=(0, 0))
+    o = lg.step(t, joint_deg=(176.0, 0.0))             # 팬 +한계 밖, 명령도 + → 0, 상태 표시
+    assert (o.state, o.reason, o.pan_cmd) == (TRACKING, 'pan_limit', 0.0)
+    t = feed(lg, -0.4, 0.05, t)
+    o = lg.step(t, joint_deg=(176.0, 0.0))             # 안쪽(−) 명령은 그대로
+    assert (o.reason, o.pan_cmd) == ('ok', -8.0)
+    t = feed(lg, 0.4, 0.05, t, ey=0.5)
+    o = lg.step(t, joint_deg=(0.0, 39.0))              # 틸트 +한계 밖, 아래(+) 명령 → 0
+    assert (o.reason, o.pan_cmd, o.tilt_cmd) == ('tilt_limit', 8.0, 0.0)
+
+
+def test_enable_twice_keeps_tracking():
+    lg = make()
+    t = feed(lg, 0.4, 0.05, 1.0, n=3)
+    assert lg.step(t).state == TRACKING
+    assert lg.set_enabled(True) is False               # 이미 켜짐: 초기화하지 않음
+    assert lg.step(t).state == TRACKING
+    assert lg.set_enabled(False) is True and lg.step(t).state == IDLE
+
+
+def test_stamp_restart_accepted_after_big_jump():
+    lg = make()
+    t = feed(lg, 0.4, 0.05, 100.0, n=3)
+    assert lg.on_target(0.4, 0.0, 0.05, int(99.5 * 1e9), t) is False   # 0.5 s 이전: 재전송으로 버림
+    assert lg.on_target(0.4, 0.0, 0.05, int(5.0 * 1e9), t) is True      # 95 s 뒤로: 시각 재시작
+    assert lg.stamp_restarts == 1
+    assert lg.on_target(0.4, 0.0, 0.05, int(5.03 * 1e9), t + 0.03) is True
+
+
+def test_search_does_not_reverse_beyond_range():
+    lg = make(search=True)
+    t = feed(lg, 0.4, 0.05, 1.0, n=3); lg.step(t)
+    t = feed(lg, 0.0, 0.0, t, n=12)
+    o = lg.step(t, joint_deg=(100.0, 30.0), desired_deg=(110.0, 32.0))   # 탐색 범위(80·25) 밖에서 잃음
+    assert o.state == SEARCHING and o.pan_cmd >= 0.0 and o.tilt_cmd >= 0.0   # 반대쪽으로 돌지 않음
+
+
+def test_enable_after_miss_does_not_crash_search():
+    lg = make(search=True)
+    t = feed(lg, 0.4, 0.05, 1.0, n=3); lg.step(t)
+    t = feed(lg, 0.0, 0.0, t)                          # 마지막 프레임 미검출
+    lg.set_enabled(False); lg.set_enabled(True)        # miss_since 초기화
+    o = lg.step(t + 0.5, joint_deg=(0, 0), desired_deg=(10, 0))   # 이전에는 now - None TypeError
+    assert o.state == LOST
+
+
+def test_board_fault_forces_lost_and_recovers():
+    lg = make()
+    t = feed(lg, 0.4, 0.05, 1.0, n=3)
+    assert lg.step(t, board_state='TRACK').state == TRACKING
+    o = lg.step(t, board_state='FAULT')
+    assert (o.state, o.reason, o.pan_cmd, o.tilt_cmd) == (LOST, 'board_fault', 0.0, 0.0)
+    assert lg.step(t, board_state='NO_STATUS').reason == 'board_silent'
+    t = feed(lg, 0.4, 0.05, t)
+    o = lg.step(t, board_state='HOLD')              # 보드 복구, 목표는 계속 보임 → 바로 추적 재개
+    assert o.state == TRACKING and o.reason == 'reacquired_in_view'
+    assert lg.step(t).state == TRACKING             # 브리지 없음(None): 검사 안 함

@@ -31,6 +31,9 @@ tracker_controller:
     tilt_kp: 2.5                               # [1/s] 팀 결정 (오버슈트 없이 2.0보다 상승 25 % 빠름)
     tilt_speed_limit_deg_s: 120.0              # [deg/s] 화면 끝 오차 명령 54.0
     tilt_deadband: 0.05                        # [정규화] #todo
+    pan_limit_deg: 175.0                       # [deg] 이 밖에서는 바깥 방향 명령 0 (펌웨어 LIMIT_DEG 팬 180 - 여유 5)
+    tilt_limit_deg: 38.0                       # [deg] (펌웨어 LIMIT_DEG 틸트 40 - 여유 2)
+    board_state_topic: /pan_tilt/board_state   # 브리지의 보드 상태. FAULT·NO_STATUS·HOMING이면 LOST(board_*)와 명령 0
 
     # ---- SEARCHING (심화): 기억한 목표 예측 위치로 이동 ----
     search_enabled: false                      # 기본 소실 시험(정지 확인)은 false, 심화 시험에서 true
