@@ -1,0 +1,26 @@
+== OS
+Ubuntu 26.04.1 LTS aarch64
+== ROS
+ROS_DISTRO=없음 ROS_DOMAIN_ID=28 RMW_IMPLEMENTATION=기본값
+   (팀 기준: lyrical · 28 · rmw_cyclonedds_cpp)
+== Python·OpenCV
+Python 3.14.4 / OpenCV 4.10.0
+== apt 패키지
+python3-opencv 4.10.0+dfsg-7ubuntu5
+python3-serial 3.5-2build1
+ros-lyrical-cv-bridge 4.1.0-3resolute.20260915.102944
+ros-lyrical-librealsense2 2.58.4-1resolute.20260830.183011
+ros-lyrical-realsense2-camera 4.58.4-1resolute.20260915.154937
+ros-lyrical-rmw-cyclonedds-cpp 
+== 장치
+Bus 001 Device 003: ID 0483:5740 STMicroelectronics Virtual COM Port
+Bus 002 Device 002: ID 8086:0b07 Intel Corp. RealSense D435
+crw-rw---- 1 root dialout 166, 0 Jul 28 05:44 /dev/ttyACM0
+dialout 그룹: 있음
+RealSense udev 규칙 없음
+== OpenCR 도구 (/home/monglian/pa-opencr-build)
+arduino-cli  Version: 1.5.1 Commit: 01f3d4f2b Date: 2026-06-05T10:22:11Z
+ROBOTIS:OpenCR 1.0.0     1.0.0  OpenCR
+Dynamixel2Arduino cfbbaf7 2025-06-09
+/home/monglian/pa-opencr-build/uploader-src/arduino/opencr_develop/opencr_ld/opencr_ld: ELF 64-bit LSB pie executable, ARM aarch64
+arm-none-eabi-g++ (15:14.2.rel1-1) 14.2.1 20241119
