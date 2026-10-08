@@ -395,6 +395,67 @@ bag의 컬러·CameraInfo·정렬 Depth·`/pan_tilt/joint_states`만 `--clock`�
 - 12 s 이후 pan 차이는 원본 각도 기록이 빈 구간(11.06~11.97 s, 원본 12.00 s `input_timeout`) 뒤에 생겼습니다. 속도 명령 재생은 작은 차이도 적분되어 남습니다. 원인은 확인하지 않았습니다.
 - 결과: [summary.md](results/assignment5/motion_20261008_125139_motorplay/summary.md), 재생 중 실제 각도 bag `results/assignment5/motion_20261008_125139_motorplay/bag/`(360 KB)
 
+#### 기록된 모터 재생 결과의 독립 재분석 — 최성진 (Choi-sungjin)
+
+**실험 환경**: PC의 ROS 2 Lyrical에서 기준 커밋 `db6e165dad11787feaeb6c03ca9e3b3198276068`의 [비교 코드](scripts/test/compare_motorplay.py)를 수정 없이 실행했다. 입력은 공유 자료의 원본 motion bag과 GitHub에 기록된 [모터 재생 결과 bag](results/assignment5/motion_20261008_125139_motorplay/bag/)이다. 이번 확인은 파일을 읽는 오프라인 재분석이며, 새 실물 모터 재생이나 영상 재검출을 수행한 결과가 아니다.
+
+**실험 목적**: 5-4의 명령 수·각도 차이·기록 공백을 같은 입력과 계산 방법으로 재현한다.
+
+**계획한 방법**: 입력 파일 해시를 확인한 뒤, 각 bag의 첫 `/pan_tilt/command` 기록 시각을 0으로 맞추고 공통 명령 기간을 0.05 s 간격으로 선형 보간한다. 각도 차이는 `재생 − 원본`, RMS는 `sqrt(mean(차이²))`, 최대값은 `max(abs(차이))`로 계산한다.
+
+**실제 수행 방법**: 원본 MCAP·metadata는 [원본 해시 기록](recordings/README.md#1-기록한-bag), 재생 MCAP·metadata는 [재생 해시 기록](results/assignment5/motion_20261008_125139_motorplay/sha256.txt)과 4개 모두 일치했다. 원본 MCAP SHA-256은 `a2d150242c4906bf8663cb91d99a9a21bd52af1d14d7f29a385dbd49f2002651`, 재생 MCAP는 `2d42c4091a3eb913ed87838f2ec700b31f2d902e6ad81d83de03b9558530f398`이다. 두 bag의 명령을 기록 순서로 대조하고, 기존 비교 코드의 보간 결과를 구간별로 다시 집계했다.
+
+저장소 루트 기준으로 원본 폴더를 `lv2_module5/recordings/motion_20261008_125139/`에 둔 뒤 PC 확인용 터미널에 입력한다. `--out`은 기존 결과와 겹치지 않는 새 경로를 사용한다.
+
+```bash
+source /opt/ros/lyrical/setup.bash
+python3 lv2_module5/scripts/test/compare_motorplay.py \
+  lv2_module5/recordings/motion_20261008_125139 \
+  lv2_module5/results/assignment5/motion_20261008_125139_motorplay/bag \
+  --out /tmp/motion-motorplay-recheck-001
+```
+
+**확인 결과**:
+
+| 확인 항목 | 이번 재계산 결과 |
+|---|---|
+| 명령 수·값 | 원본 681개 / 재생 681개, 순서별 pan·tilt 속도 값 681쌍 모두 동일(최대 차이 0) |
+| 첫~마지막 명령 기간 | 원본 15.456736 s / 재생 15.456421 s |
+| 관절 상태 메시지 | 원본 772개 / 재생 전체 1,993개(재생 명령 구간 안 772개) |
+| 원본의 최대 관절 기록 공백 | 11.063677 ~ 11.968896 s, 간격 0.905219 s |
+| 전체 비교 | 310개 보간 표본, 기존 비교표의 출발·끝 자세와 RMS·최대값 모두 표시 자릿수까지 일치 |
+
+| 구간·경계 조건 | 표본 수 | pan RMS / 최대 [°] | tilt RMS / 최대 [°] |
+|---|---:|---:|---:|
+| 전체 (`0 ≤ t < 15.456421 s`) | 310 | 1.96402 / 5.33830 | 0.81086 / 2.54774 |
+| `0 ≤ t ≤ 11.0 s` | 221 | 0.55864 / 2.04419 | 0.74001 / 1.40388 |
+| `12.0 ≤ t < 15.4 s` | 68 | 3.68498 / 5.08481 | 1.01664 / 2.54774 |
+
+마지막 구간의 pan 평균 차이는 −3.64676°다. 위 값을 소수 둘째 자리로 표시하면 기존 표의 1.96/5.34, 0.81/2.55, 0.56/2.04, 0.74/1.40, 3.68/5.08, 1.02/2.55와 일치한다. 마지막 구간은 **15.4 s 표본을 제외**해야 같은 값이 나온다. 포함하면 69개 표본, pan RMS 3.69481°·tilt RMS 1.00976°가 된다.
+
+구간별 재계산은 같은 입력으로 아래를 실행한다. 기존 스크립트의 배열을 그대로 사용하며 모터 토픽을 발행하지 않는다.
+
+```bash
+python3 - <<'PY'
+import runpy, sys
+import numpy as np
+sys.argv = ['compare_motorplay.py',
+    'lv2_module5/recordings/motion_20261008_125139',
+    'lv2_module5/results/assignment5/motion_20261008_125139_motorplay/bag']
+d = runpy.run_path('lv2_module5/scripts/test/compare_motorplay.py', run_name='__main__')
+print('명령 값 동일:', np.array_equal(d['oc'][:, 1:], d['pc'][:, 1:]))
+for name, mask in [('전체', np.ones(len(d['t']), dtype=bool)),
+                   ('0~11 포함', d['t'] <= 11),
+                   ('12~15.4 미포함', (d['t'] >= 12) & (d['t'] < 15.4))]:
+    for axis, diff in [('pan', d['pp'] - d['op']), ('tilt', d['pt'] - d['ot'])]:
+        v = diff[mask]
+        print(name, axis, len(v), 'RMS/최대/평균:',
+              np.sqrt(np.mean(v*v)), np.max(np.abs(v)), np.mean(v))
+PY
+```
+
+**해석 및 한계**: 기존 실물 재생 기록의 수치는 재현됐다. 명령 값의 동일성과 실제 도착 시각의 동일성은 구별한다. 전체 RMS에는 원본 관절 기록이 비어 있는 구간의 선형 보간값도 포함되므로, 그 구간에서 실제 모터가 어떻게 움직였는지를 증명하지 않는다. 이번 결과로 12 s 이후 차이의 물리적 원인을 확정하지 않는다. 새 bag·그래프·코드는 추가하지 않고, 기존 증거와 재계산 방법을 보고서에만 기록했다.
+
 ### 5-5. 한계
 
 - **bag에 원본 메시지가 다 들어 있지 않습니다.** 카메라는 30 fps, 검출기는 약 25 FPS로 돌았는데 bag의 컬러 영상은 성공 20.9 Hz · 소실 22.7 Hz, `/target`은 약 16~17 Hz입니다. 성공 bag은 18.5 s 이후 `/target`이 없고, 8~10 s 구간에는 모터 각도도 비어 있습니다. Pi에서 640×480 컬러+깊이(약 46 MB/s)를 SD 카드에 쓰면서 노드를 같이 돌린 부하로 보이며, 원인은 확인하지 않았습니다. 그래서 재처리는 "기록된 프레임만" 다시 처리합니다.
@@ -407,6 +468,7 @@ bag의 컬러·CameraInfo·정렬 Depth·`/pan_tilt/joint_states`만 `--clock`�
 | 확인자 | 날짜 | 받은 bag (sha256 확인) | 재처리 일치율 (성공 / 소실 / motion) | 원본과 다른 점 |
 |---|---|---|---|---|
 | 권형중 (JuneKunst) | 2026-10-08 | Pi 원본 → PC 사본, sha256 일치 (공유 드라이브 `SHA256SUMS.txt`) | 99.1 % / 83.1 % / 89.1 % | 소실 bag 10.8 s 이후 재처리가 다른 물체 선택(ex 최대 차이 1.248). 재분석 지표는 bag·CSV가 같은 경향 |
+| 최성진 (Choi-sungjin) | 2026-10-08 | 원본 motion·기존 motorplay의 MCAP/metadata 해시 4개 일치 | 입력 재처리 미실행; 5-4 기록의 오프라인 재분석 | 명령 681쌍 값 동일, 전체·구간별 각도 차이 재현. 새 실물 모터 재생 없음 |
 
 ## 인지 구현
 
