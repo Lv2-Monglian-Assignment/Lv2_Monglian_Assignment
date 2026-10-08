@@ -9,6 +9,10 @@ opencr_bridge:
     dry_run: false                             # true: 시리얼 미사용, 관절 각도는 명령 적분(시뮬레이션, 이름 pan_sim·tilt_sim)
     bridge_rate_hz: 50.0                       # [Hz] V 전송 주기. 펌웨어 CMD_TIMEOUT_MS(300 ms)보다 충분히 짧게
     torque_off_on_exit: false                  # true: 종료 시 O(토크 OFF). 틸트(카메라)가 처질 수 있음
+    home_on_start: true                        # 시작 때 I(기준 자세로 이동) 후 추적. 펌웨어가 바퀴 수를 세므로 덜 꼬이는 쪽으로 돈다
+                                               # (전원 투입 때는 기준 자세에서 ±180° 안이라고 가정: 전원을 끄기 전 정면에 둘 것)
+    board_silent_s: 0.5                        # [s] OpenCR 상태 줄(50 Hz)이 이보다 오래 없으면 board_state NO_STATUS
+    board_state_topic: /pan_tilt/board_state   # 보드 상태(OFF·HOLD·TRACK·HOMING·FAULT·FAULT_MANUAL·NO_STATUS, dry_run은 SIM)
     sim_pan_limit_deg: 180.0                   # dry_run용. 펌웨어 LIMIT_DEG와 같게
     sim_tilt_limit_deg: 40.0
     log_dir: ~/lv2_module5_logs
