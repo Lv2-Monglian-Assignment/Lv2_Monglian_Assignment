@@ -27,8 +27,8 @@
 | | arduino-cli · OpenCR 코어 | arduino-cli 1.5.1 · OpenCR 코어 1.5.3 (릴리스 파일 수동 설치, `core list`에는 1.0.0으로 표시) · FQBN `ROBOTIS:OpenCR:OpenCR` |
 | | OpenCR 코어 파일 | `https://github.com/ROBOTIS-GIT/OpenCR/releases/download/1.5.3/opencr.tar.bz2` (sha256 `418656e5…`) |
 | | 컴파일러 | `arm-none-eabi-g++ 14.2.1` (Ubuntu apt `gcc-arm-none-eabi`) |
-| | DYNAMIXEL 라이브러리 | Dynamixel2Arduino 0.8.1 (커밋 `cfbbaf7`, `~/pa-opencr-build/user/libraries`) |
-| | OpenCR 업로더 | `opencr_ld` arm64 소스 빌드 (커밋 `68ec75d`, 보드 패키지의 업로더는 x86용이라 Pi에서 실행 불가) |
+| | DYNAMIXEL 라이브러리 | Dynamixel2Arduino 0.8.1 (`~/pa-opencr-build/user/libraries`) |
+| | OpenCR 업로더 | `opencr_ld` arm64 소스 빌드 (보드 패키지의 업로더는 x86용이라 Pi에서 실행 불가) |
 | 소프트웨어 (PC) | 용도 | Raspberry Pi SSH 접속(`ssh -X`로 화면 확인) · Isaac Sim 실행 |
 | | OS · 아키텍처 | Ubuntu 24.04.5 LTS · x86_64 |
 | | ROS2 | Lyrical ([NVIDIA Isaac ROS release-5.0](https://nvidia-isaac-ros.github.io/v/release-5.0/getting_started/index.html) 문서의 터미널 설치 절차) |
