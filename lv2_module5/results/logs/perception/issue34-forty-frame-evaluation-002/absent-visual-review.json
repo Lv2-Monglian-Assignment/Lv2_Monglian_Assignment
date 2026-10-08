@@ -1,0 +1,66 @@
+{
+  "reviewer": "Claude Code (image inspection of each original frame via contact sheet)",
+  "basis": "On-site statement that the blue cylinder was removed from the box and out of view, plus preview frame and all 10 frames inspected",
+  "frames": [
+    {
+      "file": "frame-001.png",
+      "sha256": "faf152bfba0b19e0d469551385afc5a2558b2aa00f23d69d16e5d6fe1558a393",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-002.png",
+      "sha256": "b5ac54051bdacbdffb3ae3d15494ac7be2298d4f01e72306c233bc512fcf6d51",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-003.png",
+      "sha256": "c24bdfa4be777e415615d255b838691831c46c18a8c6ae7ff9108a36320c37ed",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-004.png",
+      "sha256": "05058e1f1324cecaa4ce9cb05cdcd6123199612a8d1f24e4e64ba93f5a49c135",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-005.png",
+      "sha256": "aaab0fd495e990ad78f1ecec6235b5dcc358c0340d1acca11e8a1de589bc2a4e",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-006.png",
+      "sha256": "363608ca5fbd6cc8ccd56e776be660b1690068792b83faca03c8576742d31715",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-007.png",
+      "sha256": "70c924acc86a735ff0e96c1a98c71a3e1129832519803cd2bbfee7f00f57b0b3",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-008.png",
+      "sha256": "da360b7aa464d037acc24b88630ed3b506d1647f8c22196790aceb552c83aafa",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-009.png",
+      "sha256": "76caba805a29ae8c591175922da51949c8cfb432f32b0f589c8eead4804c1920",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    },
+    {
+      "file": "frame-010.png",
+      "sha256": "5dfdbf7273e12ae35a0a229d365d5bee955211c509477c67a015f73c1c3e44e4",
+      "blue_object_visible": false,
+      "note": "box, carousel and background only; faint thin light-blue vertical lines in the background (window frame) are not the target"
+    }
+  ]
+}
