@@ -1,0 +1,4 @@
+[INFO] [1791436868.938847696] [opencr_bridge]: run_id=motion_20261008_125139_motorplay dry_run=False port=/dev/ttyACM0
+[INFO] [1791436868.943587178] [opencr_bridge]: OpenCR state None -> OFF
+[INFO] [1791436868.945679541] [opencr_bridge]: OpenCR B 1654 2007
+[INFO] [1791436902.597225924] [opencr_bridge]: OpenCR state OFF -> TRACK

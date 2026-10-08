@@ -57,6 +57,15 @@ PROGRAM_KEYS = set('1234567890pdfe')
 HANGUL = {'ㅅ': 't', 'ㅔ': 'p', 'ㅇ': 'd', 'ㄹ': 'f', 'ㄷ': 'e', 'ㅋ': 'z', 'ㅌ': 'x'}
 
 
+def config_value(key):
+    """config/*.yaml에 지금 적힌 값(안내 문구용). 설정을 바꿔도 메뉴 문구가 예전 값에 머물지 않게 파일에서 읽는다."""
+    for path in sorted(glob.glob(os.path.join(LV2, 'config', '*.yaml'))):
+        m = re.search(rf'^\s*{re.escape(key)}:\s*([^#\n]+)', open(path).read(), re.M)
+        if m:
+            return m.group(1).strip()
+    return '?'
+
+
 def width(text):
     return sum(2 if unicodedata.east_asian_width(c) in 'WF' else 1 for c in text)
 
@@ -190,11 +199,10 @@ def cmd_for(key):
         k = choose('D', [('r', '가림 반복 시험'), ('a', '설정별 비교')])
         if k == 'r':
             c = [PY, f'{A}/assignment_D.py', 'run', '--trials', str(ask('회수', 10, int))]
-            p = choose('바꿀 조건(Enter: 기본 설정)', [('1', 'recover_frames (기본 3)'), ('2', 'relock_after_s (기본 3.0)'),
-                                                    ('3', 'input_timeout_s (기본 0.5)')])
-            if p:
-                c += ['--param', {'1': 'recover_frames', '2': 'relock_after_s', '3': 'input_timeout_s'}[p],
-                      '--value', str(ask('값', None, float))]
+            names = {'1': 'recover_frames', '2': 'relock_after_s', '3': 'input_timeout_s'}
+            p = choose('바꿀 조건(Enter: 기본 설정)', [(k, f'{v} (현재 {config_value(v)})') for k, v in names.items()])
+            if p:   # 값은 글자 그대로 넘긴다. 타입(정수·실수)은 common.config_variant가 원래 설정에 맞춘다
+                c += ['--param', names[p], '--value', str(ask('값', None, str))]
             return c
         return [PY, f'{A}/assignment_D.py', 'analyze'] if k == 'a' else None
     if key == '0':
@@ -227,6 +235,24 @@ def child_env():
     return env
 
 
+CHILD = None   # 실행 중인 시험 프로그램
+
+
+def stop_child(timeout=30.0):
+    """메뉴가 닫힐 때 실행 중인 시험 프로그램에 SIGINT를 보내 자기 launch를 정리하고 끝나게 한다.
+    (예전 subprocess.run은 메뉴 종료 때 자식을 SIGKILL로 끊어 launch·모터가 남았다, 2026-10-08 검토)"""
+    child = CHILD
+    if child is None or child.poll() is not None:
+        return
+    try:
+        child.send_signal(signal.SIGINT)
+        child.wait(timeout)
+    except subprocess.TimeoutExpired:
+        child.kill()
+    except OSError:
+        pass
+
+
 def run(cmd):
     """자식은 기본 SIGINT 처리(Ctrl+C로 멈춤), 메뉴는 그동안 SIGINT를 무시한다."""
     print(f'\n$ {" ".join(cmd)}\n')
@@ -240,8 +266,11 @@ def run(cmd):
         env = child_env()
         if env.get('DISPLAY'):
             print(f'(화면 {env["DISPLAY"]}: 이미지 창은 ssh -X로 접속한 PC에 뜸)')
-        rc = subprocess.run(cmd, cwd=LV2, env=env,
-                            preexec_fn=lambda: signal.signal(signal.SIGINT, signal.SIG_DFL)).returncode
+        global CHILD
+        CHILD = subprocess.Popen(cmd, cwd=LV2, env=env,
+                                 preexec_fn=lambda: signal.signal(signal.SIGINT, signal.SIG_DFL))
+        rc = CHILD.wait()
+        CHILD = None
     except FileNotFoundError as e:
         rc = f'실행 실패: {e}'
     finally:
@@ -383,6 +412,7 @@ def main():
     # (추적은 별도 프로세스 그룹이라 메뉴만 죽으면 노드가 남아 포트를 계속 잡음, 2026-10-07)
     def closing(*_):
         sys.stdout = sys.stderr = open(os.devnull, 'w')   # 닫힌 터미널에 쓰다 정리가 중단되지 않게
+        stop_child()
         raise SystemExit(0)
     for sig in (signal.SIGHUP, signal.SIGTERM):
         signal.signal(sig, closing)

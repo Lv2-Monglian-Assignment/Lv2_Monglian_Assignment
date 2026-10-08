@@ -11,9 +11,8 @@
 깊이 중앙값·유효 비율·작업 거리 범위·핀홀 역투영은 mouse_test.py(리얼센스 학습 예제)의 방식을 따른다.
 mouse_test.py는 커서 주변 10x10 ROI를 썼고, 여기서는 목표 컨투어 내부(경계를 깎은 영역)를 쓴다.
 
-축소 검출(detect_scale < 1)은 insightface SCRFD(Deep-Live-Cam이 쓰는 얼굴 검출기) detect()의 방식을 따른다:
-작게 줄인 영상에서 검출하고, 좌표만 원본 크기로 되돌린다(scrfd.py의 `/ det_scale`). 영상 자체는 키우지 않으므로
-깊이 계산·저장은 원본 해상도 그대로다.
+축소 검출(detect_scale < 1): 검출용 사본만 작게 줄여 검출하고, 좌표는 축소 배율로 나눠 원본 크기로 되돌린다.
+영상 자체는 키우지 않으므로 깊이 계산·저장은 원본 해상도 그대로다.
 
 깊이는 후보 '단위'로만 쓴다. 픽셀 단위로 마스크를 지우거나 한 덩어리를 깊이 차이로 쪼개지 않는다
 (단차 있는 물체가 둘로 갈라지는 것 방지). 거리만으로 후보를 버리지도 않는다(먼 물체도 후보로 남김).
@@ -108,7 +107,7 @@ def make_mask(hsv, cfg: DetectorConfig, scale=1.0):
 
 
 def restore_contour(c, sx, sy):
-    """축소 영상의 컨투어 좌표를 원본 픽셀 좌표로 되돌린다 (scrfd.py detect()의 `/ det_scale`에 해당).
+    """축소 영상의 컨투어 좌표를 원본 픽셀 좌표로 되돌린다 (축소 배율로 나눈다).
 
     픽셀 중심 기준으로 변환한다: 원본 x = (축소 x + 0.5) / sx - 0.5
     """
@@ -264,8 +263,8 @@ def find_and_measure(image, encoding, cfg: DetectorConfig, depth=None, depth_sca
     s = cfg.detect_scale
     if 0.0 < s < 1.0:
         sw, sh = max(1, int(round(w * s))), max(1, int(round(h * s)))
-        small = cv2.resize(image, (sw, sh), interpolation=cv2.INTER_AREA)   # scrfd.py: cv2.resize 후 검출
-        sx, sy = sw / w, sh / h                          # 실제 배율 (scrfd.py의 det_scale)
+        small = cv2.resize(image, (sw, sh), interpolation=cv2.INTER_AREA)   # 검출용 사본만 줄인다 (원본은 그대로)
+        sx, sy = sw / w, sh / h                          # 실제 배율 (정수 픽셀로 반올림한 크기 기준)
     else:
         small, sx, sy = image, 1.0, 1.0
     mask = make_mask(to_hsv(small, encoding), cfg, sx)

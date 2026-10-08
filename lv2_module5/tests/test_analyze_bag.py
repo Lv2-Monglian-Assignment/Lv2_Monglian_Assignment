@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from analyze_bag import compare_replay, metrics  # noqa: E402
+from analyze_bag import compare_replay, metrics, update_metrics  # noqa: E402
 
 
 def scene():
@@ -52,6 +52,25 @@ def test_compare_replay_by_stamp():
     assert c['matched'] == 10 and math.isclose(c['match_ratio'], 0.5)
     assert math.isclose(c['detect_agree'], 0.9)
     assert math.isclose(c['mean_abs_dex'], 0.01)
+
+
+def test_idle_is_not_lost():
+    targets, statuses, cmds = scene()
+    statuses = [(-0.2, 'IDLE'), (-0.1, 'IDLE')] + statuses + [(2.0, 'IDLE'), (2.1, 'IDLE')]   # 켜기 전·끈 뒤
+    m = metrics(targets, statuses, cmds)
+    assert m['lost_events'] == 1 and m['unrecovered'] == 0          # 끄기(TRACKING->IDLE)는 소실이 아님
+    assert math.isclose(m['tracking_ratio'], 15 / 20)               # IDLE 행은 비율에서 뺌
+
+
+def test_update_metrics_keeps_shared_format(tmp_path):
+    path = tmp_path / 'metrics.csv'
+    path.write_text('test,run_id,condition,date,fps\nassignment4,a1,normal,2026-10-08,29.7\n')
+    update_metrics(str(path), [{'test': 'analyze_bag', 'run_id': 'r1/bag', 'condition': 'bag', 'date': 'd', 'detect_rate': '0.9'}])
+    update_metrics(str(path), [{'test': 'analyze_bag', 'run_id': 'r1/bag', 'condition': 'bag', 'date': 'd', 'detect_rate': '0.8'}])
+    import csv as _csv
+    rows = list(_csv.DictReader(open(path)))
+    assert [r['test'] for r in rows] == ['assignment4', 'analyze_bag'] and rows[0]['fps'] == '29.7'
+    assert rows[1]['detect_rate'] == '0.8' and None not in rows[1]   # 같은 (test, run_id)는 바꿔 씀, 열 어긋남 없음
 
 
 if __name__ == '__main__':

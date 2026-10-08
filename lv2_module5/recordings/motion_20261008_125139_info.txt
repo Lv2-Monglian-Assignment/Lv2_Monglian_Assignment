@@ -1,0 +1,34 @@
+run_id: motion_20261008_125139
+기록 일시: 2026-10-08 12:56:59 +0900
+기록 장비: pa23 · ROS_DISTRO=lyrical · ROS_DOMAIN_ID=28 · RMW=rmw_cyclonedds_cpp
+기준 커밋: 8f897bb7731d5e5fe39d129d1379508bc3507797 (+ 커밋 안 된 변경 있음)
+설정 사본: recordings/motion_20261008_125139_config/
+연결 기록: ~/lv2_module5_logs/motion_20261008_125139.csv (제어) · motion_20261008_125139_detect.csv (인지) · motion_20261008_125139_serial.log (시리얼)
+카메라 해상도: 
+총 크기: 453M
+== ros2 bag info
+
+Files:             0_motion_20261008_125139_2026_10_08-12_56_36.mcap
+Bag size:          452.7 MiB
+Storage id:        mcap
+ROS Distro:        lyrical
+Duration:          15.524504504s
+Start:             Oct  8 2026 12:56:36.935516054 (1791431796.935516054)
+End:               Oct  8 2026 12:56:52.460020558 (1791431812.460020558)
+Messages:          3886
+Topic information: Topic: /camera/camera/aligned_depth_to_color/image_raw | Type: sensor_msgs/msg/Image | Count: 284 | Serialization Format: cdr
+                   Topic: /camera/camera/color/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 329 | Serialization Format: cdr
+                   Topic: /camera/camera/color/image_raw | Type: sensor_msgs/msg/Image | Count: 325 | Serialization Format: cdr
+                   Topic: /pan_tilt/command | Type: geometry_msgs/msg/Vector3Stamped | Count: 681 | Serialization Format: cdr
+                   Topic: /pan_tilt/joint_states | Type: sensor_msgs/msg/JointState | Count: 772 | Serialization Format: cdr
+                   Topic: /target | Type: geometry_msgs/msg/PointStamped | Count: 271 | Serialization Format: cdr
+                   Topic: /target/position_cam | Type: geometry_msgs/msg/PointStamped | Count: 270 | Serialization Format: cdr
+                   Topic: /target_depth | Type: geometry_msgs/msg/PointStamped | Count: 271 | Serialization Format: cdr
+                   Topic: /tracking_status | Type: std_msgs/msg/String | Count: 683 | Serialization Format: cdr
+Services:          0
+Service information: 
+Actions:           0
+Action information: 
+== sha256
+a2d150242c4906bf8663cb91d99a9a21bd52af1d14d7f29a385dbd49f2002651  0_motion_20261008_125139_2026_10_08-12_56_36.mcap
+18f4a49e29b25ac444ad0c7851e881db3ddf6f1dfa48567f0ae2b60bd532d81a  metadata.yaml

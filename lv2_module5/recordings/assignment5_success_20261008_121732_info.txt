@@ -1,0 +1,35 @@
+run_id: assignment5_success_20261008_121732
+장면: success
+기록: 2026-10-08 12:21:10
+커밋: 8f897bb-dirty
+설정: results/assignment5/assignment5_success_20261008_121732/config/ (기록 당시 config 복사본)
+노드 기록: results/assignment5/assignment5_success_20261008_121732/ (제어 assignment5_success_20261008_121732.csv, 인지 assignment5_success_20261008_121732_detect.csv, 브리지 시리얼 로그)
+안내 시각: []
+크기: 618.9 MB
+
+
+Files:             0_assignment5_success_20261008_121732_2026_10_08-12_20_33.mcap
+Bag size:          590.3 MiB
+Storage id:        mcap
+ROS Distro:        lyrical
+Duration:          20.697441863s
+Start:             Oct  8 2026 12:20:33.051129864 (1791429633.051129864)
+End:               Oct  8 2026 12:20:53.748571727 (1791429653.748571727)
+Messages:          4358
+Topic information: Topic: /camera/camera/aligned_depth_to_color/image_raw | Type: sensor_msgs/msg/Image | Count: 358 | Serialization Format: cdr
+                   Topic: /camera/camera/color/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 465 | Serialization Format: cdr
+                   Topic: /camera/camera/color/image_raw | Type: sensor_msgs/msg/Image | Count: 432 | Serialization Format: cdr
+                   Topic: /pan_tilt/command | Type: geometry_msgs/msg/Vector3Stamped | Count: 676 | Serialization Format: cdr
+                   Topic: /pan_tilt/joint_states | Type: sensor_msgs/msg/JointState | Count: 880 | Serialization Format: cdr
+                   Topic: /target | Type: geometry_msgs/msg/PointStamped | Count: 290 | Serialization Format: cdr
+                   Topic: /target/position_cam | Type: geometry_msgs/msg/PointStamped | Count: 289 | Serialization Format: cdr
+                   Topic: /target_depth | Type: geometry_msgs/msg/PointStamped | Count: 289 | Serialization Format: cdr
+                   Topic: /tracking_status | Type: std_msgs/msg/String | Count: 679 | Serialization Format: cdr
+Services:          0
+Service information: 
+Actions:           0
+Action information: 
+
+sha256:
+  f0a553be6c9ba25dd0f73832c2f6c80f8cd8234099d74892bb23279ce69a1976  0_assignment5_success_20261008_121732_2026_10_08-12_20_33.mcap (618942046 B)
+  3378a0f9f86357166251590119dbcde7169b03b8675f23586499c5f3a491343d  metadata.yaml (7489 B)

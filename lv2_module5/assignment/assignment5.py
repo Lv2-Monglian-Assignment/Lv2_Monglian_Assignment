@@ -83,7 +83,9 @@ def record(args):
               + (' — 중간에 "가리세요"·"치우세요" 안내를 따르세요' if args.name == 'lost' else ''))
         C.set_tracking(node, st, True)
         C.spin_for(node, 1.0)
-        rec = C.Proc(['ros2', 'bag', 'record', '-o', bag, '--topics', *TOPICS], os.path.join(dest, 'bag_record.log'))
+        # --disable-keyboard-controls: Lyrical 기록기는 키보드 제어로 터미널을 읽는다(백그라운드에서 멈춤, 2026-10-07 #43)
+        rec = C.Proc(['ros2', 'bag', 'record', '-o', bag, '--disable-keyboard-controls', '--topics', *TOPICS],
+                     os.path.join(dest, 'bag_record.log'))
         print('  기록기 준비 중(모든 토픽 구독까지 기다림)...')
         t_rec = time.time()
         while time.time() - t_rec < 20 and len(C.wait_bag_ready(rec.log_path, TOPICS, 0.1)) < len(TOPICS):

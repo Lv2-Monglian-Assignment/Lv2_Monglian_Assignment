@@ -1,4 +1,7 @@
-test,run_id,condition,date,verdict,longest_search_s
-assignment_B_search,found_20261007_123855,dry_run virtual,2026-10-07,PASS,1.334
-assignment_B_search,cancel_20261007_123855,dry_run virtual,2026-10-07,PASS,0.4975
-assignment_B_search,notfound_20261007_123855,dry_run virtual,2026-10-07,PASS,2.997
+test,run_id,condition,date,verdict,longest_search_s,frames,duration_s,target_rate_hz,node_detect_ratio,tracking_ratio,rmse_ex,rmse_rows,to_tracking_transitions,max_abs_pan_cmd
+assignment_B_search,found_20261007_123855,dry_run virtual,2026-10-07,PASS,1.334,,,,,,,,,
+assignment_B_search,cancel_20261007_123855,dry_run virtual,2026-10-07,PASS,0.4975,,,,,,,,,
+assignment_B_search,notfound_20261007_123855,dry_run virtual,2026-10-07,PASS,2.997,,,,,,,,,
+assignment5_reanalysis,assignment5_success_20261008_121732,bag,2026-10-08,,,290,18.45,15.67,1,0.9931,0.01169,288,1,0
+assignment5_reanalysis,assignment5_lost_20261008_122845,bag,2026-10-08,,,256,14.98,17.02,0.7812,0.6914,0.2126,171,6,45.22
+assignment5_reanalysis,motion_20261008_125139,bag,2026-10-08,,,271,15.38,17.56,0.9446,0.9188,0.2259,247,3,27.07
