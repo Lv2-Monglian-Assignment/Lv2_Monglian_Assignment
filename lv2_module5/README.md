@@ -425,6 +425,109 @@ ros2 topic pub --once /tracking_enable std_msgs/msg/Bool "{data: false}"
 
 bag 목록·접근 위치·메타데이터·재현 확인 기록은 [recordings/README.md](recordings/README.md)에 있습니다.
 
+### 순서대로 따라 하기: 기록 → 확인 → 공유 → 재생
+
+아래 명령은 2026-10-08 Pi(pa23)에서 bag 3개를 기록·재생하고, PC에서 같은 재생을 다시 실행해 확인한 순서입니다. `<pi>`는 Pi 호스트 이름(예: `pa23.local`, 이름이 안 잡히면 IP)입니다.
+
+**0단계. Pi 접속과 준비**
+
+```bash
+ssh <user>@<pi>
+cd ~/git/Lv2_Monglian_Assignment/lv2_module5
+source ros2_ws/install/setup.bash        # ROS·ROS_DOMAIN_ID=28·rmw_cyclonedds_cpp는 ~/.bashrc가 설정
+tmux ls                                  # lv2 세션(자동 메뉴)이 있으면 대기 추적이 카메라·포트를 잡고 있음
+tmux kill-session -t lv2                 # (lv2가 있을 때만) 메뉴와 대기 추적 종료
+fuser /dev/ttyACM0                       # 아무것도 안 나오면 OpenCR 포트가 비어 있음
+df -h ~                                  # 여유 공간 확인: 컬러+깊이 640×480 30 fps는 약 30 MB/s (20 s ≈ 600 MB)
+```
+
+**1단계. 기록 (Pi, 모터 동작)**
+
+`assignment5.py record`가 노드를 직접 띄우고 추적을 켠 뒤 기록하고, 끝나면 추적을 끄고 노드를 정지합니다. 목표(파란 원통)를 화면 가운데에 두고 실행합니다.
+
+```bash
+# 대표 성공: 원통을 책상 위에 두고 기록이 끝날 때까지 손대지 않음
+python3 assignment/assignment5.py record --name success --seconds 20
+# 소실·복귀: 화면에 "가리세요!"가 나오면 손바닥으로 원통을 덮고, "치우세요!"가 나오면 손을 화면 밖으로 뺌
+python3 assignment/assignment5.py record --name lost --seconds 15
+# 모터가 따라 움직이는 장면(추가): 안내에 따라 Enter 후 원통을 천천히 좌우로 옮김
+scripts/test/motion_guide.sh record
+```
+
+- `Enter: 진행`이 나오면 Enter를 한 번 누릅니다. 노드 준비(10~20 s)와 기록기 준비(약 7 s) 뒤에 기록이 시작됩니다.
+- **기록 중에는 Ctrl+C를 누르지 않습니다.** `assignment5.py record`를 Ctrl+C로 끊으면 추적이 켜진 채 노드가 남습니다. 그때는 `ros2 topic pub --once -w 1 /tracking_enable std_msgs/msg/Bool "{data: false}"`로 추적을 끄고 남은 launch를 Ctrl+C로 멈춥니다.
+- 같은 명령은 통합 메뉴(`tmux attach -t lv2`)의 `5` → `s`(성공)·`l`(소실)로도 실행할 수 있습니다.
+
+**2단계. 기록 확인 (Pi)**
+
+```bash
+ls recordings/                           # <run_id>/ (metadata.yaml + .mcap), <run_id>_info.txt
+cat recordings/<run_id>_info.txt         # 길이·토픽별 메시지 수·크기·sha256·기준 커밋
+```
+
+- `/target`·`/pan_tilt/joint_states` 메시지가 기록 길이 전체에 고르게 있는지 봅니다. Pi 부하로 일부 구간이 빠질 수 있습니다(report.md 5-5).
+- `assignment5.py record`는 `recordings/README.md` 끝에 자동으로 표 한 줄을 붙입니다. 커밋 전에 1절 표 형식에 맞게 옮깁니다.
+
+**3단계. PC로 복사와 공유 (PC)**
+
+```bash
+cd ~/Lv2_Monglian_Assignment/lv2_module5           # PC의 저장소 위치
+rsync -a <user>@<pi>:git/Lv2_Monglian_Assignment/lv2_module5/recordings/<run_id> \
+         <user>@<pi>:git/Lv2_Monglian_Assignment/lv2_module5/recordings/<run_id>_info.txt recordings/
+(cd recordings/<run_id> && sha256sum *)             # <run_id>_info.txt의 sha256과 같아야 함
+```
+
+- bag 원본은 Git에서 제외됩니다(`.gitignore`의 `recordings/*/`). [공유 드라이브](recordings/README.md)에 bag 폴더와 `SHA256SUMS.txt`를 올리고, 저장소에는 `<run_id>_info.txt`와 `recordings/README.md` 표만 커밋합니다.
+- 다른 사람은 공유 드라이브에서 bag 폴더를 받아 `recordings/` 아래에 두고 `sha256sum -c SHA256SUMS.txt`로 확인합니다.
+
+**4단계. 재생 — 모터 출력 없음 (Pi 또는 PC)**
+
+PC에서 처음 재생한다면 먼저 워크스페이스를 빌드합니다(`colcon build --symlink-install`, 3절).
+
+```bash
+cd ~/git/Lv2_Monglian_Assignment/lv2_module5        # PC는 PC의 저장소 위치
+source /opt/ros/lyrical/setup.bash && source ros2_ws/install/setup.bash
+export ROS_DOMAIN_ID=28 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+pgrep -af "controller_node|opencr_bridge"           # 아무것도 안 나와야 함 (모터 노드가 있으면 먼저 정지)
+
+python3 assignment/assignment5.py replay    recordings/<run_id>   # 입력 재처리: bag 영상 → 검출기 → /target_replay
+python3 assignment/assignment5.py reanalyze recordings/<run_id>   # 결과 재분석: 저장된 /target·상태·명령으로 지표 재계산
+```
+
+- 입력 재처리는 bag의 컬러·CameraInfo·정렬 Depth·`/pan_tilt/joint_states`만 `--clock`으로 재생하고, 저장된 `/target`은 재생하지 않습니다. 결과는 `results/assignment5/<run_id>_replay/summary.md`(검출 여부 일치율·ex 차이)에 남습니다.
+- 결과 재분석은 검출기를 실행하지 않습니다. 결과는 `results/assignment5/<run_id>/reanalysis.md`와 `results/metrics.csv`에 남습니다.
+- motion bag은 `scripts/test/motion_guide.sh replay <run_id>`로 두 단계를 한 번에 실행할 수 있습니다(모터 노드가 있으면 시작하지 않음).
+- 같은 PC·Pi에서 로봇이 DOMAIN 28로 실행 중이면, 재생은 `ROS_DOMAIN_ID`를 다른 값(예: 77)으로 바꿔 섞이지 않게 합니다.
+
+**5단계. 재생 화면 보기 (선택)**
+
+```bash
+python3 scripts/web_view.py --width 320 --hz 3     # 브라우저: http://<pi>.local:8080/ (PC에서 실행하면 http://localhost:8080/)
+```
+
+- 웹뷰를 먼저 켠 뒤 4단계를 실행합니다. bag 영상과 관절 각도가 기록 때처럼 바뀝니다(실제 모터는 움직이지 않음). `/target`·상태는 재생하지 않는 토픽이라 비어 있거나 "수신 끊김"인 것이 정상입니다.
+- `--local-dds`는 쓰지 않습니다. 다른 노드와 DDS 탐색 범위가 달라 토픽을 받지 못한 경우가 있었습니다.
+
+**6단계. 별도 시연: 기록된 명령으로 실제 모터 재생 (선택, Pi)**
+
+과제의 재현(4단계, 모터 출력 없음)과 구분합니다. bag의 `/pan_tilt/command`만 브리지로 다시 보내 실제 모터를 움직입니다. 카메라·검출·제어 노드는 띄우지 않습니다.
+
+```bash
+scripts/test/motor_replay.sh <run_id>
+# Enter: bag 시작 자세로 이동 → Enter: 재생 → 원본 각도와 비교표 (results/assignment5/<run_id>_motorplay/)
+# 비상 정지: Ctrl+C (재생 중지 → 정지 명령 X) 또는 12V 차단
+```
+
+**7단계. 정리 (Pi)**
+
+```bash
+pgrep -af "realsense2_camera_node|target_detector|controller_node|opencr_bridge|web_view"   # 남은 노드 없음 확인
+rm -rf recordings/<run_id>               # PC·공유 드라이브에 같은 sha256 사본이 있는 것을 확인한 뒤에만
+df -h ~
+```
+
+### 스크립트별 상세
+
 ```bash
 # 기록 (Pi): full.launch.py run_id:=<run_id>로 실행·추적 중인 상태에서
 scripts/record_bag.sh <run_id> 30          # recordings/<run_id>/ + <run_id>_info.txt(커밋·설정·bag info·sha256)
