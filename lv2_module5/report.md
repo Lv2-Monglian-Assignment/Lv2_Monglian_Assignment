@@ -66,7 +66,7 @@
 | 타임아웃 | 마지막 신선한 입력 후 0.5 s | 0.5 s (`config/safety.yaml`, 변경 없음) |
 
 #### 노드·연결 구조도
-실선은 main에 있는 연결, 점선은 열린 PR에서 추가되는 연결이다(PR 번호 표시, 병합 후 실선으로 바꿈).
+실선은 추적 동작에 쓰이는 연결, 점선은 보기 전용 구독이다(web_view, best-effort로 구독만 하고 발행하지 않아 로봇 동작에 영향 없음).
 
 ```mermaid
 flowchart LR
@@ -76,12 +76,12 @@ flowchart LR
     ctl["tracker_controller<br>(제어)"]
     br["opencr_bridge<br>(시리얼 브리지)"]
     ops["운영 입력<br>assignment/*.py · ros2 topic pub"]
-    web["web_view.py<br>(PR 44)"]
+    web["web_view.py<br>(보기 전용)"]
     bag[("rosbag2 · CSV 기록")]
   end
   fw["OpenCR 1.0<br>opencr_tracker<br>100 Hz 속도 모드"]
   mot["XM430-W350 ×2<br>팬 ID 11 · 틸트 ID 12"]
-  pc["PC 브라우저<br>monglian.local:8080"]
+  pc["PC 브라우저<br>pi-host:8080"]
 
   cam -- "color/image_raw<br>aligned_depth_to_color/image_raw<br>color/camera_info" --> det
   det -- "/target PointStamped<br>ex·ey·면적비 (0 = 미검출)" --> ctl
@@ -93,14 +93,16 @@ flowchart LR
   ctl -- "/tracking_status String" --> bag
   br -- "/pan_tilt/joint_states<br>pan·tilt · 50 Hz" --> ctl
   br -- "/pan_tilt/joint_states" --> det
-  br -. "/pan_tilt/board_state String<br>(PR 54 발행 · PR 52 구독)" .-> ctl
-  br -- "USB 115200<br>V · I · X · O · H · B · R(PR 54)" --> fw
-  fw -- "S 상태 줄 50 Hz · E 오류 · B · R OK(PR 54)" --> br
+  br -- "/pan_tilt/board_state String<br>OFF·HOLD·TRACK·HOMING·FAULT·…" --> ctl
+  br -- "USB 115200<br>V · I · X · O · H · B · R" --> fw
+  fw -- "S 상태 줄 50 Hz (FAULT 중에도)<br>E 오류 · B · R OK" --> br
   fw -- "DXL Protocol 2.0 · 1 Mbps<br>Bus Watchdog 200 ms" --> mot
 
-  cam -. "color/image_raw" .-> web
-  web -. "/tracking_enable · /target/save_snapshot<br>파라미터 서비스" .-> ctl
-  web -. "MJPEG 오버레이" .-> pc
+  cam -. "color/image_raw (화면을 볼 때만)" .-> web
+  det -. "/target · /target_depth" .-> web
+  ctl -. "/tracking_status · /pan_tilt/command" .-> web
+  br -. "/pan_tilt/joint_states" .-> web
+  web -. "MJPEG (HTTP 8080)" .-> pc
 ```
 
 #### 노드별 책임
@@ -108,14 +110,13 @@ flowchart LR
 |---|---|---|---|
 | realsense2_camera | 통합 | Color·정렬 Depth·CameraInfo 발행 | 멈추면 인지 입력이 없음 |
 | target_detector | 인지 | HSV·Contour·크기 검증·선택, `/target` 발행(영상마다, 원본 stamp 유지) | 미검출이면 z = 0 발행, 카메라가 멈추면 발행하지 않음 |
-| tracker_controller | 제어 | IDLE/TRACKING/LOST(·SEARCHING) 상태, 각도 Kp P 제어, 속도 상한·데드밴드, CSV 기록 | z = 0 첫 프레임부터 명령 0, 입력이 0.5 s 끊기면 `LOST:input_timeout`, 명령 0 |
-| opencr_bridge | 통합(코드)·제어(시험) | 명령 → 시리얼 `V` 50 Hz, 상태 줄 → `/pan_tilt/joint_states`, 시리얼 송수신 기록 | 명령이 0.2 s 끊기면 `V 0 0`, 종료 시 `X` |
-| OpenCR `opencr_tracker` | 제어 | 100 Hz 속도 실행, 소프트 한계(팬 ±180°·틸트 ±40°), 속도 상한 120°/s | `V`가 300 ms 끊기면 속도 0(토크 유지), 모터 Bus Watchdog 200 ms |
-
-- 열린 PR의 변경: PR #52(제어 노드)는 각도 한계(팬 175°·틸트 38°) 밖에서 바깥 방향 명령을 0으로 하고, 보드 상태가 FAULT·끊김·HOMING이면 `LOST:board_*`로 명령 0. PR #54(펌웨어·브리지)는 모터 통신이 연속 3회 실패하면 FAULT, FAULT 중에도 상태 줄을 보내며, 브리지가 `/pan_tilt/board_state`를 발행하고 FAULT면 `R`로 자동 복구(최대 3회)를 시도한다.
+| tracker_controller | 제어 | IDLE/TRACKING/LOST(·SEARCHING) 상태, 각도 Kp P 제어, 속도 상한·데드밴드, 각도 한계(팬 175°·틸트 38°, 밖에서는 바깥 방향 명령 0), CSV 기록 | z = 0 첫 프레임부터 명령 0, 입력이 0.5 s 끊기면 `LOST:input_timeout`, 보드 상태가 FAULT·끊김·HOMING이면 `LOST:board_*` — 모두 명령 0 |
+| opencr_bridge | 통합(코드)·제어(시험) | 명령 → 시리얼 `V` 50 Hz, 상태 줄 → `/pan_tilt/joint_states`·`/pan_tilt/board_state`, 시작할 때 기준 자세 이동(`I`), 시리얼 송수신 기록 | 명령이 0.2 s 끊기면 `V 0 0`, 상태 줄이 0.5 s 없으면 `NO_STATUS`. 보드 FAULT면 2 s 뒤 `R`로 자동 복구 최대 3회, 그래도 FAULT면 `FAULT_MANUAL`(수동 복구 요청). 정상 60 s가 지나면 횟수 초기화. 종료 시 `X` |
+| OpenCR `opencr_tracker` | 제어 | 100 Hz 속도 실행, 소프트 한계(팬 ±180°·틸트 ±40°), 속도 상한 120°/s | `V`가 300 ms 끊기면 속도 0(토크 유지). 모터 통신이 연속 3회 실패하면 토크 OFF 후 FAULT(상태 줄은 계속 보냄), `R`로 복구. 모터 Bus Watchdog 200 ms |
+| web_view.py | 통합 | 웹 관제 (카메라 화면·토픽·상태·로그 보기) | 보기 전용: 발행·서비스 호출 없음, 멈춰도 추적에 영향 없음 |
 
 #### 인터페이스 표
-ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준. PR 표시는 열린 PR의 변경)
+ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준 — 2026-10-08 #44·#52·#54 병합 후)
 
 | 토픽 | 형식 | 발행 → 구독 | QoS · 주기 | 내용 · 단위 · 부호 |
 |---|---|---|---|---|
@@ -123,10 +124,10 @@ ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준. PR 표시는 �
 | `/target/position_cam` | geometry_msgs/PointStamped | target_detector → tracker_controller | best-effort depth 1 · 영상마다 | 목표의 카메라 광학 좌표 [m] (X 오른쪽, Y 아래, Z 앞), 무효면 NaN. SEARCHING(심화)용 |
 | `/target_depth` | geometry_msgs/PointStamped | target_detector → 기록 | best-effort depth 1 · 영상마다 | x = 깊이 유효 1/0, y = 유효 픽셀 비율, z = 거리 [m] |
 | `/tracking_enable` | std_msgs/Bool | 운영(assignment `common.py`, CLI) → tracker_controller | reliable 10 · 요청 시 | true = 추적 시작 (기본 꺼짐, launch `auto_enable`) |
-| `/tracking_status` | std_msgs/String | tracker_controller → 기록 | reliable 10 · 50 Hz | `상태:사유` (예: `TRACKING:ok`, `LOST:no_detection`, `LOST:input_timeout`, `LOST:confirming_1/3`). PR #52 추가: `TRACKING:pan_limit`·`tilt_limit`, `LOST:board_fault`·`board_fault_manual`·`board_silent`·`board_homing` |
+| `/tracking_status` | std_msgs/String | tracker_controller → 기록 | reliable 10 · 50 Hz | `상태:사유` (예: `TRACKING:ok`, `LOST:no_detection`, `LOST:input_timeout`, `LOST:confirming_1/3`). 각도 한계·보드 상태: `TRACKING:pan_limit`·`tilt_limit`, `LOST:board_fault`·`board_fault_manual`·`board_silent`·`board_homing` |
 | `/pan_tilt/command` | geometry_msgs/Vector3Stamped | tracker_controller → opencr_bridge | reliable 10 · 50 Hz | x = 팬, y = 틸트 속도 [°/s] (팬 + = 왼쪽, 틸트 + = 아래). IDLE·LOST에서도 0 발행 |
-| `/pan_tilt/joint_states` | sensor_msgs/JointState | opencr_bridge → tracker_controller, target_detector | reliable 10 · 상태 줄마다(50 Hz) | 이름 `pan`·`tilt` (dry_run은 `pan_sim`·`tilt_sim`), 각도 [rad]·속도 [rad/s], 측정값. PR #54: stamp를 보드 시각으로 보정 |
-| `/pan_tilt/board_state` (PR #54·#52) | std_msgs/String | opencr_bridge → tracker_controller | reliable 10 · 50 Hz | `OFF`·`HOLD`·`TRACK`·`HOMING`·`FAULT`·`FAULT_MANUAL`(자동 복구 3회 실패)·`NO_STATUS`(상태 줄 0.5 s 없음)·`SIM`(dry_run) |
+| `/pan_tilt/joint_states` | sensor_msgs/JointState | opencr_bridge → tracker_controller, target_detector | reliable 10 · 상태 줄마다(50 Hz) | 이름 `pan`·`tilt` (dry_run은 `pan_sim`·`tilt_sim`), 각도 [rad]·속도 [rad/s], 측정값. stamp는 보드 측정 시각으로 보정 |
+| `/pan_tilt/board_state` | std_msgs/String | opencr_bridge → tracker_controller | reliable 10 · 50 Hz | `OFF`·`HOLD`·`TRACK`·`HOMING`·`FAULT`·`FAULT_MANUAL`(자동 복구 3회 실패)·`NO_STATUS`(상태 줄 0.5 s 없음)·`SIM`(dry_run) |
 | `/camera/camera/color/image_raw` | sensor_msgs/Image | realsense2_camera → target_detector | best-effort depth 1 · 30 Hz | 640×480 Color |
 | `/camera/camera/aligned_depth_to_color/image_raw` | sensor_msgs/Image | realsense2_camera → target_detector | best-effort depth 5 · 30 Hz | Color에 정렬한 Depth |
 | `/camera/camera/color/camera_info` | sensor_msgs/CameraInfo | realsense2_camera → target_detector | best-effort depth 1 | 내부 파라미터 (fx·fy·cx·cy) |
@@ -135,19 +136,19 @@ ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준. PR 표시는 �
 | `/tracker/target_base` | geometry_msgs/PointStamped | tracker_controller → (기록) | reliable 10 | `pan_tilt_base` 기준 목표 위치 |
 | `/target_replay` (`/depth`, `/position_cam`) | geometry_msgs/PointStamped | target_detector(`replay.launch.py`) → 분석 | `/target`과 같음 | bag 재처리 결과. 원본 `/target`과 섞지 않도록 분리 (문제 5) |
 
-- PR #44 `web_view.py`(웹 관제): 카메라·`/target`·`/tracking_status`·`/pan_tilt/command`·`/pan_tilt/joint_states`를 구독하고, `/tracking_enable`·`/target/save_snapshot`을 발행하며, `/tracker_controller`의 파라미터 서비스(get·set_parameters)로 실행 중 설정을 바꾼다. HTTP 8080으로 외곽선 오버레이 MJPEG를 보낸다.
+- `web_view.py`(웹 관제, 보기 전용): `/target`·`/target_depth`·`/tracking_status`·`/pan_tilt/command`·`/pan_tilt/joint_states`를 best-effort로 구독하고, 카메라 영상은 브라우저가 화면을 볼 때만 구독한다. 발행·서비스 호출이 없어 추적에 영향을 주지 않으며, HTTP 8080으로 MJPEG 화면을 보낸다.
 
 시리얼 프로토콜 (Pi ↔ OpenCR, `/dev/ttyACM0` 115200 bps, ASCII 한 줄 = 한 메시지, 이슈 #7)
 
 | 방향 | 메시지 | 의미 |
 |---|---|---|
 | Pi → OpenCR | `V <pan_dps> <tilt_dps>` | 속도 명령 [°/s]. 브리지가 50 Hz로 계속 보냄 (0이 아닌 값을 받으면 토크를 켬) |
-| | `I` | 기준 자세(팬 0°, 틸트 0°)로 이동 후 정지 |
+| | `I` | 기준 자세(팬 0°, 틸트 0°)로 이동 후 정지. 브리지가 시작할 때와 `R OK` 뒤에 보냄 (`home_on_start`) |
 | | `X` | 즉시 정지 (속도 0, 토크 유지) |
 | | `O` | 토크 OFF |
-| | `H` · `B <pan_tick> <tilt_tick>` | 기준 자세 설정 (브리지가 시작할 때 `config/device.yaml`의 `home_ticks`를 `B`로 보냄) → 회신 `B` |
-| | `R` (PR #54) | FAULT 복구 → 회신 `R OK` 또는 `E 4` |
-| OpenCR → Pi | `S <ms> <pan_deg> <tilt_deg> <pan_dps> <tilt_dps> <state>` | 상태 50 Hz (측정 각도·속도, state = OFF·HOLD·TRACK·HOMING·FAULT) |
+| | `H` · `B <pan_tick> <tilt_tick>` | 기준 자세 설정 (브리지가 시작할 때 `config/device.yaml`의 `home_ticks`를 `B`로 보냄) → 회신 `B`. `B`는 지금까지 센 팬 바퀴 수를 유지한다 (기준 tick 차이만큼만 옮김) |
+| | `R` | FAULT 복구 (모터 확인·속도 모드·기준 각도를 다시 잡고 OFF로) → 회신 `R OK` 또는 `E 4`. 브리지가 자동으로 보냄 |
+| OpenCR → Pi | `S <ms> <pan_deg> <tilt_deg> <pan_dps> <tilt_dps> <state>` | 상태 50 Hz (측정 각도·속도, state = OFF·HOLD·TRACK·HOMING·FAULT). FAULT 중에도 마지막 각도로 계속 보냄 |
 | | `E <code> <text>` | 오류·경고 (1 타임아웃, 2 명령 오류, 3 토크 켜기 거부, 4 FAULT, 5 기준 자세 시간 초과) |
 
 정지가 걸리는 시간 (층별)
@@ -158,11 +159,13 @@ ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준. PR 표시는 �
 | 제어 명령 (`/pan_tilt/command` 침묵) | opencr_bridge | 0.2 s | `V 0 0` 전송 |
 | 시리얼 (`V` 없음) | OpenCR 펌웨어 | 300 ms | 속도 0, 토크 유지 (`E 1 command timeout; stop`) |
 | 모터 통신 (OpenCR 멈춤) | XM430 Bus Watchdog | 200 ms | 모터가 스스로 정지 |
-| 보드 상태 줄 (PR #54·#52) | opencr_bridge · tracker_controller | 0.5 s · 1 s | `NO_STATUS` · `LOST:board_silent`, 명령 0 |
+| 모터 통신 실패 (OpenCR ↔ 모터) | OpenCR 펌웨어 | 연속 3회 (제어 주기 3번) | 토크 OFF 후 FAULT, 상태 줄(`… FAULT`)은 계속 보냄 → 제어 노드 `LOST:board_fault`, 명령 0 |
+| 보드 FAULT 지속 | opencr_bridge | 2 s 뒤, 최대 3회 | `R`로 자동 복구 → 복구되면 기준 자세로 이동 후 추적 재개. 3회 모두 실패하면 `FAULT_MANUAL`(수동 복구: 케이블·전원 확인 후 추적 재시작 또는 OpenCR 리셋), 제어 노드 `LOST:board_fault_manual`. 정상 60 s가 지나면 횟수 초기화 |
+| 보드 상태 줄 | opencr_bridge · tracker_controller | 0.5 s · 1 s | `NO_STATUS` · `LOST:board_silent`, 명령 0 |
 
 #### 다섯 입력 확인 결과 (모터 출력 끔)
 - 실행: `python3 assignment/assignment2.py`. 제어 노드만 실행하고 브리지는 띄우지 않으므로 OpenCR·모터에 명령이 가지 않는다. 시험 프로그램이 `/target`(best-effort)을 직접 발행하고 `/pan_tilt/command`·`/tracking_status`를 기록한다.
-- 조건: 2026-10-07 12:37, Raspberry Pi(monglian), run_id `assignment2_mock_20261007_123707`, Kp 팬 2.0·틸트 2.5 [1/s], direction 팬 −1·틸트 +1, 속도 상한 120°/s, 입력 타임아웃 0.5 s. 입력은 30 Hz로 3 s 발행 (발행 중단은 2 s 발행 후 중단).
+- 조건: 2026-10-07 12:37, Raspberry Pi(monglian), run_id `assignment2_mock_20261007_123707`, Kp 팬 2.0·틸트 2.5 [1/s], direction 팬 −1·틸트 +1, 속도 상한 120°/s, 입력 타임아웃 0.5 s. 입력은 30 Hz로 3 s 발행 (발행 중단은 2 s 발행 후 중단). #52·#54 병합(2026-10-08) 전 코드로 한 시험이다.
 
 | 입력 | 발제 기대 결과 | 상태 | 팬 명령 [°/s] | 틸트 명령 [°/s] | 판정 |
 |---|---|---|---|---|---|
@@ -196,7 +199,7 @@ ROS 토픽 (출처: `config/*.yaml`·노드 코드, main 기준. PR 표시는 �
 - 기록: [results/logs/direction_test_20261008_142755.log](results/logs/direction_test_20261008_142755.log) (시험 화면 출력), 원본 영상: [results/media/direction_test_20261008_142638.mp4](results/media/direction_test_20261008_142638.mp4) (23.7 s, 1080×1080). 위 GIF는 이 영상을 실제 속도로 줄인 것(270 px, 5 fps)
 
 #### 한계
-- 다섯 입력 시험은 2026-10-07 main 코드로 제어 노드만 실행한 결과다. PR #52·#54가 병합되면 보드 상태(`/pan_tilt/board_state`)와 새 상태 사유(`pan_limit`·`board_*`)가 생기므로 같은 시험을 다시 하고, 구조도의 점선을 실선으로 바꾼다.
+- 다섯 입력 시험은 #52·#54 병합 전(2026-10-07) 코드로 제어 노드만 실행한 결과다. 병합으로 각도 한계(`TRACKING:pan_limit`·`tilt_limit`)와 보드 상태 사유(`LOST:board_*`)가 생겼으므로, 병합 후 코드로 같은 시험을 다시 하고 보드 상태별 정지(FAULT·끊김·자동 복구 실패)도 확인한다. 브리지 없이 하는 모의 시험에서는 보드 상태를 검사하지 않는다.
 - 모의 입력은 명령의 부호·크기와 상태만 확인한다. 실제 모터가 오차를 줄이는 방향으로 도는지는 문제 3의 실물 추적에서 확인한다.
 - `/tracker/predicted_target`·`/tracker/target_base`는 발행만 하고 구독하는 노드가 없다(기록용). 쓰지 않으면 정리한다.
 - 심화의 `/search` 액션(요청·진행·성공/실패·취소)은 구현하지 않았다. 시야 밖 탐색은 제어 노드의 SEARCHING 상태(기본 꺼짐, 도전 B)로만 시험했다.
