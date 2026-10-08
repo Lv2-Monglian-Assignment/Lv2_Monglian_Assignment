@@ -4,8 +4,8 @@
   python3 assignment/assignment_D.py run --trials 10                                  # 기본 설정
   python3 assignment/assignment_D.py run --trials 10 --param relock_after_s --value 1.5   # 조건 하나만 변경
   python3 assignment/assignment_D.py analyze                                          # 설정별 성공률·복구 시간·원인 비교
-바꿀 수 있는 조건(한 번에 하나): recover_frames(복귀 연속 프레임, 기본 3), relock_after_s(번호 유지 재선택, 기본 3.0),
-                                  input_timeout_s(입력 타임아웃, 기본 0.5)
+바꿀 수 있는 조건(한 번에 하나): recover_frames(복귀 연속 프레임), relock_after_s(번호 유지 재선택),
+                                  input_timeout_s(입력 타임아웃). 기본값은 config/*.yaml의 현재 값(2026-10-08: 3, 0.5, 0.5)
 실패 원인 분류
   검출 실패          재등장 뒤에도 후보(n_candidates)가 나오지 않음
   입력 타임아웃       재등장 뒤 3 s 안에 LOST:input_timeout (인지가 멈춤)
@@ -23,7 +23,7 @@ import time
 import common as C
 from assignment4 import occlusion
 
-PARAMS = {'recover_frames': 3, 'relock_after_s': 3.0, 'input_timeout_s': 0.5}
+PARAMS = ('recover_frames', 'relock_after_s', 'input_timeout_s')   # 기본값은 config에서 읽는다(C.read_param)
 
 
 def classify(trial, ctl, det, limit=3.0):
