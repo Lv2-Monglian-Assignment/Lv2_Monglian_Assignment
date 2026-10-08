@@ -1,0 +1,6 @@
+run_id assignment3_kp2_t2
+날짜 2026-10-08 19:41:08
+커밋 f910df2-dirty
+바꾼 설정 {'pan_kp': 2.0}
+dry_run False
+
