@@ -5,6 +5,7 @@ assignment*.py는 Pi에서 ROS 워크스페이스를 source한 셸에서 실행�
   python3 assignment/assignment1.py --help
 지표 산식은 발제 문제 4의 측정 지표 표를 따르고, 각 함수 설명에 분모·조건을 적었다.
 """
+import atexit
 import csv
 import glob
 import math
@@ -22,6 +23,21 @@ RESULTS = os.path.join(LV2, 'results')
 LOG_DIR = os.path.expanduser('~/lv2_module5_logs')        # 노드 기록 (제어 <run_id>.csv, 인지 <run_id>_detect.csv)
 SNAP_DIR = os.path.expanduser('~/lv2_module5_results/images')
 NAN = float('nan')
+REAPPEAR_SLACK_S = 1.0     # 재등장 안내 뒤 사람이 가린 물체를 치우는 데 걸리는 여유 [s]
+
+
+def _graceful_exit(signum, _frame):
+    """메뉴 세션이 닫히거나(SIGHUP) 종료 요청(SIGTERM)을 받아도 finally의 Proc.stop()이 실행되게 한다.
+    기본 동작(즉시 종료)이면 따로 띄운 launch가 남아 모터를 돌리고 시리얼 포트를 잡는다(2026-10-08 검토)."""
+    try:
+        sys.stdout = sys.stderr = open(os.devnull, 'w')   # 닫힌 터미널에 쓰다 정리가 멈추지 않게
+    except OSError:
+        pass
+    raise SystemExit(128 + signum)
+
+
+for _sig in (signal.SIGHUP, signal.SIGTERM):
+    signal.signal(_sig, _graceful_exit)
 
 # 자식 프로세스(ros2 launch)가 SIGINT를 무시한 채 시작되지 않도록 기본 처리로 되돌린다
 # (비대화형 셸에서 백그라운드로 실행되면 SIGINT가 무시 상태로 물려받아져 launch가 Ctrl+C에 반응하지 않았다, 2026-10-06)
@@ -61,7 +77,10 @@ def read_csv(path):
 
 
 def write_csv(path, rows, header=None):
-    header = header or (list(rows[0].keys()) if rows else [])
+    if not header:       # 모든 행의 열을 합친다(첫 행에 없는 열이 버려지지 않게)
+        header = []
+        for r in rows:
+            header += [k for k in r if k not in header]
     with open(path, 'w', newline='') as f:
         w = csv.DictWriter(f, fieldnames=header, extrasaction='ignore')
         w.writeheader()
@@ -129,8 +148,9 @@ def config_variant(dest, overrides):
             p = os.path.join(dest, name)
             text = open(p).read()
             pat = re.compile(rf'^(\s*{re.escape(key)}:\s*)([^#\n]*?)(\s*#.*)?$', re.M)
-            if pat.search(text):
-                val = str(value).lower() if isinstance(value, bool) else str(value)
+            m = pat.search(text)
+            if m:
+                val = typed_value(key, m.group(2), value)
                 text = pat.sub(lambda m: m.group(1) + val + (m.group(3) or ''), text, count=1)
                 open(p, 'w').write(text)
                 hit = True
@@ -138,6 +158,25 @@ def config_variant(dest, overrides):
         if not hit:
             raise SystemExit(f'설정 키를 찾지 못함: {key}')
     return dest
+
+
+def typed_value(key, old_text, value):
+    """새 값을 원래 설정 값과 같은 타입의 yaml 글자로 만든다. ROS 파라미터는 타입이 다르면 노드가 시작하자마자 죽는다
+    (예: min_area_px: 100.0에 300 → '300.0', recover_frames: 3에 3.0 → '3')."""
+    import yaml
+    old = yaml.safe_load(old_text) if old_text.strip() else None
+    new = yaml.safe_load(value) if isinstance(value, str) else value
+    if isinstance(old, bool) or isinstance(new, bool):
+        if not isinstance(new, bool):
+            raise SystemExit(f'{key}: true/false 값이 필요합니다 (받은 값 {value})')
+        return str(new).lower()
+    if isinstance(old, float) and isinstance(new, (int, float)):
+        return repr(float(new))
+    if isinstance(old, int) and isinstance(new, (int, float)):
+        if float(new) != int(new):
+            raise SystemExit(f'{key}: 정수 값이 필요합니다 (받은 값 {value})')
+        return str(int(new))
+    return str(value)
 
 
 def read_param(key, config_dir=CONFIG):
@@ -156,7 +195,8 @@ class Proc:
     def __init__(self, cmd, log_path):
         self.cmd, self.log_path = cmd, log_path
         self.log = open(log_path, 'w')
-        self.p = subprocess.Popen(cmd, stdout=self.log, stderr=subprocess.STDOUT, start_new_session=True)
+        self.p = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=self.log, stderr=subprocess.STDOUT,
+                                  start_new_session=True)   # 터미널을 읽지 않게(ros2 bag 키보드 제어 등)
 
     def alive(self):
         return self.p.poll() is None
@@ -196,8 +236,16 @@ def ros_args(node, config_dir=CONFIG, params=None):
         f = tempfile.NamedTemporaryFile('w', prefix=f'{node}_run_', suffix='.yaml', delete=False)
         yaml.safe_dump({node: {'ros__parameters': dict(params)}}, f)
         f.close()
+        atexit.register(_remove_quietly, f.name)      # 노드는 시작할 때만 읽는다. 프로그램이 끝나면 지운다
         args += ['--params-file', f.name]
     return args
+
+
+def _remove_quietly(path):
+    try:
+        os.remove(path)
+    except OSError:
+        pass
 
 
 def run_node(pkg, exe, node, log_path, config_dir=CONFIG, params=None):
@@ -426,13 +474,16 @@ def state_segments(ctl_rows, by_state=False):
 def recovery_trials(ctl_rows, det_rows, marks, limit_s=3.0):
     """가림 후 재등장 판정. marks = [(가림 안내 시각, 재등장 안내 시각)] (time.time(), 같은 시스템 시계).
     - 가림 확인: 안내 구간에 후보가 없는 영상(n_candidates=0)이 있어야 한다(없으면 '가림 미확인')
-    - 재등장 시각: 후보 없는 마지막 영상 다음의 첫 후보 영상 stamp (사람이 판단한 시각이 아님을 보고서에 적는다)
+    - 재등장 시각: 가림 구간(재등장 안내 + REAPPEAR_SLACK_S까지)의 마지막 후보 없는 영상 다음의 첫 후보 영상 stamp
+      (사람이 판단한 시각이 아님을 보고서에 적는다). 재등장 뒤에 생긴 빈 영상(흔들림)은 재등장 시각을 옮기지 않고
+      empty_after_reappear로 센다(예전에는 구간 끝까지의 마지막 빈 영상을 써서 실패가 성공으로 바뀔 수 있었음)
     - 복귀 시각: 재등장 이후 첫 TRACKING 행 / 성공: 복귀 - 재등장 <= limit_s
     - 정지 확인: 가림 중 미검출 행의 최대 |명령| (0이어야 함)"""
     out = []
     for i, (hide_t, show_t) in enumerate(marks, 1):
         win = [r for r in det_rows if hide_t - 0.5 <= fnum(r['stamp_s']) <= show_t + limit_s + 3.0]
-        empty = [j for j, r in enumerate(win) if r['n_candidates'] == '0']
+        empty = [j for j, r in enumerate(win) if r['n_candidates'] == '0'
+                 and fnum(r['stamp_s']) <= show_t + REAPPEAR_SLACK_S]
         res = {'trial': i, 'hide_prompt_t': hide_t, 'show_prompt_t': show_t}
         if not empty:
             res.update(result='가림 미확인', reappear_t=NAN, tracking_t=NAN, recovery_s=NAN)
@@ -449,6 +500,7 @@ def recovery_trials(ctl_rows, det_rows, marks, limit_s=3.0):
             out.append(res)
             continue
         t_re = fnum(after[0]['stamp_s'])
+        res['empty_after_reappear'] = sum(1 for r in win if fnum(r['stamp_s']) > t_re and r['n_candidates'] == '0')
         trk = [r for r in ctl_rows if fnum(r['ros_time_s']) >= t_re and r['state'] == 'TRACKING']
         t_trk = fnum(trk[0]['ros_time_s']) if trk else NAN
         rec = t_trk - t_re
