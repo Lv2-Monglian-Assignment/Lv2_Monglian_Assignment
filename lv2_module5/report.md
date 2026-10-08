@@ -178,3 +178,11 @@ D435 컬러 영상에서 HSV 마스크와 형태학 연산·Contour로 가장 �
 [인지 보고서](docs/perception/report.md)에 실험 환경·목적·방법·실제 결과·한계를 기록했다. [코드 배치와 실행](docs/perception/README.md), [수행 계획](../vision_todo/vision_todo.md), [실제 결과 자료](results/logs/perception/)를 연결한다.
 
 확인 결과: 기존 인지 증거 5/7단계, 약 71%. 새 팀 패키지 2개 PC 빌드·합성 검사 15개·카메라 없는 launch 기동/정상 종료를 확인했다. 기존 Pi 모듈 실측과 새 패키지 검증을 구별한다. 독립 30·10프레임 정답 평가와 실제 협업 증빙은 미완료다.
+
+## AI 도구 사용
+
+AI 도구 사용 내용은 영역별로 아래 세 문서에 작성했다.
+
+- [인지](docs/perception/AI_CONTRIBUTIONS.md)
+- [제어](docs/control/AI_CONTRIBUTIONS.md)
+- [통합](docs/integration/AI_CONTRIBUTIONS.md)
