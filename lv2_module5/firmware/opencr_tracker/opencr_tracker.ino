@@ -9,6 +9,8 @@
 //                H                        지금 자세를 기준 자세(0°)로 설정 (OFF·HOLD에서만) → 회신 B
 //                B <pan_tick> <tilt_tick> 기준 자세 tick(0~4095)을 지정 (OFF·HOLD에서만, 브리지가 시작 때 보냄) → 회신 B
 //                                         H·B는 #7에 없는 추가안. 값은 Pi의 config/device.yaml(home_ticks)에 저장한다
+//                                         B는 지금까지 센 바퀴 수를 유지한다(기준 tick 차이만큼만 옮김). 같은 값을 다시 보내도 각도가 안 바뀐다
+//                R                        FAULT 복구: 모터를 다시 확인하고 OFF로 (FAULT가 아니면 무시) → 회신 R OK 또는 E 4
 // 토크는 0이 아닌 V 또는 I를 받을 때 켠다.
 //   OpenCR → Pi  S <ms> <pan_deg> <tilt_deg> <pan_dps> <tilt_dps> <state>   50 Hz
 //                E <code> <text>          오류·경고
@@ -25,7 +27,9 @@
 //   - 유효한 명령이 300 ms 없으면 속도 0(HOLD). 토크는 유지한다(틸트에 달린 카메라가 처지지 않게, 2026-10-06 팀 결정).
 //     토크를 끄려면 O 명령 또는 전원 차단
 //   - 모터 Bus Watchdog 200 ms: OpenCR가 멈춰도 모터가 스스로 정지
-//   - DXL 통신 실패·루프 지연 시 토크 OFF 후 FAULT (RESET 필요)
+//   - DXL 통신이 연속 DXL_FAIL_LIMIT회(30 ms) 실패하거나 루프가 늦으면 토크 OFF 후 FAULT (Issue #27: 잡음 한 번에 끄지 않음)
+//     FAULT 중에도 상태 줄(state FAULT)을 계속 보내 Pi가 알 수 있게 한다. R(또는 OpenCR 리셋)으로 복구
+//   - 전원 투입·R 복구 때 팬 각도는 기준 자세에서 ±180° 안으로 잡는다(모터가 전원이 꺼지면 바퀴 수를 잃으므로)
 // USB 출력은 막히지 않게 보낸다(LineOut): Pi가 읽지 않아도 제어 루프가 늦어지지 않는다.
 #include <Dynamixel2Arduino.h>
 #include <math.h>
@@ -63,7 +67,9 @@ const uint8_t N = 2;
 const uint8_t IDS[N] = {11, 12};
 const int32_t IDLE_TICKS[N] = {1654, 2007};        // 기본 기준 자세 tick (2026-10-06 실측). 실행 중 H·B로 바뀐다
 const float LIMIT_DEG[N] = {180.0f, 40.0f};        // 소프트 한계 (둘 다 기구 여유를 고려한 값)
-const float ENABLE_LIMIT_DEG[N] = {170.0f, 45.0f}; // 토크를 켤 때 IDLE에서 이보다 멀면 거부
+const float ENABLE_LIMIT_DEG[N] = {170.0f, 100.0f}; // 토크를 켤 때 IDLE에서 이보다 멀면 거부. 팬: 케이블 꼬임 보호
+                                                    // 틸트: 꼬임이 없어 기계 범위(약 -118~+108°, 10-03 실측) 안이면 허용.
+                                                    // 토크가 꺼지면 틸트가 처지므로(10-08 시험 56.6°) 45°면 FAULT 자동 복구가 막혔다
 const float SPEED_LIMIT_DPS = 120.0f;              // 펌웨어 속도 상한 (Kp 시험과 같은 값)
 const float LIMIT_GAIN = 3.0f;                     // [1/s] 한계 접근 시 바깥 방향 허용 속도 = 3 × 남은 각도
 const float HOME_KP = 2.0f;                        // [1/s] IDLE 복귀 위치 P (Kp 시험에서 고른 값)
@@ -74,6 +80,7 @@ const uint32_t HOME_TIMEOUT_MS = 15000;
 const uint32_t PERIOD_US = 10000;                  // 100 Hz 제어 루프
 const uint8_t STATUS_DIV = 2;                      // 상태 회신 50 Hz
 const uint32_t LATE_US = 5 * PERIOD_US;            // 이보다 늦으면 FAULT
+const uint8_t DXL_FAIL_LIMIT = 3;                  // 모터 통신이 연속 이 횟수(30 ms) 실패하면 FAULT (Issue #27)
 const uint32_t CMD_TIMEOUT_MS = 300;               // 보드 측 통신 타임아웃
 const uint32_t TORQUE_OFF_AFTER_MS = 0;            // 타임아웃 후 이 시간 더 명령이 없으면 토크 OFF. 0 = 끄지 않음(토크 유지)
 const uint8_t BUS_WATCHDOG_20MS = 10;              // 모터 Bus Watchdog 200 ms
@@ -94,7 +101,11 @@ float pos_deg[N], vel_dps[N];  // IDLE 기준 관절각, 측정 속도
 float cmd_dps[N] = {0, 0};     // Pi 명령
 uint32_t last_cmd_ms = 0, last_us = 0, home_start_ms = 0;
 uint8_t status_count = 0;
+uint8_t dxl_fail = 0;          // 연속 DXL 실패 횟수 (한 주기를 끝까지 성공하면 0)
 bool timeout_reported = false;
+bool fault_nagged = false;     // FAULT 중 명령 거부를 이미 알렸는지 (V마다 50 Hz로 같은 오류를 보내지 않게)
+
+bool initMotors();  // 아래 정의 (R 명령에서 먼저 쓴다)
 
 int32_t wrapTicks(int32_t t) {  // (−2048, 2048]
   t %= 4096;
@@ -113,19 +124,28 @@ void fault(const char *reason) {
     dxl.torqueOff(IDS[i]);
   }
   state = FAULT;
+  fault_nagged = false;
   sendError(4, reason);
 }
 
 bool dxlOk() { return dxl.getLastLibErrCode() == DXL_LIB_OK && dxl.getLastStatusPacketError() == 0; }
 
-// 두 모터의 속도·위치를 한 패킷씩(8바이트) 읽는다.
+// 모터 통신 실패 한 번을 센다. 연속 DXL_FAIL_LIMIT회면 FAULT(true). 그 전에는 속도 0을 시도하고 이번 주기를 건너뛴다
+// (0 쓰기도 실패하면 모터 Bus Watchdog 200 ms가 멈춘다).
+bool dxlFailed(const char *reason) {
+  if (++dxl_fail >= DXL_FAIL_LIMIT) {
+    fault(reason);
+    return true;
+  }
+  for (uint8_t i = 0; i < N; ++i) dxl.setGoalVelocity(IDS[i], 0, UNIT_RAW);
+  return false;
+}
+
+// 두 모터의 속도·위치를 한 패킷씩(8바이트) 읽는다. 실패를 FAULT로 바꾸는 것은 부르는 쪽(dxlFailed)이 한다.
 bool readState() {
   for (uint8_t i = 0; i < N; ++i) {
     uint8_t buf[8];
-    if (dxl.read(IDS[i], ADDR_PRESENT_VELOCITY, 8, buf, sizeof(buf), 5) != 8 || !dxlOk()) {
-      fault("DXL read failed");
-      return false;
-    }
+    if (dxl.read(IDS[i], ADDR_PRESENT_VELOCITY, 8, buf, sizeof(buf), 5) != 8 || !dxlOk()) return false;
     int32_t v, p;
     memcpy(&v, buf, 4);
     memcpy(&p, buf + 4, 4);
@@ -138,11 +158,7 @@ bool readState() {
 
 bool writeVelocity(uint8_t i, float dps) {
   const int32_t raw = lroundf(dps / DPS_PER_RAW);
-  if (!dxl.setGoalVelocity(IDS[i], raw, UNIT_RAW) || !dxlOk()) {
-    fault("DXL velocity write failed");
-    return false;
-  }
-  return true;
+  return dxl.setGoalVelocity(IDS[i], raw, UNIT_RAW) && dxlOk();
 }
 
 bool torqueOffAll() {
@@ -158,9 +174,12 @@ bool torqueOffAll() {
 
 // OFF에서 처음 명령을 받으면 토크를 켠다. IDLE에서 너무 멀면 거부한다.
 bool enable() {
-  if (state == FAULT) { sendError(4, "FAULT: RESET required"); return false; }
+  if (state == FAULT) {
+    if (!fault_nagged) { sendError(4, "FAULT: send R to recover"); fault_nagged = true; }
+    return false;
+  }
   if (state != OFF) return true;
-  if (!readState()) return false;
+  if (!readState()) { sendError(4, "enable: DXL read failed"); return false; }
   for (uint8_t i = 0; i < N; ++i) {
     if (fabsf(pos_deg[i]) > ENABLE_LIMIT_DEG[i]) {
       sendError(3, i == 0 ? "pan too far from IDLE; move it by hand" : "tilt too far from IDLE; move it by hand");
@@ -196,21 +215,27 @@ bool parseVelocity(const char *line, float &pan, float &tilt) {
 
 // 기준 자세를 바꾼다. 움직이는 중(TRACK·HOMING)에는 기준이 바뀌면 각도 제한이 튀므로 거부한다.
 void setHome(const char *line, bool here) {
+  if (state == FAULT) { sendError(4, "H/B: FAULT, send R first"); return; }
   if (state != OFF && state != HOLD) { sendError(2, "H/B: stop first (X)"); return; }
-  if (!readState()) return;
+  if (!readState()) { sendError(4, "H/B: DXL read failed"); return; }
   int32_t t[N];
   if (here) {
     for (uint8_t i = 0; i < N; ++i) t[i] = ((raw_ticks[i] % 4096) + 4096) % 4096;
   } else {
     char *end;
     t[0] = strtol(line + 1, &end, 10);
+    const bool first_ok = end != line + 1;
     const char *cursor = end;
     t[1] = strtol(cursor, &end, 10);
-    if (end == cursor || t[0] < 0 || t[0] > 4095 || t[1] < 0 || t[1] > 4095) { sendError(2, "B: need 2 ticks 0~4095"); return; }
+    while (isspace(static_cast<unsigned char>(*end))) ++end;
+    if (!first_ok || end == cursor || *end != '\0' || t[0] < 0 || t[0] > 4095 || t[1] < 0 || t[1] > 4095) {
+      sendError(2, "B: need 2 ticks 0~4095"); return;
+    }
   }
   for (uint8_t i = 0; i < N; ++i) {
-    idle_ticks[i] = t[i];
-    base_ticks[i] = raw_ticks[i] - wrapTicks(raw_ticks[i] - t[i]);
+    if (here) base_ticks[i] = raw_ticks[i];                        // 지금 자세가 0°
+    else base_ticks[i] += wrapTicks(t[i] - idle_ticks[i]);         // 바퀴 수 유지: 기준 tick 차이만큼만 옮긴다
+    idle_ticks[i] = t[i];                                          // (예전: ±180° 안으로 다시 접어 손으로 돌린 바퀴 수를 잃음)
     pos_deg[i] = (raw_ticks[i] - base_ticks[i]) * DEG_PER_TICK;
   }
   out.print("B "); out.print(idle_ticks[0]); out.print(' '); out.print(idle_ticks[1]); out.send();
@@ -244,6 +269,12 @@ void handleLine(const char *line) {
     if (state != OFF && state != FAULT) torqueOffAll();
   } else if ((c == 'H' && bare) || c == 'B') {
     setHome(line, c == 'H');
+  } else if (c == 'R' && bare) {
+    if (state != FAULT) { sendError(2, "R: not in FAULT"); return; }
+    if (initMotors()) {
+      state = OFF; dxl_fail = 0; cmd_dps[0] = cmd_dps[1] = 0;
+      out.print("R OK"); out.send();
+    }
   } else {
     sendError(2, "bad command");
   }
@@ -282,26 +313,35 @@ void sendStatus() {
   out.print(' '); out.print(STATE_NAMES[state]); out.send();
 }
 
+// 모터 확인·속도 모드·기준 각도 설정. 전원 투입과 R(FAULT 복구)에 쓴다. 실패하면 fault() 후 false.
+bool initMotors() {
+  for (uint8_t i = 0; i < N; ++i) {
+    if (!dxl.ping(IDS[i])) { fault("ping: check ID/baud/power"); return false; }
+    if (dxl.getModelNumber(IDS[i]) != XM430_W350) { fault("requires XM430-W350"); return false; }
+    dxl.torqueOff(IDS[i]);
+    const int32_t mode = dxl.readControlTableItem((uint8_t)OPERATING_MODE, IDS[i], 10);
+    if (!dxlOk()) { fault("read operating mode"); return false; }
+    if (mode != OP_VELOCITY && !dxl.setOperatingMode(IDS[i], OP_VELOCITY)) { fault("set velocity mode"); return false; }
+    const int32_t drive = dxl.readControlTableItem((uint8_t)DRIVE_MODE, IDS[i], 10);
+    if (!dxlOk() || (drive & 1)) { fault("Drive Mode reverse bit must be 0"); return false; }
+    // 속도 모드에서 위치는 전원 투입 때만 0~4095로 초기화되므로, 여기서 IDLE 기준을 잡는다(기준 자세에서 ±180° 안).
+    const int32_t p = dxl.readControlTableItem((uint8_t)PRESENT_POSITION, IDS[i], 10);
+    if (!dxlOk()) { fault("read position"); return false; }
+    base_ticks[i] = p - wrapTicks(p - idle_ticks[i]);
+    raw_ticks[i] = p;
+    pos_deg[i] = (p - base_ticks[i]) * DEG_PER_TICK;
+    vel_dps[i] = 0;
+  }
+  return true;
+}
+
 void setup() {
   Serial.begin(115200);
   dxl.begin(DXL_BAUD);  // 라이브러리가 OpenCR의 DXL 전원도 켠다.
   dxl.setPortProtocolVersion(2.0);
   delay(500);
-  for (uint8_t i = 0; i < N; ++i) {
-    if (!dxl.ping(IDS[i])) { fault("ping: check ID/baud/power"); return; }
-    if (dxl.getModelNumber(IDS[i]) != XM430_W350) { fault("requires XM430-W350"); return; }
-    dxl.torqueOff(IDS[i]);
-    const int32_t mode = dxl.readControlTableItem((uint8_t)OPERATING_MODE, IDS[i], 10);
-    if (!dxlOk()) { fault("read operating mode"); return; }
-    if (mode != OP_VELOCITY && !dxl.setOperatingMode(IDS[i], OP_VELOCITY)) { fault("set velocity mode"); return; }
-    const int32_t drive = dxl.readControlTableItem((uint8_t)DRIVE_MODE, IDS[i], 10);
-    if (!dxlOk() || (drive & 1)) { fault("Drive Mode reverse bit must be 0"); return; }
-    // 속도 모드에서 위치는 전원 투입 때만 0~4095로 초기화되므로, 여기서 한 번 IDLE 기준을 잡는다.
-    const int32_t p = dxl.readControlTableItem((uint8_t)PRESENT_POSITION, IDS[i], 10);
-    if (!dxlOk()) { fault("read position"); return; }
-    base_ticks[i] = p - wrapTicks(p - idle_ticks[i]);
-  }
-  out.print("READY opencr_tracker: V <pan_dps> <tilt_dps> | I | X | O, newline. Status S 50 Hz."); out.send();
+  if (!initMotors()) return;   // FAULT: loop가 상태 줄(FAULT)을 계속 보낸다
+  out.print("READY opencr_tracker: V <pan_dps> <tilt_dps> | I | X | O | H | B | R, newline. Status S 50 Hz."); out.send();
   last_us = micros();
 }
 
@@ -311,10 +351,13 @@ void loop() {
   const uint32_t dt_us = now_us - last_us;  // unsigned 차분: micros() wrap 대응
   if (dt_us < PERIOD_US) return;
   last_us = now_us;
-  if (state == FAULT) return;
+  if (state == FAULT) {          // 모터를 읽지 않고 마지막 각도로 상태(FAULT)만 보낸다 (예전에는 아무것도 안 보내 Pi가 몰랐음)
+    if (++status_count >= STATUS_DIV) { status_count = 0; sendStatus(); }
+    return;
+  }
 
   // 1. 상태 읽기 (토크 OFF여도 /joint_states용으로 계속 읽는다)
-  if (!readState()) return;
+  if (!readState()) { dxlFailed("DXL read failed"); return; }
 
   if (state == HOLD || state == TRACK || state == HOMING) {
     if (dt_us > LATE_US) { fault("control loop late"); return; }
@@ -345,8 +388,11 @@ void loop() {
       }
     }
     // 4. 제한 후 쓰기
-    for (uint8_t i = 0; i < N; ++i) if (!writeVelocity(i, applyLimits(i, target[i]))) return;
+    for (uint8_t i = 0; i < N; ++i) {
+      if (!writeVelocity(i, applyLimits(i, target[i]))) { dxlFailed("DXL velocity write failed"); return; }
+    }
   }
+  dxl_fail = 0;                  // 이번 주기 읽기·쓰기 모두 성공
 
   if (++status_count >= STATUS_DIV) { status_count = 0; sendStatus(); }
 }
