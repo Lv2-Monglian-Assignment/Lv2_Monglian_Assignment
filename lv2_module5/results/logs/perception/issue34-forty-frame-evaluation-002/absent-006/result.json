@@ -1,0 +1,13 @@
+{
+  "set": "absent",
+  "frame": "frame-006.png",
+  "sha256": "363608ca5fbd6cc8ccd56e776be660b1690068792b83faca03c8576742d31715",
+  "label": "absent",
+  "found": false,
+  "candidate_count": 0,
+  "ex": 0.0,
+  "ey": 0.0,
+  "area_ratio": 0.0,
+  "mask_pixels": 0,
+  "rgb_bgr_same": true
+}
