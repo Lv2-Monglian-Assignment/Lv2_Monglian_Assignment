@@ -559,7 +559,7 @@ Kp 2종의 같은 조건 3회 비교는 3-1(모터 각도 루프)에서 했다. 
 | `assignment5_lost_20261008_122845` | 손바닥으로 가림 → 치움 | 15.2 s | 445.7 MiB | 안내 "가리세요" 5.42 s · "치우세요" 7.46 s → 7.40 s LOST → 8.71 s 첫 재획득 → 14.07 s 이후 TRACKING |
 | `motion_20261008_125139` (추가) | 원통을 들고 옮기며 팬·틸트가 따라 움직임 | 15.5 s | 452.7 MiB | TRACKING 중 5.01·6.57 s에 짧게 LOST 후 재획득, 12.00 s `input_timeout` 0.25 s. 팬 −10° → −45° → −9° → −32° → −14° |
 
-bag 실험 영상(녹화)은 [팀 Notion 영상](https://app.notion.com/p/teamsparta/D-_-3eb2dc3ef514800e9f49c3eba87f8c0d#3f32dc3ef5148004bc9cc7f97275749c)에 있습니다. bag 원본은 [팀 공유 드라이브](https://app.notion.com/p/ROS2-3f37bcf74d93802cb3f4c6022eb4a160?source=copy_link)에 있습니다. 토픽·메시지 형식·메시지 수·sha256·폴더 구성은 [recordings/README.md](recordings/README.md)에 있습니다. 성공·소실 기록은 `assignment/assignment5.py record`, 추가 motion 기록은 `scripts/test/motion_guide.sh record`(→ `scripts/record_bag.sh`), 재현은 같은 파일의 `replay`(입력 재처리)·`reanalyze`(결과 재분석)로 했습니다. 재현할 때는 검출기와 `ros2 bag play`만 띄우고 `tracker_controller`·`opencr_bridge`가 없는 것을 확인했습니다(모터 출력 없음).
+추가 motion bag(`motion_20261008_125139`, 원통을 들고 옮기며 팬·틸트가 따라 움직이는 장면)의 촬영 영상(녹화)은 [팀 Notion 영상](https://app.notion.com/p/teamsparta/D-_-3eb2dc3ef514800e9f49c3eba87f8c0d#3f32dc3ef5148004bc9cc7f97275749c)에 있습니다. bag 원본은 [팀 공유 드라이브](https://app.notion.com/p/ROS2-3f37bcf74d93802cb3f4c6022eb4a160?source=copy_link)에 있습니다. 토픽·메시지 형식·메시지 수·sha256·폴더 구성은 [recordings/README.md](recordings/README.md)에 있습니다. 성공·소실 기록은 `assignment/assignment5.py record`, 추가 motion 기록은 `scripts/test/motion_guide.sh record`(→ `scripts/record_bag.sh`), 재현은 같은 파일의 `replay`(입력 재처리)·`reanalyze`(결과 재분석)로 했습니다. 재현할 때는 검출기와 `ros2 bag play`만 띄우고 `tracker_controller`·`opencr_bridge`가 없는 것을 확인했습니다(모터 출력 없음).
 
 ### 5-2. 입력 재처리 — bag 영상으로 검출기를 다시 실행
 

@@ -32,7 +32,7 @@ python3 scripts/web_view.py       # (선택) PC 브라우저 http://<pi-host>:80
 | 정상·소실 추적 | 공유 드라이브 bag `assignment5_success_*`, `assignment5_lost_*`와 재처리 그래프 `results/plots/assignment5_*_replay_ex.png` |
 | 보드 FAULT 자동 복구 | `results/logs/fault_recovery_20261008/summary.md` (시리얼·제어 기록) |
 | 추적 시연 영상 | [최종 추적 자유 추적 15 s (녹화, 2026-10-08)](https://app.notion.com/p/teamsparta/D-_-3eb2dc3ef514800e9f49c3eba87f8c0d#3f32dc3ef51480ed940fd8dd482fb775) |
-| bag 실험 영상 | [팀 Notion 영상 (녹화)](https://app.notion.com/p/teamsparta/D-_-3eb2dc3ef514800e9f49c3eba87f8c0d#3f32dc3ef5148004bc9cc7f97275749c) |
+| motion bag 장면 (목표를 옮기며 팬·틸트 추적) | [팀 Notion 영상 (녹화, 2026-10-08)](https://app.notion.com/p/teamsparta/D-_-3eb2dc3ef514800e9f49c3eba87f8c0d#3f32dc3ef5148004bc9cc7f97275749c) |
 
 ## 발표 이후 바뀐 점 (2026-10-07 발표 대비)
 
