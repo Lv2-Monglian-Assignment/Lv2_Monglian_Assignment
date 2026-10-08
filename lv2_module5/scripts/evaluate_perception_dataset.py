@@ -1,7 +1,12 @@
-"""Evaluate labelled real color frames with one frozen HSV configuration."""
+"""Evaluate labelled real color frames with one frozen HSV configuration.
+
+Uses the package detector (target_detector/detection.py) and the target_detector entry of the config yaml.
+Color frames only: size_check keeps candidates without depth (same rule as the node).
+"""
 
 import argparse
 import csv
+from dataclasses import fields
 import hashlib
 import json
 from pathlib import Path
@@ -10,9 +15,21 @@ import sys
 
 import cv2
 import numpy as np
+import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ros2_ws/src/target_detector"))
-from target_detector.detector import DetectorConfig, detect, draw
+from target_detector.detection import DetectorConfig, detect, draw_overlay
+
+
+def load_config(path):
+    """/** common values + target_detector node values of the config yaml -> DetectorConfig (same as the node)."""
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+    params = {}
+    for key in ("/**", "target_detector"):
+        params.update((data.get(key) or {}).get("ros__parameters") or {})
+    names = {f.name for f in fields(DetectorConfig)}
+    return DetectorConfig(**{k: tuple(v) if k in ("hsv_lower", "hsv_upper") else v
+                             for k, v in params.items() if k in names})
 
 
 def read_dataset(path, scene, expected_count):
@@ -95,31 +112,31 @@ def main():
     if any(f["sha256"] in excluded for f, _, _ in all_frames):
         raise ValueError("Evaluation contains an excluded tuning/earlier image")
     config_path = Path(args.config).resolve()
-    cfg = DetectorConfig.from_yaml(config_path)
+    cfg = load_config(config_path)
     out = Path(args.out).resolve()
     out.mkdir(parents=True, exist_ok=False)
     shutil.copyfile(config_path, out / "perception-used.yaml")
     shutil.copyfile(__file__, out / "evaluation_source.py")
-    detector_path = Path(__file__).resolve().parents[1] / "ros2_ws/src/target_detector/target_detector/detector.py"
+    detector_path = Path(__file__).resolve().parents[1] / "ros2_ws/src/target_detector/target_detector/detection.py"
     shutil.copyfile(detector_path, out / "detector_source.py")
     rows, tiles = [], []
     for manifest, metadata, loaded in datasets:
         scene = metadata["scene"]
         shutil.copyfile(manifest, out / (scene + "-dataset.json"))
         for index, (frame, path, bgr) in enumerate(loaded, 1):
-            image = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB) if cfg.input_encoding == "rgb8" else bgr
-            detection, mask = detect(image, cfg)
+            image = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)  # files are BGR; the node receives rgb8
+            detection, mask = detect(image, "rgb8", cfg)
             truth = frame["target_present"]
-            classification = ("TP" if detection.found else "FN") if truth else ("FP" if detection.found else "TN")
+            classification = ("TP" if detection.detected else "FN") if truth else ("FP" if detection.detected else "TN")
             stem = f"{scene}-{index:03d}"
             images = out / stem
             images.mkdir()
             shutil.copyfile(path, images / "original.png")
-            for name, array in (("mask.png", mask), ("detection.png", draw(bgr, detection))):
+            for name, array in (("mask.png", mask), ("detection.png", draw_overlay(bgr, detection))):
                 if not cv2.imwrite(str(images / name), array):
                     raise RuntimeError("Result image write failed")
             rows.append({"frame": stem, "original_sha256": frame["sha256"], "source": str(path),
-                         "target_present": truth, "found": detection.found, "classification": classification,
+                         "target_present": truth, "found": detection.detected, "classification": classification,
                          "x": detection.ex, "y": detection.ey, "z": detection.area_ratio,
                          "cx": detection.cx, "cy": detection.cy, "header": frame["header"]})
             tile = cv2.resize(bgr, (240, 180))
