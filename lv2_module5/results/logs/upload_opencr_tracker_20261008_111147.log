@@ -1,0 +1,23 @@
+# 시각: 2026-10-08 11:12:51  호스트: monglian  포트: /dev/ttyACM0
+# 커밋: 
+# 소스 변경: 없음
+# ino sha256: bff9f3dc2bf3cc1c9e0a6a3411272b740db98e258ac47d718fdf485d06170725
+# bin sha256: 06ea3d6111900a1cafabe10f2a3cca9ac536b5f5329d4fdff6374d8fe936867b  크기: 98256 B
+opencr_ld ver 1.0.4
+opencr_ld_main 
+>>
+file name : /home/monglian/pa-opencr-build/output/opencr_tracker/opencr_tracker.ino.bin 
+file size : 95 KB
+Open port OK
+Clear Buffer Start
+Clear Buffer End
+Board Name : OpenCR R1.0
+Board Ver  : 0x17020800
+Board Rev  : 0x00000000
+>>
+flash_erase : 0 : 0.865000 sec
+flash_write : 0 : 1.143000 sec 
+CRC OK 958AF8 958AF8 0.003000 sec
+[OK] Download 
+jump_to_fw 
+jump finished
