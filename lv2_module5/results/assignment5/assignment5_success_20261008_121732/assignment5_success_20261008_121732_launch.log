@@ -1,0 +1,112 @@
+[INFO] [launch]: All log files can be found below /home/pa23/.ros/log/2026-10-08-12-17-33-975005-pa23-21385
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: 🚀 Launching as Normal ROS Node
+[INFO] [realsense2_camera_node-1]: process started with pid [21400]
+[INFO] [target_detector-2]: process started with pid [21401]
+[INFO] [controller_node-3]: process started with pid [21402]
+[INFO] [opencr_bridge-4]: process started with pid [21403]
+[realsense2_camera_node-1] [0m[INFO] [1791429455.439268607] [camera.camera]: RealSense ROS v4.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.439673918] [camera.camera]: Built with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.439842195] [camera.camera]: Running with LibRealSense v2.58.4[0m
+[realsense2_camera_node-1]  08/10 12:17:35,444 WARNING [281473298983200] (context.cpp:41) No valid configuration file found at : /home/pa23/.realsense-config.json loading defaults
+[realsense2_camera_node-1] [0m[INFO] [1791429455.661757341] [camera.camera]: Device with serial number 261822072247 was found.
+[realsense2_camera_node-1] [0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.662068265] [camera.camera]: Device with physical ID /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.662209856] [camera.camera]: Device with name RealSense D435 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.662640464] [camera.camera]: Device with port number 2-1 was found.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.662833111] [camera.camera]: Device USB type: 3.2[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.662960481] [camera.camera]: Starting device RealSense D435 (Product ID: 0x0B07)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.663260941] [camera.camera]: getParameters...[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666228049] [camera.camera]: JSON file is not provided[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666426677] [camera.camera]: Device Name: RealSense D435[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666488973] [camera.camera]: Device Serial No: 261822072247[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666524306] [camera.camera]: Device physical port: /sys/devices/platform/scb-bus@fc000000/fd500000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/usb2/2-1/2-1:1.0/video4linux/video0[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666611676] [camera.camera]: Device FW version: 5.15.1.55[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666663731] [camera.camera]: Device Product ID: 0x0B07[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.666697342] [camera.camera]: Sync Mode: Off[0m
+[realsense2_camera_node-1] [33m[WARN] [1791429455.859792367] [camera.camera]: re-enable the stream for the change to take effect.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.863198212] [camera.camera]: Set ROS param depth_module.infra_profile to default: 848x480x30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.912146204] [camera.camera]: Stopping Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.914667945] [camera.camera]: Stopping Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.978051849] [camera.camera]: Starting Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429455.999268452] [camera.camera]: Open profile: stream_type: Depth(0), Format: Z16, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429456.045392224] [camera.camera]: Starting Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429456.066716049] [camera.camera]: Open profile: stream_type: Color(0), Format: RGB8, Width: 640, Height: 480, FPS: 30[0m
+[realsense2_camera_node-1] [33m[WARN] [1791429456.127976765] [camera.camera]: frame's time domain is HARDWARE_CLOCK. Timestamps may reset periodically.[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429456.251729911] [camera.camera]: RealSense Node Is Up![0m
+[realsense2_camera_node-1] [33m[WARN] [1791429457.987965905] [camera.camera]: XXX Hardware Notification:Depth stream start failure,1.79143e+12,Error,Hardware Error[0m
+[realsense2_camera_node-1] [33m[WARN] [1791429457.991136974] [camera.camera]: Hardware Notification:Depth stream start failure,1.79143e+12,Error,Hardware Error[0m
+[controller_node-3] [INFO] [1791429458.483519669] [tracker_controller]: run_id=assignment5_success_20261008_121732 search=False pan(kp=2.0/s, dir=-1, limit=120.0) tilt(kp=2.5/s, dir=1, limit=120.0)
+[controller_node-3] [INFO] [1791429458.490416544] [tracker_controller]: state None -> IDLE (disabled)
+[opencr_bridge-4] [INFO] [1791429458.892376792] [opencr_bridge]: run_id=assignment5_success_20261008_121732 dry_run=False port=/dev/ttyACM0
+[opencr_bridge-4] [INFO] [1791429458.901938926] [opencr_bridge]: OpenCR state None -> HOLD
+[opencr_bridge-4] [INFO] [1791429458.917703958] [opencr_bridge]: OpenCR B 1654 2007
+[target_detector-2] [INFO] [1791429460.720829757] [target_detector]: run_id=assignment5_success_20261008_121732 hsv=(102, 120, 40)~(110, 255, 255) min_area=100.0 selection=priority use_depth=True detect_scale=1.0 size_check=True object_tracker=True
+[target_detector-2] [INFO] [1791429467.092338763] [target_detector]: processing FPS 15.8, mean proc 14.1 ms
+[target_detector-2] [INFO] [1791429472.116409603] [target_detector]: processing FPS 19.7, mean proc 14.5 ms
+[target_detector-2] [INFO] [1791429477.157792296] [target_detector]: processing FPS 25.2, mean proc 16.5 ms
+[target_detector-2] [INFO] [1791429482.176259603] [target_detector]: processing FPS 25.3, mean proc 15.4 ms
+[target_detector-2] [INFO] [1791429487.182946866] [target_detector]: processing FPS 26.0, mean proc 15.3 ms
+[target_detector-2] [INFO] [1791429492.207363592] [target_detector]: processing FPS 28.1, mean proc 16.6 ms
+[target_detector-2] [INFO] [1791429497.211969685] [target_detector]: processing FPS 24.8, mean proc 17.9 ms
+[target_detector-2] [INFO] [1791429502.257778050] [target_detector]: processing FPS 26.4, mean proc 17.8 ms
+[target_detector-2] [INFO] [1791429507.295284846] [target_detector]: processing FPS 26.8, mean proc 16.8 ms
+[target_detector-2] [INFO] [1791429512.304139723] [target_detector]: processing FPS 28.6, mean proc 15.8 ms
+[target_detector-2] [INFO] [1791429517.336388799] [target_detector]: processing FPS 26.6, mean proc 18.6 ms
+[target_detector-2] [INFO] [1791429522.348608022] [target_detector]: processing FPS 26.6, mean proc 16.0 ms
+[target_detector-2] [INFO] [1791429527.361463869] [target_detector]: processing FPS 27.9, mean proc 15.3 ms
+[target_detector-2] [INFO] [1791429532.404265701] [target_detector]: processing FPS 27.2, mean proc 15.6 ms
+[target_detector-2] [INFO] [1791429537.417113697] [target_detector]: processing FPS 27.7, mean proc 15.3 ms
+[target_detector-2] [INFO] [1791429542.440965130] [target_detector]: processing FPS 27.7, mean proc 16.3 ms
+[target_detector-2] [INFO] [1791429547.507437843] [target_detector]: processing FPS 28.1, mean proc 15.1 ms
+[target_detector-2] [INFO] [1791429552.540446487] [target_detector]: processing FPS 27.0, mean proc 14.2 ms
+[target_detector-2] [INFO] [1791429557.573151485] [target_detector]: processing FPS 27.2, mean proc 14.7 ms
+[target_detector-2] [INFO] [1791429562.611658033] [target_detector]: processing FPS 25.2, mean proc 16.2 ms
+[target_detector-2] [INFO] [1791429567.633134818] [target_detector]: processing FPS 25.5, mean proc 18.7 ms
+[target_detector-2] [INFO] [1791429572.649323826] [target_detector]: processing FPS 26.3, mean proc 17.9 ms
+[target_detector-2] [INFO] [1791429577.667844373] [target_detector]: processing FPS 27.1, mean proc 17.5 ms
+[target_detector-2] [INFO] [1791429582.679027677] [target_detector]: processing FPS 26.0, mean proc 17.8 ms
+[target_detector-2] [INFO] [1791429587.708836660] [target_detector]: processing FPS 25.3, mean proc 17.3 ms
+[target_detector-2] [INFO] [1791429592.740793497] [target_detector]: processing FPS 23.7, mean proc 16.7 ms
+[target_detector-2] [INFO] [1791429597.814904968] [target_detector]: processing FPS 24.3, mean proc 17.0 ms
+[target_detector-2] [INFO] [1791429602.836043107] [target_detector]: processing FPS 23.5, mean proc 15.9 ms
+[target_detector-2] [INFO] [1791429607.857311133] [target_detector]: processing FPS 22.3, mean proc 17.6 ms
+[target_detector-2] [INFO] [1791429612.890944569] [target_detector]: processing FPS 23.5, mean proc 17.6 ms
+[target_detector-2] [INFO] [1791429617.922997739] [target_detector]: processing FPS 23.7, mean proc 16.6 ms
+[target_detector-2] [INFO] [1791429622.932210632] [target_detector]: processing FPS 24.4, mean proc 17.0 ms
+[controller_node-3] [INFO] [1791429625.316496194] [tracker_controller]: tracking enabled=True
+[controller_node-3] [INFO] [1791429625.324812355] [tracker_controller]: state IDLE -> LOST (confirming_0/3)
+[controller_node-3] [INFO] [1791429625.422684784] [tracker_controller]: tracking enabled=True
+[controller_node-3] [INFO] [1791429625.533773300] [tracker_controller]: tracking enabled=True
+[controller_node-3] [INFO] [1791429625.689737691] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[opencr_bridge-4] [INFO] [1791429625.754260365] [opencr_bridge]: OpenCR state HOLD -> TRACK
+[target_detector-2] [INFO] [1791429627.952092557] [target_detector]: processing FPS 20.9, mean proc 21.3 ms
+[target_detector-2] [INFO] [1791429633.092114915] [target_detector]: processing FPS 17.0, mean proc 27.5 ms
+[target_detector-2] [INFO] [1791429638.172970207] [target_detector]: processing FPS 16.4, mean proc 28.4 ms
+[controller_node-3] [INFO] [1791429643.450687811] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[opencr_bridge-4] [ERROR] [1791429643.489122695] [opencr_bridge]: OpenCR E 1 command timeout; stop
+[opencr_bridge-4] [INFO] [1791429643.493123277] [opencr_bridge]: OpenCR state TRACK -> HOLD
+[target_detector-2] [INFO] [1791429643.519102697] [target_detector]: processing FPS 12.2, mean proc 26.2 ms
+[controller_node-3] [INFO] [1791429643.611839163] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[target_detector-2] [INFO] [1791429648.532105006] [target_detector]: processing FPS 17.6, mean proc 24.6 ms
+[controller_node-3] [INFO] [1791429658.152153703] [tracker_controller]: state TRACKING -> LOST (input_timeout)
+[target_detector-2] [INFO] [1791429658.177130797] [target_detector]: processing FPS 5.8, mean proc 23.8 ms
+[controller_node-3] [INFO] [1791429659.068225375] [tracker_controller]: state LOST -> TRACKING (reacquired_in_view)
+[controller_node-3] [INFO] [1791429660.889413115] [tracker_controller]: tracking enabled=False
+[controller_node-3] [INFO] [1791429660.898379493] [tracker_controller]: state TRACKING -> IDLE (disabled)
+[controller_node-3] [INFO] [1791429660.964018363] [tracker_controller]: tracking enabled=False
+[controller_node-3] [INFO] [1791429661.141714186] [tracker_controller]: tracking enabled=False
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[realsense2_camera_node-1] [0m[INFO] [1791429663.026318681] [rclcpp]: signal_handler(signum=2)[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429663.030853019] [camera.camera]: Stop Sensor: Depth Module[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429663.031082795] [camera.camera]: Close Sensor. [0m
+[controller_node-3] [INFO] [1791429663.033250297] [tracker_controller]: stats {'reacquired_in_view': 3, 'reacquired_search': 0, 'search_failed': 0} stale_inputs=0
+[controller_node-3] Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:427
+[realsense2_camera_node-1] [0m[INFO] [1791429663.050421949] [camera.camera]: Close Sensor - Done. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791429663.050513985] [camera.camera]: Stop Sensor: RGB Camera[0m
+[realsense2_camera_node-1] [0m[INFO] [1791429663.050533337] [camera.camera]: Close Sensor. [0m
+[realsense2_camera_node-1] [0m[INFO] [1791429663.342588190] [camera.camera]: Close Sensor - Done. [0m
+[INFO] [target_detector-2]: process has finished cleanly [pid 21401]
+[INFO] [controller_node-3]: process has finished cleanly [pid 21402]
+[INFO] [opencr_bridge-4]: process has finished cleanly [pid 21403]
+[INFO] [realsense2_camera_node-1]: process has finished cleanly [pid 21400]

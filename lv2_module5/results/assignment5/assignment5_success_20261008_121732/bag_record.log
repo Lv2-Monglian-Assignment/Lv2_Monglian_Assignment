@@ -1,0 +1,28 @@
+[INFO] [1791429632.829705992] [rosbag2_recorder]: Event publisher thread: Started
+[INFO] [1791429632.831984790] [rosbag2_recorder]: Press SPACE for pausing/resuming
+[INFO] [1791429633.008970804] [rosbag2_recorder]: Starting recording to '/home/pa23/git/Lv2_Monglian_Assignment/lv2_module5/recordings/assignment5_success_20261008_121732'
+[WARN] [1791429633.009271116] [rosbag2_recorder]: No input serialization format specified, using default rmw serialization format: 'cdr'.
+[INFO] [1791429633.039333395] [rosbag2_recorder]: Subscribed to topic '/tracking_status'
+[INFO] [1791429633.061657101] [rosbag2_recorder]: Subscribed to topic '/target_depth'
+[INFO] [1791429633.082736798] [rosbag2_recorder]: Subscribed to topic '/target'
+[INFO] [1791429633.092930242] [rosbag2_recorder]: Subscribed to topic '/pan_tilt/command'
+[INFO] [1791429633.098132130] [rosbag2_recorder]: Subscribed to topic '/target/position_cam'
+[INFO] [1791429633.114022642] [rosbag2_recorder]: Subscribed to topic '/camera/camera/color/image_raw'
+[INFO] [1791429633.124267789] [rosbag2_recorder]: Subscribed to topic '/pan_tilt/joint_states'
+[INFO] [1791429633.168435724] [rosbag2_recorder]: Subscribed to topic '/camera/camera/color/camera_info'
+[INFO] [1791429633.270598676] [rosbag2_recorder]: Subscribed to topic '/camera/camera/aligned_depth_to_color/image_raw'
+[INFO] [1791429633.271455022] [rosbag2_recorder]: Listening for topics...
+[INFO] [1791429633.272123498] [rosbag2_recorder]: Recording...
+[INFO] [1791429633.296270302] [rosbag2_recorder]: Topics discovery started.
+[INFO] [1791429633.337080595] [rosbag2_recorder]: All requested topics are subscribed. Stopping discovery...
+[INFO] [1791429633.358180551] [rosbag2_recorder]: Topics discovery stopped.
+[INFO] [1791429653.763589117] [rosbag2_cpp]: Writing remaining messages from cache to the bag. It may take a while
+[WARN] [1791429659.578809362] [rosbag2_cpp]: Cache buffers lost messages per topic: 
+	/camera/camera/aligned_depth_to_color/image_raw: 12
+	/pan_tilt/joint_states: 3
+	/camera/camera/color/camera_info: 14
+	/camera/camera/color/image_raw: 15
+Total lost: 44
+[INFO] [1791429659.613409441] [rosbag2_recorder]: Recording stopped
+[WARN] [1791429659.613769809] [rosbag2_recorder]: Number of messages lost in the recorder: 44
+[INFO] [1791429659.630681592] [rosbag2_recorder]: Event publisher thread: Exited

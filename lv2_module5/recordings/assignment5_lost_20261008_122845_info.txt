@@ -1,0 +1,35 @@
+run_id: assignment5_lost_20261008_122845
+장면: lost
+기록: 2026-10-08 12:30:32
+커밋: 8f897bb-dirty
+설정: results/assignment5/assignment5_lost_20261008_122845/config/ (기록 당시 config 복사본)
+노드 기록: results/assignment5/assignment5_lost_20261008_122845/ (제어 assignment5_lost_20261008_122845.csv, 인지 assignment5_lost_20261008_122845_detect.csv, 브리지 시리얼 로그)
+안내 시각: [('가리세요!', 1791430206.9989588), ('치우세요!', 1791430209.0329287)]
+크기: 467.4 MB
+
+
+Files:             0_assignment5_lost_20261008_122845_2026_10_08-12_30_01.mcap
+Bag size:          445.7 MiB
+Storage id:        mcap
+ROS Distro:        lyrical
+Duration:          15.219764303s
+Start:             Oct  8 2026 12:30:01.574733415 (1791430201.574733415)
+End:               Oct  8 2026 12:30:16.794497718 (1791430216.794497718)
+Messages:          3823
+Topic information: Topic: /camera/camera/aligned_depth_to_color/image_raw | Type: sensor_msgs/msg/Image | Count: 242 | Serialization Format: cdr
+                   Topic: /camera/camera/color/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 375 | Serialization Format: cdr
+                   Topic: /camera/camera/color/image_raw | Type: sensor_msgs/msg/Image | Count: 345 | Serialization Format: cdr
+                   Topic: /pan_tilt/command | Type: geometry_msgs/msg/Vector3Stamped | Count: 667 | Serialization Format: cdr
+                   Topic: /pan_tilt/joint_states | Type: sensor_msgs/msg/JointState | Count: 759 | Serialization Format: cdr
+                   Topic: /target | Type: geometry_msgs/msg/PointStamped | Count: 256 | Serialization Format: cdr
+                   Topic: /target/position_cam | Type: geometry_msgs/msg/PointStamped | Count: 255 | Serialization Format: cdr
+                   Topic: /target_depth | Type: geometry_msgs/msg/PointStamped | Count: 256 | Serialization Format: cdr
+                   Topic: /tracking_status | Type: std_msgs/msg/String | Count: 668 | Serialization Format: cdr
+Services:          0
+Service information: 
+Actions:           0
+Action information: 
+
+sha256:
+  faf0fb4d0b403b8508f19660599584f29553374b0cdf3c09f552c27e8d6be738  0_assignment5_lost_20261008_122845_2026_10_08-12_30_01.mcap (467371169 B)
+  849cd77b3d094927fa8c58c47cbe5f2bb0ef24569484dd0998dae86954ac2dd4  metadata.yaml (7483 B)

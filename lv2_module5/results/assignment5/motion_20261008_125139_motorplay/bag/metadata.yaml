@@ -1,0 +1,66 @@
+rosbag2_bagfile_information:
+  version: 9
+  storage_identifier: mcap
+  duration:
+    nanoseconds: 39840517228
+  starting_time:
+    nanoseconds_since_epoch: 1791436917175195546
+  message_count: 2674
+  topics_with_message_count:
+    - topic_metadata:
+        name: /pan_tilt/command
+        type: geometry_msgs/msg/Vector3Stamped
+        serialization_format: cdr
+        offered_qos_profiles:
+          - history: keep_last
+            depth: 10
+            reliability: reliable
+            durability: volatile
+            deadline:
+              sec: 9223372036
+              nsec: 854775807
+            lifespan:
+              sec: 9223372036
+              nsec: 854775807
+            liveliness: automatic
+            liveliness_lease_duration:
+              sec: 9223372036
+              nsec: 854775807
+            avoid_ros_namespace_conventions: false
+        type_description_hash: RIHS01_d4829622288cbb443886e7ea94ea5671a3b1be6bab4ad04224432a65f7d7887a
+      message_count: 681
+    - topic_metadata:
+        name: /pan_tilt/joint_states
+        type: sensor_msgs/msg/JointState
+        serialization_format: cdr
+        offered_qos_profiles:
+          - history: keep_last
+            depth: 10
+            reliability: reliable
+            durability: volatile
+            deadline:
+              sec: 9223372036
+              nsec: 854775807
+            lifespan:
+              sec: 9223372036
+              nsec: 854775807
+            liveliness: automatic
+            liveliness_lease_duration:
+              sec: 9223372036
+              nsec: 854775807
+            avoid_ros_namespace_conventions: false
+        type_description_hash: RIHS01_a13ee3a330e346c9d87b5aa18d24e11690752bd33a0350f11c5882bc9179260e
+      message_count: 1993
+  compression_format: ""
+  compression_mode: ""
+  relative_file_paths:
+    - 0_motion_20261008_125139_motorplay_2026_10_08-14_21_57.mcap
+  files:
+    - path: 0_motion_20261008_125139_motorplay_2026_10_08-14_21_57.mcap
+      starting_time:
+        nanoseconds_since_epoch: 1791436917175195546
+      duration:
+        nanoseconds: 39840517228
+      message_count: 2674
+  custom_data: ~
+  ros_distro: lyrical
