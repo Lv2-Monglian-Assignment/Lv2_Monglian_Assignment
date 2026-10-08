@@ -1,0 +1,31 @@
+:arrow_forward: pan+: V +15.0 +0.0 deg/s로 2.0초 (약 30°)
+  Enter를 누르면 실행 (중단: Ctrl+C)
+  팬 각도 변화 +30.2° (tick 증가 방향 +), 다른 축 +0.0°
+  ★ 카메라가 어느 쪽으로 돌았나요? 왼쪽 l / 오른쪽 r / 안 움직임 n [l/r/n]     다시 입력하세요: l, r, n
+  ★ 카메라가 어느 쪽으로 돌았나요? 왼쪽 l / 오른쪽 r / 안 움직임 n [l/r/n] l
+
+:arrow_forward: pan-: V -15.0 +0.0 deg/s로 2.0초 (약 30°) — 제자리로 돌아오기
+  Enter를 누르면 실행 (중단: Ctrl+C)
+  팬 각도 변화 -30.2° (tick 증가 방향 +), 다른 축 +0.0°
+
+:arrow_forward: tilt+: V +0.0 +15.0 deg/s로 2.0초 (약 30°)
+  Enter를 누르면 실행 (중단: Ctrl+C)
+  틸트 각도 변화 +29.4° (tick 증가 방향 +), 다른 축 +0.0°
+  ★ 카메라가 어느 쪽을 보게 됐나요? 위 u / 아래 d / 안 움직임 n [u/d/n] d
+
+:arrow_forward: tilt-: V +0.0 -15.0 deg/s로 2.0초 (약 30°) — 제자리로 돌아오기
+  Enter를 누르면 실행 (중단: Ctrl+C)
+  틸트 각도 변화 -30.5° (tick 증가 방향 +), 다른 축 +0.0°
+
+========== 판정 ==========
+✓ 팬 + 명령 → tick 증가 (+30.2°)
+✓ 틸트 + 명령 → tick 증가 (+29.4°)
+팬 + = 왼쪽  → pan_direction = -1
+틸트 + = 아래  → tilt_direction = +1
+✓ config/control.yaml pan_direction: -1 (일치)
+✓ config/control.yaml tilt_direction: 1 (일치)
+결과: PASS
+토크는 켜진 상태(속도 0)로 유지합니다.
+기록: /home/pa23/lv2_module5_logs/direction_test_20261008_142755.log
+
+[끝: 종료 코드 0, 20 s] 3 s 뒤 추적 상태로 돌아갑니다
